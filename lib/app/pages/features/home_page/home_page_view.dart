@@ -1,7 +1,10 @@
+import 'package:ayamku_admin/app/pages/features/home_page/sections/list_order_section.dart';
+import 'package:ayamku_admin/app/pages/features/home_page/sections/heading_section.dart';
+import 'package:ayamku_admin/app/pages/features/home_page/sections/sales_summary_section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../common/theme.dart';
 import 'home_page_controller.dart';
 
 class HomePageView extends GetView<HomePageController> {
@@ -9,27 +12,28 @@ class HomePageView extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: SizedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-
-
-            ],
-          )
-        ),
-
-      ),
-
-      body:  SafeArea(
+    return const Scaffold(
+      backgroundColor: baseColor,
+      body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HeadingSection(),
 
-            ],
+                SizedBox(height: 20,),
+
+                SalesSummarySection(),
+
+                SizedBox(height: 20,),
+
+                ListOrderSection()
+
+
+              ],
+            ),
           ),
         ),
       )

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class HomePageController extends GetxController {
   late PageController pageController;
   RxInt pageIndex = 0.obs;
+  RxInt currentIndex = 0.obs;
 
   @override
   void onInit() {
@@ -25,6 +26,10 @@ class HomePageController extends GetxController {
 
   void onPageChanged(int index) {
     pageIndex.value = index;
+  }
+
+  void changeIndex(int index) {
+    currentIndex.value = index;
   }
 
 }

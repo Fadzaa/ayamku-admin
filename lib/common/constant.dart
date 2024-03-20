@@ -4,7 +4,14 @@ String svgImages = 'assets/svg/';
 
 //CONSTANT IMAGE
 String logoPrimary = '${images}logo_primary.png';
+String icHistory = '${images}ic_history.png';
+String icProduct = '${images}ic_product.png';
+String icPromo = '${images}ic_promo.png';
+String icVoucher = '${images}ic_voucher.png';
 
 
 //CONSTANT SVG
-String icHome = '${svgImages}ic_home.svg';
+String icNotification = '${svgImages}ic_notification.svg';
+String icPersonChat = '${svgImages}ic_person_chat.svg';
+String icTotalOrder = '${svgImages}ic_total_order.svg';
+String icProducts = '${svgImages}ic_products.svg';

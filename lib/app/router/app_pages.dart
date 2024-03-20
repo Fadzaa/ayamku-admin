@@ -11,12 +11,12 @@ class AppPages {
 
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN_PAGE;
+  static const INITIAL = Routes.HOME_PAGE;
 
   static final routes = [
     GetPage(
       name: _Paths.HOME_PAGE,
-      page: () => HomePageView(),
+      page: () => const HomePageView(),
       binding: HomePageBinding(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 500),

@@ -4,8 +4,8 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ListOrderSection extends GetView<HomePageController> {
-  const ListOrderSection({super.key});
+class LatestOrderSection extends GetView<HomePageController> {
+  const LatestOrderSection({super.key});
 
 
 
@@ -23,7 +23,7 @@ class ListOrderSection extends GetView<HomePageController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("List Order", style: txtHeadline3),
+            Text("Latest Order", style: txtHeadline3),
 
             Container(
               width: 100,

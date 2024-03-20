@@ -1,4 +1,4 @@
-import 'package:ayamku_admin/app/pages/features/home_page/sections/list_order_section.dart';
+import 'package:ayamku_admin/app/pages/features/home_page/sections/latest_order_section.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/sections/heading_section.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/sections/sales_summary_section.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ class HomePageView extends GetView<HomePageController> {
 
                 SizedBox(height: 20,),
 
-                ListOrderSection()
+                LatestOrderSection()
 
 
               ],

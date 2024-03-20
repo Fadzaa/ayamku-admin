@@ -1,5 +1,7 @@
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/order_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/order_page_view.dart';
 import 'package:get/get.dart';
 import '../pages/initial_pages/login_page/login_page_binding.dart';
 import '../pages/initial_pages/login_page/login_page_view.dart';
@@ -11,7 +13,7 @@ class AppPages {
 
   AppPages._();
 
-  static const INITIAL = Routes.HOME_PAGE;
+  static const INITIAL = Routes.ORDER_PAGE;
 
   static final routes = [
     GetPage(
@@ -25,6 +27,12 @@ class AppPages {
       name: _Paths.LOGIN_PAGE,
       page: () => const LoginPageView(),
       binding: LoginPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.ORDER_PAGE,
+      page: () => const OrderPageView(),
+      binding: OrderPageBinding(),
       transition: Transition.noTransition,
     ),
 

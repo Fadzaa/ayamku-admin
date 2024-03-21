@@ -15,7 +15,7 @@ class AppPages {
 
   AppPages._();
 
-  static const INITIAL = Routes.HISTORY_PAGE;
+  static const INITIAL = Routes.DETAIL_ORDER_PAGE;
 
   static final routes = [
     GetPage(
@@ -39,6 +39,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HISTORY_PAGE,
+      page: () => const HistoryPageView(),
+      binding: HistoryPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.DETAIL_ORDER_PAGE,
       page: () => const HistoryPageView(),
       binding: HistoryPageBinding(),
       transition: Transition.noTransition,

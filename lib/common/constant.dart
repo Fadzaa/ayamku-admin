@@ -8,6 +8,7 @@ String icHistory = '${images}ic_history.png';
 String icProduct = '${images}ic_product.png';
 String icPromo = '${images}ic_promo.png';
 String icVoucher = '${images}ic_voucher.png';
+String sampleImage = '${images}sample_image.png';
 
 
 //CONSTANT SVG

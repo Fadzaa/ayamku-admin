@@ -2,6 +2,8 @@ import 'package:ayamku_admin/app/pages/features/history_page/history_page_bindin
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/notification_page/empty_notification_page.dart';
+import 'package:ayamku_admin/app/pages/features/notification_page/notification_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_view.dart';
 import 'package:get/get.dart';
@@ -15,7 +17,7 @@ class AppPages {
 
   AppPages._();
 
-  static const INITIAL = Routes.DETAIL_ORDER_PAGE;
+  static const INITIAL = Routes.NOTIF_MANAGEMENT;
 
   static final routes = [
     GetPage(
@@ -49,7 +51,17 @@ class AppPages {
       binding: HistoryPageBinding(),
       transition: Transition.noTransition,
     ),
-
-
+    GetPage(
+      name: _Paths.EMPTY_NOTIFICATION,
+      page: () => const EmptyNotificationPageView(),
+      binding: HistoryPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.NOTIF_MANAGEMENT,
+      page: () => const NotificationPageView(),
+      binding: HistoryPageBinding(),
+      transition: Transition.noTransition,
+    ),
   ];
 }

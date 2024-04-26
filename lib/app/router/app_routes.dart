@@ -8,6 +8,8 @@ abstract class Routes {
   static const ORDER_PAGE = _Paths.ORDER_PAGE;
   static const DETAIL_ORDER_PAGE = _Paths.DETAIL_ORDER_PAGE;
   static const HISTORY_PAGE = _Paths.HISTORY_PAGE;
+  static const EMPTY_NOTIFICATION = _Paths.EMPTY_NOTIFICATION;
+  static const NOTIF_MANAGEMENT = _Paths.NOTIF_MANAGEMENT;
 }
 
 abstract class _Paths {
@@ -18,6 +20,6 @@ abstract class _Paths {
   static const ORDER_PAGE = '/order-page';
   static const HISTORY_PAGE = '/history-page';
   static const DETAIL_ORDER_PAGE = '/detail-order-page';
-
-
+  static const EMPTY_NOTIFICATION = '/empty-notification';
+  static const NOTIF_MANAGEMENT = '/notif-management';
 }

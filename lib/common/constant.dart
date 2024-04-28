@@ -13,6 +13,7 @@ String imgEmptyNotif = '${images}empty_notification.png';
 String icLocation = '${images}ic_location.png';
 String icSpoon = '${images}ic_spoon.png';
 String icWarning = '${images}ic_warning.png';
+String icPerson = '${images}person.png';
 
 
 
@@ -25,3 +26,4 @@ String icCancel = '${svgImages}ic_cancel.svg';
 String icTotalDelivery = '${svgImages}ic_total_delivery.svg';
 String icTotalPickup = '${svgImages}ic_total_pickup.svg';
 String icBack = '${svgImages}ic_back.svg';
+String icSearch = '${svgImages}ic_search.svg';

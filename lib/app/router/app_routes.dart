@@ -10,6 +10,7 @@ abstract class Routes {
   static const HISTORY_PAGE = _Paths.HISTORY_PAGE;
   static const EMPTY_NOTIFICATION = _Paths.EMPTY_NOTIFICATION;
   static const NOTIF_MANAGEMENT = _Paths.NOTIF_MANAGEMENT;
+  static const CHAT_MANAGEMENT = _Paths.CHAT_MANAGEMENT;
 }
 
 abstract class _Paths {
@@ -22,4 +23,5 @@ abstract class _Paths {
   static const DETAIL_ORDER_PAGE = '/detail-order-page';
   static const EMPTY_NOTIFICATION = '/empty-notification';
   static const NOTIF_MANAGEMENT = '/notif-management';
+  static const CHAT_MANAGEMENT = '/chat-management';
 }

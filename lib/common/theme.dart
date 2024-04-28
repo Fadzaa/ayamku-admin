@@ -74,6 +74,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 const Color baseColor = Color(0xFFFFFFFF);
+const Color lightGrey = Color(0xFFF5F6F7);
 const Color greenLight = Color(0xFF6CD8B0);
 const Color greenMedium = Color(0xFF5CB85C);
 const Color redMedium = Color(0xFFD85458);

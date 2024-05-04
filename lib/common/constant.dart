@@ -27,3 +27,7 @@ String icTotalDelivery = '${svgImages}ic_total_delivery.svg';
 String icTotalPickup = '${svgImages}ic_total_pickup.svg';
 String icBack = '${svgImages}ic_back.svg';
 String icSearch = '${svgImages}ic_search.svg';
+String icSuccesful = '${svgImages}ic_successful.svg';
+String icMakanan = '${svgImages}ic_makanan.svg';
+String icGoogle = '${svgImages}ic_google.svg';
+String icStar = '${svgImages}ic_star.svg';

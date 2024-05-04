@@ -1,4 +1,5 @@
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_view.dart';
+import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_binding.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_binding.dart';
@@ -7,7 +8,9 @@ import 'package:ayamku_admin/app/pages/features/notification_page/empty_notifica
 import 'package:ayamku_admin/app/pages/features/notification_page/notfication_binding.dart';
 import 'package:ayamku_admin/app/pages/features/notification_page/notification_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/order_detail_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_view.dart';
+
 import 'package:get/get.dart';
 import '../pages/initial_pages/login_page/login_page_binding.dart';
 import '../pages/initial_pages/login_page/login_page_view.dart';
@@ -19,7 +22,7 @@ class AppPages {
 
   AppPages._();
 
-  static const INITIAL = Routes.CHAT_MANAGEMENT;
+  static const INITIAL = Routes.DETAIL_ORDER_PAGE;
 
   static final routes = [
     GetPage(
@@ -49,8 +52,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DETAIL_ORDER_PAGE,
-      page: () => const HistoryPageView(),
-      binding: HistoryPageBinding(),
+      page: () => const OrderPageDetailView(),
+      binding: OrderPageBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(
@@ -68,7 +71,7 @@ class AppPages {
     GetPage(
       name: _Paths.CHAT_MANAGEMENT,
       page: () => const ChatManagementPageView(),
-      binding: NotificationPageBinding(),
+      binding: ChatManagementBinding(),
       transition: Transition.noTransition,
     ),
   ];

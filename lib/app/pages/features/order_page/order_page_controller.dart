@@ -7,6 +7,7 @@ class OrderPageController extends GetxController {
   RxInt pageIndex = 0.obs;
   RxInt currentIndex = 0.obs;
 
+
   @override
   void onInit() {
     super.onInit();
@@ -31,5 +32,8 @@ class OrderPageController extends GetxController {
   void changeIndex(int index) {
     currentIndex.value = index;
   }
+  
+  void validateForm() {
 
+  }
 }

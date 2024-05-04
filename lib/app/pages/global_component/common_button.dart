@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../common/constant.dart';
 import '../../../common/theme.dart';
 
 class CommonButton extends StatelessWidget {
@@ -29,14 +30,13 @@ class CommonButton extends StatelessWidget {
           backgroundColor: primaryColor,
           fixedSize: Size(width ?? double.maxFinite, height ?? 0),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius ?? 16)
+              borderRadius: BorderRadius.circular(borderRadius ?? 15)
           ),
-          disabledBackgroundColor: const Color(0xFFBABABA)
         ),
         child: Text(
           text,
-          style: style ?? txtBody.copyWith(
-            color: Colors.white,
+          style: style ?? txtButtonTab.copyWith(
+            color: blackColor,
             fontWeight: FontWeight.w600,
           ),
         )
@@ -69,15 +69,17 @@ class CommonButtonGoogle extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             Text(
               "Masuk dengan Google",
-              style: txtCaption
+              
+              style: txtButtonTab.copyWith(
+                color: blackColor,
+                fontWeight: FontWeight.w600,)
             ),
 
             const SizedBox(width: 10,),
 
-            // SvgPicture.asset(icGoogle, width: 20, height: 20,),
+            SvgPicture.asset(icGoogle, width: 20, height: 20,),
 
           ],
         )
@@ -106,7 +108,7 @@ class CommonButtonOutline extends StatelessWidget {
           backgroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 20),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(15),
               side: const BorderSide(
                 color: primaryColor,
                 width: 1
@@ -116,7 +118,7 @@ class CommonButtonOutline extends StatelessWidget {
 
         child: Text(
           text,
-          style: style ?? txtFormTitle.copyWith(
+          style: style ?? txtButtonTab.copyWith(
             color: primaryColor,
             fontWeight: FontWeight.w600,
           ),

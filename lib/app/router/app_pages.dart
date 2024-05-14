@@ -12,6 +12,8 @@ import 'package:ayamku_admin/app/pages/features/order_page/order_detail_view.dar
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_view.dart';
 
 import 'package:get/get.dart';
 import '../pages/initial_pages/login_page/login_page_binding.dart';
@@ -24,7 +26,7 @@ class AppPages {
 
   AppPages._();
 
-  static const INITIAL = Routes.PRODUCT_PAGE;
+  static const INITIAL = Routes.PROMO_PAGE;
 
   static final routes = [
     GetPage(
@@ -80,6 +82,12 @@ class AppPages {
       name: _Paths.PRODUCT_PAGE,
       page: () => const ProductPageView(),
       binding: ProductPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.PROMO_PAGE,
+      page: () => const PromoPageView(),
+      binding: PromoPageBinding(),
       transition: Transition.noTransition,
     ),
   ];

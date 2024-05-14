@@ -10,6 +10,8 @@ import 'package:ayamku_admin/app/pages/features/notification_page/notification_p
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_detail_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/product_page/product_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/product_page/product_page_view.dart';
 
 import 'package:get/get.dart';
 import '../pages/initial_pages/login_page/login_page_binding.dart';
@@ -22,7 +24,7 @@ class AppPages {
 
   AppPages._();
 
-  static const INITIAL = Routes.DETAIL_ORDER_PAGE;
+  static const INITIAL = Routes.PRODUCT_PAGE;
 
   static final routes = [
     GetPage(
@@ -72,6 +74,12 @@ class AppPages {
       name: _Paths.CHAT_MANAGEMENT,
       page: () => const ChatManagementPageView(),
       binding: ChatManagementBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_PAGE,
+      page: () => const ProductPageView(),
+      binding: ProductPageBinding(),
       transition: Transition.noTransition,
     ),
   ];

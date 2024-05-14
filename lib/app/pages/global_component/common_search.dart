@@ -9,31 +9,25 @@ class CommonSearch extends StatelessWidget {
     super.key,
     required this.text,
     this.onPressed,
-    this.width,
-    this.height,
     this.style,
     this.borderRadius
   });
 
   String text;
-  double? width;
-  double? height;
   VoidCallback? onPressed;
   TextStyle? style;
   double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
-    return  ElevatedButton(
-        onPressed: () => null,
-        style: ElevatedButton.styleFrom(
-            backgroundColor: lightGrey,
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)
-            ),
-            elevation: 2
+    return  InkWell(
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          color: lightGrey,
+          borderRadius: BorderRadius.circular(10)
         ),
+        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -50,7 +44,8 @@ class CommonSearch extends StatelessWidget {
             ),
 
           ],
-        )
+        ),
+      ),
     );
   }
 }

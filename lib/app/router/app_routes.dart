@@ -11,6 +11,7 @@ abstract class Routes {
   static const EMPTY_NOTIFICATION = _Paths.EMPTY_NOTIFICATION;
   static const NOTIF_MANAGEMENT = _Paths.NOTIF_MANAGEMENT;
   static const CHAT_MANAGEMENT = _Paths.CHAT_MANAGEMENT;
+  static const PRODUCT_PAGE = _Paths.PRODUCT_PAGE;
 }
 
 abstract class _Paths {
@@ -24,4 +25,5 @@ abstract class _Paths {
   static const EMPTY_NOTIFICATION = '/empty-notification';
   static const NOTIF_MANAGEMENT = '/notif-management';
   static const CHAT_MANAGEMENT = '/chat-management';
+  static const PRODUCT_PAGE = '/product-page';
 }

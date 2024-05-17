@@ -26,7 +26,6 @@ class AppPages {
 
   AppPages._();
   static const INITIAL = Routes.HISTORY_PAGE;
-  static const INITIAL = Routes.PROMO_PAGE;
 
   static final routes = [
     GetPage(

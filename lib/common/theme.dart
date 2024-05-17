@@ -92,6 +92,9 @@ const Color blackColor40 = Color(0xFF575757);
 const Color blackColor50 = Color(0xFF6F6F6F);
 const Color blackColor80 = Color(0xFFB7B7B7);
 const Color blackColor90 = Color(0xFFCFCFCF);
+const Color orange = Color(0xFFFFB240);
+const Color green = Color(0xFF5CB85C);
+const Color blue = Color(0xFF4683F7);
 
 
 TextStyle txtHeadline1 = GoogleFonts.poppins(

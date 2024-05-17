@@ -22,7 +22,7 @@ class AppPages {
 
   AppPages._();
 
-  static const INITIAL = Routes.DETAIL_ORDER_PAGE;
+  static const INITIAL = Routes.HISTORY_PAGE;
 
   static final routes = [
     GetPage(

@@ -29,16 +29,4 @@ final List <History> history_data = [
         ),
       ]
   ),
-  History(
-      date: DateTime.monthsPerYear.toString(),
-      menu: [
-        Menu(
-            image: sampleImage,
-            username: "Fattah Anggit",
-            orderFood: "Ayam Bakar",
-            price: 20000,
-            date: DateTime.monthsPerYear.toString()
-        ),
-      ]
-  ),
 ];

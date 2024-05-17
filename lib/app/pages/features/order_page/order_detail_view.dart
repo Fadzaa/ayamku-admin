@@ -272,34 +272,35 @@ class OrderPageDetailView extends GetView<OrderPageController> {
                       );
                     }))),
                 Container(
-  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start, // Menjadikan elemen-elemen berada di sebelah kiri
-    children: [
-      Text(
-        "Makanan nya enak 👌",
-        style: TextStyle(fontSize: 17),
-      ),
-      SizedBox(
-        height: 10,
-      ), // Menambah jarak antara teks dan gambar
-      Row(
-        children: List.generate(3, (index) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 10.0), // Memberikan jarak antar gambar
-            child: Image.asset(
-              sampleImage,
-              width: 70,
-              height: 70,
-            ),
-          );
-        }),
-      ),
-      SizedBox(height: 5),
-    ],
-  ),
-),
-
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment
+                        .start, // Menjadikan elemen-elemen berada di sebelah kiri
+                    children: [
+                      Text(
+                        "Makanan nya enak 👌",
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ), // Menambah jarak antara teks dan gambar
+                      Row(
+                        children: List.generate(3, (index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                right: 10.0), // Memberikan jarak antar gambar
+                            child: Image.asset(
+                              sampleImage,
+                              width: 70,
+                              height: 70,
+                            ),
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 5),
+                    ],
+                  ),
+                ),
               ],
             ),
           ]),

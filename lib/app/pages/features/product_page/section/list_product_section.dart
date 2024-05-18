@@ -1,14 +1,19 @@
 import 'package:ayamku_admin/app/pages/features/product_page/items/item_filter_list_product.dart';
+import 'package:ayamku_admin/app/pages/features/product_page/product_page_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_search.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ListProductSection extends StatelessWidget {
   const ListProductSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductPageController());
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -24,20 +29,26 @@ class ListProductSection extends StatelessWidget {
 
         SizedBox(height: 10,),
 
-        ListView.builder(
-          itemCount: 3,
+        Obx(() => ListView.builder(
+          itemCount: controller.products.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => ItemListProductSection(
-            image: sampleImage,
-            cattegory: 'Geprek',
-            name: 'PAHE Geprek',
-            onPressed: () {  },
-            price: 13000,
-            stok: 45,
-          )
+          itemBuilder: (context, index) {
+            final product = controller.products[index];
+            return ItemListProductSection(
+              image: product.image,
+              cattegory: product.category,
+              name: product.name,
+              price: product.price,
+              stok: product.qty,
+              onPressed: () {
+                Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: index);
+              },
+            );
+          },
 
-        )
+
+        ))
 
       ],
     );
@@ -71,7 +82,7 @@ class ItemListProductSection extends StatelessWidget {
 
               Row(
                 children: [
-                  Image.asset(
+                  Image.network(
                     image,
                     width: 57,
                     height: 50,

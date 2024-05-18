@@ -31,3 +31,6 @@ String icSuccesful = '${svgImages}ic_successful.svg';
 String icMakanan = '${svgImages}ic_makanan.svg';
 String icGoogle = '${svgImages}ic_google.svg';
 String icStar = '${svgImages}ic_star.svg';
+String icUpload = '${svgImages}ic_upload.svg';
+String icEdit = '${svgImages}ic_edit.svg';
+String icPickImg = '${svgImages}ic_pick_img.svg';

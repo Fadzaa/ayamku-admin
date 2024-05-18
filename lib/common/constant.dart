@@ -36,3 +36,4 @@ String icStar = '${svgImages}ic_star.svg';
 String icUpload = '${svgImages}ic_upload.svg';
 String icEdit = '${svgImages}ic_edit.svg';
 String icPickImg = '${svgImages}ic_pick_img.svg';
+String icDate = '${svgImages}ic_date.svg';

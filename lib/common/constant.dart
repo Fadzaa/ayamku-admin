@@ -14,6 +14,8 @@ String icLocation = '${images}ic_location.png';
 String icSpoon = '${images}ic_spoon.png';
 String icWarning = '${images}ic_warning.png';
 String icPerson = '${images}person.png';
+String promoNatal = '${images}promo_natal.png';
+
 
 
 

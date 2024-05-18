@@ -14,6 +14,7 @@ abstract class Routes {
   static const PRODUCT_PAGE = _Paths.PRODUCT_PAGE;
   static const ADD_PRODUCT_PAGE = _Paths.ADD_PRODUCT_PAGE;
   static const EDIT_PRODUCT_PAGE = _Paths.EDIT_PRODUCT_PAGE;
+  static const PROMO_PAGE = _Paths.PROMO_PAGE;
 }
 
 abstract class _Paths {
@@ -30,4 +31,5 @@ abstract class _Paths {
   static const PRODUCT_PAGE = '/product-page';
   static const ADD_PRODUCT_PAGE = '/add-product-page';
   static const EDIT_PRODUCT_PAGE = '/edit-product-page';
+  static const PROMO_PAGE = '/promo-page';
 }

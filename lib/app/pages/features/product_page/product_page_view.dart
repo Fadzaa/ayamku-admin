@@ -3,6 +3,7 @@ import 'package:ayamku_admin/app/pages/features/product_page/section/inventory_s
 import 'package:ayamku_admin/app/pages/features/product_page/section/list_product_section.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/section/produk_terlaris_section.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,9 @@ class ProductPageView extends GetView<ProductPageController> {
                 ),
                 child: CommonButton(
                   text: '+ Tambahkan menu baru',
-                  onPressed: () {  },
+                  onPressed: () {
+                    Get.toNamed(Routes.ADD_PRODUCT_PAGE);
+                  },
                 ),
               )
           )

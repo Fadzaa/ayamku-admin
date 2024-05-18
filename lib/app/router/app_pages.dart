@@ -1,5 +1,9 @@
+import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_view.dart';
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_binding.dart';
+import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_binding.dart';
@@ -84,6 +88,18 @@ class AppPages {
       transition: Transition.noTransition,
     ),
     GetPage(
+      name: _Paths.ADD_PRODUCT_PAGE,
+      page: () => const AddProductPageView(),
+      binding: AddProductPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.EDIT_PRODUCT_PAGE,
+      page: () => const EditProductPageView(),
+      binding: EditProductPageBinding(),
+      transition: Transition.noTransition,
+     ),
+   GetPage(
       name: _Paths.PROMO_PAGE,
       page: () => const PromoPageView(),
       binding: PromoPageBinding(),

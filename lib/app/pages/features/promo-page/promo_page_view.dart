@@ -2,6 +2,7 @@ import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_controller
 import 'package:ayamku_admin/app/pages/features/promo-page/section/item_promo.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_search.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,9 @@ class PromoPageView extends GetView<PromoPageController> {
                 ),
                 child: CommonButton(
                   text: '+ Tambahkan promo baru',
-                  onPressed: () {  },
+                  onPressed: () {
+                    Get.toNamed(Routes.ADD_PROMO_PAGE);
+                  },
                 ),
               )
           )

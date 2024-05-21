@@ -15,35 +15,6 @@ class HeadingSection extends StatelessWidget {
     return Column(
       children: [
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-                children: [
-                  Image.asset(logoPrimary),
-
-                  const SizedBox(width: 10,),
-
-                  Text("Halo, Admin! 👋", style: txtListItemTitle),
-                ]
-            ),
-
-            Row(
-              children: [
-                SvgPicture.asset(icPersonChat),
-
-                const SizedBox(width: 20,),
-
-                SvgPicture.asset(icNotification),
-              ],
-            )
-
-          ],
-        ),
-
-        const SizedBox(height: 20,),
-
         InkWell(
           onTap: () => Get.toNamed(Routes.ORDER_PAGE),
           child: Container(

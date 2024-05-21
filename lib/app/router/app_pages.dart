@@ -2,6 +2,8 @@ import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_pag
 import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/add_promo_page/add_promo_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/add_promo_page/add_promo_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/analytic_page/analytic_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/analytic_page/analytic_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_view.dart';
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_binding.dart';
 import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_page_binding.dart';
@@ -33,7 +35,7 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.HOME_PAGE;
+  static const INITIAL = Routes.ANALYTIC_PAGE;
 
   static final routes = [
     GetPage(
@@ -119,6 +121,12 @@ class AppPages {
       name: _Paths.EDIT_PROMO_PAGE,
       page: () => const EditPromoPageView(),
       binding: EditPromoPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.ANALYTIC_PAGE,
+      page: () => const AnalyticPageView(),
+      binding: AnalyticPageBinding(),
       transition: Transition.noTransition,
     ),
   ];

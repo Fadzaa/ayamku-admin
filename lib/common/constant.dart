@@ -37,3 +37,6 @@ String icUpload = '${svgImages}ic_upload.svg';
 String icEdit = '${svgImages}ic_edit.svg';
 String icPickImg = '${svgImages}ic_pick_img.svg';
 String icDate = '${svgImages}ic_date.svg';
+String icUser = '${svgImages}ic_user.svg';
+String icChat = '${svgImages}ic_chat.svg';
+String icSidebarNotif = '${svgImages}ic_notif.svg';

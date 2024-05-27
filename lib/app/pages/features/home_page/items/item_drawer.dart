@@ -1,9 +1,9 @@
-import 'package:ayamku_admin/app/router/app_pages.dart';
+import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 
 class ItemDrawer extends StatelessWidget {
@@ -12,49 +12,48 @@ class ItemDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: baseColor,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DrawerHeader(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    logoPrimary,
-                    width: 59,
-                    height: 59,
-                  ),
 
-                  SizedBox(width: 15),
+            SizedBox(height: 70,),
 
-                  // SwitchTutupToko()
-
-                ],
-              ),
+            Image.asset(
+              logoPrimary,
+              width: 60,
+              height: 60,
             ),
+
+            SizedBox(height: 20,),
+
+            SizedBox(
+              height: 45,
+              child: const Expanded(child: SwitchTutupToko()),),
+
+            SizedBox(height: 20,),
 
             ListSidebar(
-                text: "Chat",
-                icon: icChat,
-                onPressed: (){
-
-                }
+              text: "Chat",
+              icon: icChat,
+              onPressed: () {},
             ),
+
+            SizedBox(height: 20,),
+
             ListSidebar(
-                text: "Notifikasi",
-                icon: icSidebarNotif,
-                onPressed: (){
-
-                }
+              text: "Notifikasi",
+              icon: icSidebarNotif,
+              onPressed: () {},
             ),
-            ListSidebar(
-                text: "User",
-                icon: icUser,
-              onPressed: (){
 
-              },
-            ),
+            // ListSidebar(
+            //   text: "User",
+            //   icon: icUser,
+            //   onPressed: () {},
+            // ),
           ],
         ),
       ),
@@ -63,79 +62,75 @@ class ItemDrawer extends StatelessWidget {
 }
 
 class ListSidebar extends StatelessWidget {
-  ListSidebar({
+  const ListSidebar({
     super.key,
     required this.text,
     required this.icon,
     this.onPressed,
   });
 
-  String text;
-  String icon;
-  VoidCallback? onPressed;
+  final String text;
+  final String icon;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
+    return InkWell(
+      onTap: onPressed,
+      child: Row(
+        children: [
 
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: InkWell(
-          onTap: onPressed,
-          child: Row(
-            children: [
-
-              SvgPicture.asset(
-                icon,
-                width: 26,
-                height: 26,
-              ),
-
-              SizedBox(width: 15,),
-
-              Text(
-                  text,
-                  style: txtFormTitle.copyWith(color: blackColor,)
-              )
-            ],
+          SvgPicture.asset(
+            icon,
+            width: 26,
+            height: 26,
           ),
-        ),
+
+          SizedBox(width: 15),
+
+          Text(
+            text,
+            style: txtFormTitle.copyWith(color: blackColor),
+          ),
+        ],
       ),
     );
   }
 }
 
-class SwitchTutupToko extends StatelessWidget {
-  const SwitchTutupToko({
-    Key? key,
-  }) : super(key: key);
 
+class SwitchTutupToko extends StatelessWidget {
+  const SwitchTutupToko({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final controller = Get.put(HomePageController());
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
 
-
-            Text(
-              "Tutup toko",
-              style: txtFormTitle.copyWith(
-                color: blackColor,
-              ),
-            ),
-
-            const Spacer(),
-
-           Switch(
-              value: true,
-              onChanged: (value) {},
-            )
-          ],
+        Text(
+          "Tutup toko",
+          style: txtFormTitle.copyWith(color: blackColor),
         ),
+
+        const Spacer(),
+
+        Obx(() => FlutterSwitch(
+          width: 45.0,
+          height: 25.0,
+          toggleSize: 21.0,
+          value: controller.isActive.value,
+          borderRadius: 12.5,
+          padding: 3.5,
+          activeColor: primaryColor,
+          inactiveColor: Color(0xFFE7E7E8),
+          activeToggleColor: Colors.white,
+          inactiveToggleColor: Colors.white,
+          onToggle: (value) {
+            controller.toggleSwitch(value);
+          },
+        )),
       ],
     );
   }

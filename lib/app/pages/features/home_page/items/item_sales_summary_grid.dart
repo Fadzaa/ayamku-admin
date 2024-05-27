@@ -1,7 +1,9 @@
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class ItemSalesSummary extends StatelessWidget {
   const ItemSalesSummary({
@@ -16,29 +18,34 @@ class ItemSalesSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     switch(typeSalesItem) {
       case SalesItem.analytic:
-        return Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.circular(16)
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Analytic", style: txtCaption.copyWith(color: Colors.white)),
+        return InkWell(
+          onTap: (){
+            Get.toNamed(Routes.ANALYTIC_PAGE);
+          },
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(16)
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Analytic", style: txtCaption.copyWith(color: Colors.white)),
 
-                  const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,)
-                ],
-              ),
+                    const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,)
+                  ],
+                ),
 
-              const SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
-              Text("Rp. 1.120.000", style: txtHarga.copyWith(color: Colors.white),)
-            ],
+                Text("Rp. 1.120.000", style: txtHarga.copyWith(color: Colors.white),)
+              ],
+            ),
           ),
         );
 

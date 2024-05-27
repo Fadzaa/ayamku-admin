@@ -88,7 +88,7 @@ class HeadingSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ...List.of(manage_data.map((e) => ItemManageHorizontal(image: e.image, name: e.name)))
+            ...List.of(manage_data.map((e) => ItemManageHorizontal(image: e.image, name: e.name,routes: e.routes,)))
           ],
         ),
       ],

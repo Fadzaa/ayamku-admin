@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -6,10 +7,13 @@ import '../../../../../common/constant.dart';
 import '../../../../../common/theme.dart';
 
 class ItemVoucherActiveVertical extends StatelessWidget {
-  const ItemVoucherActiveVertical({super.key});
+  const ItemVoucherActiveVertical({super.key, required this.name, required this.startDate, required this.endDate});
+
+  final String name, startDate, endDate;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VoucherPageController());
     
     return Container(
 
@@ -20,12 +24,12 @@ class ItemVoucherActiveVertical extends StatelessWidget {
 
           ListTile(
 
-            title: Text("Diskon makanan 50%, maks. 20rb",style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),),
+            title: Text(name,style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),),
 
             subtitle: Row(
               children: [
 
-                Text("20 Jan 2024, 1:54 pm"),
+                Text(startDate),
 
                 SizedBox(width: 10),
 
@@ -33,7 +37,7 @@ class ItemVoucherActiveVertical extends StatelessWidget {
 
                 SizedBox(width: 10),
 
-                Text("20 Jan 2024, 1:54 pm"),
+                Text(endDate),
               ],
             ),
 
@@ -49,7 +53,9 @@ class ItemVoucherActiveVertical extends StatelessWidget {
 }
 
 class ItemVoucherDeactiveVertical extends StatelessWidget {
-  const ItemVoucherDeactiveVertical({super.key});
+  const ItemVoucherDeactiveVertical({super.key, required this.name, required this.startDate, required this.endDate});
+
+  final String name, startDate, endDate;
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +69,12 @@ class ItemVoucherDeactiveVertical extends StatelessWidget {
 
           ListTile(
 
-            title: Text("Diskon makanan 50%, maks. 20rb",style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),),
-            
+            title: Text(name,style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),),
+
             subtitle: Row(
               children: [
 
-                Text("20 Jan 2024, 1:54 pm"),
+                Text(startDate),
 
                 SizedBox(width: 10),
 
@@ -76,7 +82,7 @@ class ItemVoucherDeactiveVertical extends StatelessWidget {
 
                 SizedBox(width: 10),
 
-                Text("20 Jan 2024, 1:54 pm"),
+                Text(endDate),
               ],
             ),
 

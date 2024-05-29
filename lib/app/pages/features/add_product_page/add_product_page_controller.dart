@@ -8,7 +8,7 @@ import '../product_page/product_page_controller.dart';
 
 class AddProductPageController extends GetxController {
 
-  final ProductPageController productPageController = Get.find<ProductPageController>();
+  final ProductPageController productPageController = Get.put(ProductPageController());
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();

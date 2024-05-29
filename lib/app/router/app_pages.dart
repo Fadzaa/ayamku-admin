@@ -26,6 +26,8 @@ import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_binding.da
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_view.dart';
 
 import 'package:get/get.dart';
+import '../pages/features/add_voucher/add_voucher_binding.dart';
+import '../pages/features/add_voucher/add_voucher_page.dart';
 import '../pages/features/voucher_management/voucher_management_binding.dart';
 import '../pages/features/voucher_management/voucher_management_page_view.dart';
 import '../pages/initial_pages/login_page/login_page_binding.dart';
@@ -37,7 +39,7 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.ANALYTIC_PAGE;
+  static const INITIAL = Routes.ADD_VOUCHER_PAGE  ;
 
   static final routes = [
     GetPage(
@@ -137,10 +139,16 @@ class AppPages {
       binding: AnalyticPageBinding(),
       transition: Transition.noTransition,
     ),
-     GetPage(
+    GetPage(
       name: _Paths.MANAGEMENT_VOUCHER,
       page: () => const VoucherManagementPage(),
       binding: VoucherPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.ADD_VOUCHER_PAGE,
+      page: () => const AddVoucherPageView(),
+      binding: AddVoucherPageBinding(),
       transition: Transition.noTransition,
     ),
   ];

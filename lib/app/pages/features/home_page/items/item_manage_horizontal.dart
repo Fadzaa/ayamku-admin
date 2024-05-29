@@ -1,34 +1,41 @@
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ItemManageHorizontal extends StatelessWidget {
   const ItemManageHorizontal({
-    super.key,
+    Key? key,
     required this.image,
     required this.name,
-  });
+    this.routes,
+  }) : super(key: key);
 
   final String image, name;
+  final String? routes;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: const BoxDecoration(
-            color: primaryColor80,
-            shape: BoxShape.circle
+        InkWell(
+          onTap: () {
+            if (routes != null) {
+              Get.toNamed(routes!);
+            }
+          },
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: const BoxDecoration(
+                color: primaryColor80, shape: BoxShape.circle),
+            child: Center(child: Image.asset(image)),
           ),
-
-          child: Center(
-            child: Image.asset(image)
-          )
         ),
 
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
 
         Text(name, style: txtCaption)
       ],

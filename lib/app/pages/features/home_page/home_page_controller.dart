@@ -6,6 +6,8 @@ class HomePageController extends GetxController {
   late PageController pageController;
   RxInt pageIndex = 0.obs;
   RxInt currentIndex = 0.obs;
+  final isActive = false.obs;
+
 
   @override
   void onInit() {
@@ -18,6 +20,10 @@ class HomePageController extends GetxController {
     // TODO: implement dispose
     super.dispose();
     pageController.dispose();
+  }
+
+  void toggleSwitch(bool value) {
+    isActive.value = value;
   }
 
   void changePage(int index) {

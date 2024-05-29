@@ -37,6 +37,7 @@ dependencies:
   intl: ^0.17.0
   flutter_charts: ^0.5.2
   charts_flutter:
+  flutter_switch:
   flutter:
     sdk: flutter
 

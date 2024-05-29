@@ -1,21 +1,26 @@
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'manage.dart';
 
 final List <Manage> manage_data = [
   Manage(
     name: "Promo",
-    image: icPromo
+    image: icPromo,
+    routes: Routes.PROMO_PAGE,
   ),
   Manage(
       name: "Voucher",
-      image: icVoucher
+      image: icVoucher,
+      routes: Routes.MANAGEMENT_VOUCHER,
   ),
   Manage(
       name: "History",
-      image: icHistory
+      image: icHistory,
+      routes: Routes.HISTORY_PAGE,
   ),
   Manage(
       name: "Product",
-      image: icProduct
+      image: icProduct,
+      routes: Routes.PRODUCT_PAGE,
   ),
 ];

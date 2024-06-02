@@ -31,6 +31,7 @@ dependencies:
   shared_preferences:
   flutter_svg: ^2.0.7
   get: ^4.6.6
+  dio: ^5.4.0
   shimmer:
   google_fonts: ^6.2.1
   image_picker: ^1.1.1

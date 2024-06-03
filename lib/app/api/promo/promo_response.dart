@@ -6,10 +6,10 @@ import '../dio_instance.dart';
 class ProductService {
   final DioInstance _dioInstance = DioInstance();
 
-  Future<Response> getAllProduct() async {
+  Future<Response> getAllPromo() async {
     try {
       final response = await _dioInstance.getRequest(
-          endpoint: 'http://ayamku-api.rplrus.com/api/products',
+          endpoint: 'http://ayamku-api.rplrus.com/promos?search=',
       );
 
       return response;
@@ -18,25 +18,25 @@ class ProductService {
     }
   }
 
-  Future<Response> addProduct(FormData formData) async {
+  Future<Response> addPromo(FormData formData) async {
     try {
       final response = await _dioInstance.postImageRequest(
           endpoint: 'http://ayamku-api.rplrus.com/api/products',
           data: formData,
       );
 
-
-      return response;
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
-  Future<Response> updateProduct(FormData formData, String id) async {
+      Future<Response> updatePromo(String name,String description,String price,String category,String stock,String image,String id) async {
         try {
           final response = await _dioInstance.putRequest(
               endpoint: 'http://ayamku-api.rplrus.com/api/products/$id',
-              data: formData,
+              data: {
+                "name" : name,
+                "description" : description,
+                "price" : price,
+                "category" : category,
+                "stock" : stock,
+                "image" : image
+              }
           );
 
           return response;
@@ -45,7 +45,7 @@ class ProductService {
         }
       }
 
-  Future<Response> deleteProduct(String id) async {
+      Future<Response> deletePromo(String name,String description,String price,String category,String stock,String image,String id) async {
         try {
           final response = await _dioInstance.deleteRequest(
               endpoint: 'http://ayamku-api.rplrus.com/api/products/$id',
@@ -57,7 +57,7 @@ class ProductService {
         }
       }
 
-  Future<Response> allProductTerlaris() async {
+      Future<Response> allPromo(String name,String description,String price,String category,String stock,String image) async {
         try {
           final response = await _dioInstance.getRequest(
               endpoint: 'http://ayamku-api.rplrus.com/api/products/terlaris',
@@ -69,5 +69,12 @@ class ProductService {
         }
       }
 
+
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
 }

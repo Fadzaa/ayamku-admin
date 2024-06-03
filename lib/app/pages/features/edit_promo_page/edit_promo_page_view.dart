@@ -21,17 +21,21 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
         automaticallyImplyLeading: false,
         title: Row(
           children: [
+            
             InkWell(
               onTap: () {
                 Get.back();
               },
+
               child: SvgPicture.asset(
                 icBack,
                 width: 30,
                 height: 30,
               ),
             ),
+
             SizedBox(width: 10),
+
             Text(
               "Edit produk",
               style: txtTitlePage.copyWith(
@@ -41,6 +45,7 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
           ],
         ),
       ),
+
       body: Stack(
         children: [
           Container(
@@ -58,6 +63,7 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
                       imageController: () {
                         controller.pickImage();
                       },
+                      
                       nameController: controller.nameController,
                       eventController: controller.eventController,
                       startDateController: controller.startDateController,
@@ -70,6 +76,7 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
               ),
             ),
           ),
+
           Positioned(
             left: 0,
             right: 0,

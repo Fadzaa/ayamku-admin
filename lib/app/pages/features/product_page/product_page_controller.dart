@@ -1,25 +1,27 @@
-import 'package:ayamku_admin/app/pages/features/product_page/model/product_data.dart';
+import 'package:ayamku_admin/app/api/product/model/product_response.dart';
+import 'package:ayamku_admin/app/api/product/product_service.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
-import 'model/product.dart';
+
 
 class ProductPageController extends GetxController{
   RxString selectedValue = 'All'.obs;
   RxString dropdownValue = "Today".obs;
-  RxList<Product> products = product_data;
+  RxBool isLoadingAll = false.obs;
+
+  RxString filePathImage = ''.obs;
+
+  RxList<Product> listProduct = <Product>[].obs;
+  ProductService productService = ProductService();
+  ProductResponse productResponse = ProductResponse();
 
 
+@override
+  void onInit() {
+    super.onInit();
 
-  void addProduct(Product product) {
-    products.add(product);
-  }
-
-  void updateProduct(int index, Product product) {
-    products[index] = product;
-  }
-
-  void deleteProduct(int index) {
-    products.removeAt(index);
+    getAllProduct();
   }
 
   void onChangeValue(String selectDay, List<String> items) {
@@ -31,6 +33,31 @@ class ProductPageController extends GetxController{
   void updateSelectedValue(String value) {
     selectedValue.value = value;
     update();
+  }
+
+  void getAllProduct () async {
+    try {
+      isLoadingAll.value = true;
+
+      final response = await productService.getAllProduct();
+
+      print("Fetch Semua Warung");
+      print(response.data);
+
+      productResponse = ProductResponse.fromJson(response.data);
+      listProduct = productResponse.data!.obs;
+
+      print("Fetch Semua product");
+      print(listProduct);
+
+
+      print(productResponse.data);
+    } catch (e) {
+      isLoadingAll.value = true;
+      print(e);
+    } finally {
+      isLoadingAll.value = false;
+    }
   }
 
 }

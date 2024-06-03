@@ -1,13 +1,13 @@
-class ProductResponse {
-  List<Product>? data;
+class PromoResponse {
+  List<Data>? data;
 
-  ProductResponse({this.data});
+  PromoResponse({this.data});
 
-  ProductResponse.fromJson(Map<String, dynamic> json) {
+  PromoResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Product>[];
+      data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Product.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class ProductResponse {
   }
 }
 
-class Product {
+class Data {
   int? id;
   String? name;
   String? description;
@@ -32,7 +32,7 @@ class Product {
   String? category;
   int? totalRating;
 
-  Product(
+  Data(
       {this.id,
       this.name,
       this.description,
@@ -43,7 +43,7 @@ class Product {
       this.category,
       this.totalRating});
 
-  Product.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];

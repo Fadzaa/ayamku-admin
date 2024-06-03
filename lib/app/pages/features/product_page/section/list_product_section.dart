@@ -7,12 +7,11 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ListProductSection extends StatelessWidget {
+class ListProductSection extends GetView<ProductPageController> {
   const ListProductSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProductPageController());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,26 +28,26 @@ class ListProductSection extends StatelessWidget {
 
         SizedBox(height: 10,),
 
-        Obx(() => ListView.builder(
-          itemCount: controller.products.length,
+        Obx(() => controller.isLoadingAll.value ? Center(child: CircularProgressIndicator(),) 
+        :  ListView.builder(
+          itemCount: controller.listProduct.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            final product = controller.products[index];
+            final product = controller.listProduct[index];
             return ItemListProductSection(
-              image: product.image,
-              cattegory: product.category,
-              name: product.name,
-              price: product.price,
-              stok: product.qty,
+              image: product.image.toString(),
+              cattegory: product.category.toString(),
+              name: product.name.toString(),
+              price: product.price!,
+              stok: product.stock!,
               onPressed: () {
-                Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: index);
+                Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: product);
               },
             );
-          },
-
-
+          }
         ))
+        
 
       ],
     );
@@ -66,9 +65,9 @@ class ItemListProductSection extends StatelessWidget {
     required this.stok
   });
 
-  final String image, cattegory, name;
+  final String image, cattegory, name, price;
   final VoidCallback onPressed;
-  final int price,stok;
+  final int stok;
 
   @override
   Widget build(BuildContext context) {

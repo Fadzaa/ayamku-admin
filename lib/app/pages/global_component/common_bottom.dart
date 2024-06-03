@@ -2,8 +2,11 @@ import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-class CommonBottom extends StatelessWidget {
+import '../features/edit_product_page/edit_product_page_controller.dart';
+
+class CommonBottom extends GetView<EditProductPageController> {
   const CommonBottom({
     super.key,
     required this.onPressed1,
@@ -38,7 +41,7 @@ class CommonBottom extends StatelessWidget {
         children: [
 
           WidgetBottomBtn(
-              onPressed: onPressed1,
+              onPressed: () => controller.deleteProduct(),
               icon: ic1,
               text: txt1,
               bgColor: bgColor1,
@@ -46,7 +49,7 @@ class CommonBottom extends StatelessWidget {
           ),
 
           WidgetBottomBtn(
-              onPressed: onPressed2,
+              onPressed: () => controller.editProduct(),
               icon: ic2,
               text: txt2,
               bgColor: bgColor2,

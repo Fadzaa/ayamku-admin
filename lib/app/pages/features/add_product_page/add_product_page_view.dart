@@ -67,14 +67,14 @@ class AddProductPageView extends GetView<AddProductPageController> {
                         nameController: controller.nameController,
                         priceController: controller.priceController,
                         qtyController: controller.qtyController,
-                        selectedImagePath: controller.selectedImagePath.value,
+                        selectedImagePath: controller.filePathImage.value,
                         descriptionController: controller.descriptionController,
                         hintTxtName: "PAHE Geprek",
                         hintTxtPrice: "Rp. 13.000",
                         hintTxtQty: "3",
                         hintTxtDesc: "Ayam goreng dengan saus mozarella",
                         imageController: () {
-                          controller.pickImage();
+                          controller.pickImage(controller.filePathImage);
                         },
                       )),
                     ],

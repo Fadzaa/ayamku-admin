@@ -45,6 +45,31 @@ class DioInstance {
 
   }
 
+  Future<Response> postImageRequest({required String endpoint, bool? isAuthorize, required Object data}) async {
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    try {
+      response = await _dio.post(
+          endpoint,
+          data: data,
+          options: Options(
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "multipart/form-data",
+                if(isAuthorize ?? false) "Authorization": "Bearer $token"
+              })
+      );
+
+
+    } on DioException catch (e) {
+      print(e.message);
+      throw Exception(e.message);
+    }
+
+    return response;
+  }
+
   Future<Response> postRequest({required String endpoint, bool? isAuthorize, required Object data}) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();

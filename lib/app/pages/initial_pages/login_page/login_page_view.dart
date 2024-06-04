@@ -54,7 +54,7 @@ class LoginPageView extends GetView<LoginPageController> {
 
                 const SizedBox(height: 60,),
 
-                CommonButton(text: "Login", onPressed: () => Get.toNamed(Routes.HOME_PAGE), height: 50,)
+                CommonButton(text: "Login", onPressed: () => controller.login(), height: 50,)
 
               ]
             ),

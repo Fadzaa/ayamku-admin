@@ -1,15 +1,18 @@
+import 'dart:ffi';
+
 import 'package:ayamku_admin/app/pages/features/product_page/model/product.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../api/product/product_service.dart';
 import '../product_page/product_page_controller.dart';
 
 class AddProductPageController extends GetxController {
 
-  final ProductPageController productPageController = Get.find<ProductPageController>();
-
+  final ProductPageController productPageController = Get.put(ProductPageController());
+  ProductService productService = ProductService();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController qtyController = TextEditingController();
@@ -18,19 +21,41 @@ class AddProductPageController extends GetxController {
 
   RxString selectedCategory = "Geprek".obs;
   RxList<String> categories = ["Geprek", "Snack", "Minuman"].obs;
-  final ImagePicker _picker = ImagePicker();
 
-  RxString imagePath = RxString("");
-  RxString selectedImagePath = ''.obs;
+  RxString filePathImage = ''.obs;
+  RxBool isLoading = false.obs;
 
-  Future<void> pickImage() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      selectedImagePath.value = pickedFile.path;
+  Future<void> pickImage(RxString imagePath) async {
+  final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (pickedImage != null) {
+        imagePath.value = pickedImage.path;
+      }
+  }
+
+  Future addProduct() async{
+    try {
+      isLoading.value = true;
+      dio.FormData formData = dio.FormData.fromMap({
+        "name" : nameController.text,
+        "description" : descriptionController.text,
+        "price" : priceController.text,
+        "category" : categories,
+        "stock" : qtyController.text,
+        'image': await dio.MultipartFile.fromFile(filePathImage.value),
+      });
+
+      await productService.addProduct(
+          formData
+      );
     }
-    print("Image Selected");
-    print(pickedFile?.path);
-    print(selectedImagePath.value);
+    catch(e){
+      isLoading.value = true;
+      print(e);
+    }
+    finally{
+      isLoading.value = false;
+    }
   }
 
   void onChangeCategory(String category) {
@@ -39,21 +64,6 @@ class AddProductPageController extends GetxController {
     categories.insert(0, category);
   }
 
-  void addProduct() {
-    int price = int.parse(priceController.text);
-    int qty = int.parse(qtyController.text);
-
-    productPageController.addProduct(Product(
-      name: nameController.text,
-      price: price,
-      qty: qty,
-      description: descriptionController.text,
-      category: selectedCategory.value,
-      image: imageController.text,
-    ));
-    clearForm();
-    Get.back();
-  }
 
   void clearForm() {
     nameController.clear();
@@ -73,4 +83,6 @@ class AddProductPageController extends GetxController {
     imageController.dispose();
     super.onClose();
   }
+
+  
 }

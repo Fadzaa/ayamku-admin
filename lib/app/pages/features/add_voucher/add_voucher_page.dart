@@ -1,5 +1,6 @@
 import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/section/product_page.dart';
+import 'package:ayamku_admin/app/pages/features/add_voucher/add_voucher_controller.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -8,15 +9,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../global_component/common_bottom.dart';
+import '../voucher_management/voucher_management_controller.dart';
+import 'section/voucher_page.dart';
 
-class AddProductPageView extends GetView<AddProductPageController> {
-  const AddProductPageView({super.key});
+class AddVoucherPageView extends GetView<AddVoucherPageController> {
+  const AddVoucherPageView({super.key});
 
 
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AddProductPageController());
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -40,7 +42,7 @@ class AddProductPageView extends GetView<AddProductPageController> {
               SizedBox(width: 10,),
 
               Text(
-                "Tambah produk",
+                "Tambah Voucher",
                 style: txtTitlePage.copyWith(
                   color: blackColor,
                 ),
@@ -60,22 +62,19 @@ class AddProductPageView extends GetView<AddProductPageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Obx(() => ProductPage(
-                        categories: controller.categories,
-                        selectedCategory: controller.selectedCategory.value,
-                        onCategoryChanged: (value) => controller.onChangeCategory(value!),
+                      Obx(() => VoucherPage(
                         nameController: controller.nameController,
                         priceController: controller.priceController,
                         qtyController: controller.qtyController,
-                        selectedImagePath: controller.filePathImage.value,
                         descriptionController: controller.descriptionController,
-                        hintTxtName: "PAHE Geprek",
+                        hintTxtName: "PAHE Geprek",     
                         hintTxtPrice: "Rp. 13.000",
                         hintTxtQty: "3",
                         hintTxtDesc: "Ayam goreng dengan saus mozarella",
-                        imageController: () {
-                          controller.pickImage(controller.filePathImage);
-                        },
+                        startDateController: controller.startDateController,
+                        endDateController: controller.endDateController,
+                        onTapStartDate: () => controller.selectDate(context, controller.startDateController),
+                        onTapEndDate: () => controller.selectDate(context, controller.endDateController),
                       )),
                     ],
                   ),
@@ -92,7 +91,7 @@ class AddProductPageView extends GetView<AddProductPageController> {
                 Get.back();
               },
               onPressed2: () {
-                controller.addProduct();
+                // controller.addVoucher();
               },
               bgColor1: red,
               bgColor2: primaryColor,

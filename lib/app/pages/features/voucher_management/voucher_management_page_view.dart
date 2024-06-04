@@ -1,16 +1,19 @@
 import 'package:ayamku_admin/app/pages/features/voucher_management/items/item_voucher_vertical.dart';
+import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../common/theme.dart';
 import '../../../router/app_pages.dart';
+import 'package:intl/intl.dart';
 
 class VoucherManagementPage extends StatelessWidget {
   const VoucherManagementPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VoucherPageController());
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -66,22 +69,29 @@ class VoucherManagementPage extends StatelessWidget {
 
                     SizedBox(height: 15,),
 
-                    ListView.builder(
-                      itemCount: 1,
+                    Obx(() => ListView.builder(
+                      itemCount: controller.voucherList.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) =>
-                          ItemVoucherActiveVertical(),
-                    ),
+                      itemBuilder: (context, index) {
+                        final voucher = controller.voucherList[index];
+                        final startDate = DateFormat('dd MMMM yyyy').format(voucher.startDate);
+                        final endDate = DateFormat('dd MMMM yyyy').format(voucher.endDate);
+                        return ItemVoucherActiveVertical(
+                          name: voucher.name,
+                          startDate: startDate,
+                          endDate: endDate,
+                        );
+                      },
 
-                    ListView.builder(
-                      itemCount: 3,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) =>
-                          ItemVoucherDeactiveVertical(),
-                    )
-                  ],
+                    // ListView.builder(
+                    //   itemCount: 3,
+                    //   shrinkWrap: true,
+                    //   physics: const NeverScrollableScrollPhysics(),
+                    //   itemBuilder: (context, index) =>
+                    //       ItemVoucherDeactiveVertical(),
+                    // )
+                ))]
                 ),
               ),
             ),

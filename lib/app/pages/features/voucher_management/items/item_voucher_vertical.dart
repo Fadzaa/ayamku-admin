@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -6,10 +7,13 @@ import '../../../../../common/constant.dart';
 import '../../../../../common/theme.dart';
 
 class ItemVoucherActiveVertical extends StatelessWidget {
-  const ItemVoucherActiveVertical({super.key});
+  const ItemVoucherActiveVertical({super.key, required this.name, required this.startDate, required this.endDate});
+
+  final String name, startDate, endDate;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VoucherPageController());
     
     return Container(
       margin: EdgeInsets.only(bottom: 15),
@@ -56,12 +60,14 @@ class ItemVoucherActiveVertical extends StatelessWidget {
 }
 
 class ItemVoucherDeactiveVertical extends StatelessWidget {
-  const ItemVoucherDeactiveVertical({super.key});
+  const ItemVoucherDeactiveVertical({super.key, required this.name, required this.startDate, required this.endDate});
+
+  final String name, startDate, endDate;
 
   @override
   Widget build(BuildContext context) {
 
-    return Container(
+    returnContainer(
       margin: EdgeInsets.only(bottom: 15),
       child: Column(
         children: [

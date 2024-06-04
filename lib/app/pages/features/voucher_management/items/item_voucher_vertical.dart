@@ -67,7 +67,7 @@ class ItemVoucherDeactiveVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    returnContainer(
+    return Container(
       margin: EdgeInsets.only(bottom: 15),
       child: Column(
         children: [

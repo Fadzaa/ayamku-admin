@@ -118,6 +118,26 @@ class DioInstance {
     return response;
   }
 
+  Future<Response> updateStore({required String endpoint}) async {
+    Response response;
+
+    try {
+      response = await _dio.put(
+          endpoint,
+          options: Options(
+              headers: {
+                "Accept": "application/json",
+              })
+      );
+
+    } on DioException catch (e) {
+      print(e.message);
+      throw Exception(e.message);
+    }
+
+    return response;
+  }
+
   Future<Response> deleteRequest({required String endpoint, bool? isAuthorize}) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();

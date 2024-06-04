@@ -39,7 +39,7 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.PRODUCT_PAGE  ;
+  static const INITIAL = Routes.LOGIN_PAGE  ;
 
   static final routes = [
     GetPage(

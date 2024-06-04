@@ -59,7 +59,9 @@ class ItemPromo extends StatelessWidget {
     double screenWIdth = MediaQuery.of(context).size.width;
 
     return InkWell(
-      onTap: onPressed,
+      onTap: (){
+        Get.toNamed(Routes.EDIT_PROMO_PAGE);
+      },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
         child: Column(

@@ -30,28 +30,44 @@ class ItemOrderVertical extends StatelessWidget {
             children: [
               Text(username, style: txtCaption.copyWith(color: blackColor40),),
 
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                decoration: BoxDecoration(
-                    color: const Color(0xFFEBEBEB),
-                    borderRadius: BorderRadius.circular(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 10,
-                      height: 10,
-                      decoration: const BoxDecoration(
-                          color: grey,
-                          shape: BoxShape.circle
+              Row(
+                children: [
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: grey,
+                        borderRadius: BorderRadius.circular(15),
                       ),
+                      child: Text("Pos 1", style: txtCaption)
+                  ),
+
+                  SizedBox(width: 10,),
+
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    decoration: BoxDecoration(
+                        color: primaryColor40,
+                        borderRadius: BorderRadius.circular(10)
                     ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: const BoxDecoration(
+                              color: primaryColor,
+                              shape: BoxShape.circle
+                          ),
+                        ),
 
-                    const SizedBox(width: 5,),
+                        const SizedBox(width: 5,),
 
-                    Text("Terima", style: txtCaption)
-                  ],
-                ),
+                        Text("Terima", style: txtCaption.copyWith(color: blackColor))
+                      ],
+                    ),
+                  ),
+
+                ],
               )
             ],
           ),

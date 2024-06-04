@@ -79,7 +79,7 @@ class ItemSalesSummary extends StatelessWidget {
 
       case SalesItem.totalOrders:
         return Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(14.0),
           decoration: BoxDecoration(
               color: const Color(0xFFF8F9FB),
               borderRadius: BorderRadius.circular(16)
@@ -94,8 +94,8 @@ class ItemSalesSummary extends StatelessWidget {
                   Row(
                     children: [
                       Text("Total Sales", style: txtCaption),
-                      const SizedBox(width: 5,),
-                      Text("(in items)", style: txtNavbar.copyWith(color: blackColor50))
+                      const SizedBox(width: 3,),
+                      Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
                     ],
                   ),
 

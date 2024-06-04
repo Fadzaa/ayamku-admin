@@ -40,7 +40,17 @@ class LoginPageView extends GetView<LoginPageController> {
 
                 const SizedBox(height: 20,),
 
-                CommonTextField(heading: "Password" , controller: controller.passwordController, hintText: "Masukkan Password", isObscure: true),
+                Obx(() {
+                  return CommonTextField(
+                    controller: controller.passwordController,
+                    hintText: "Masukkan Password",
+                    isObscure: !controller.isPasswordVisible.value,
+                    heading: "Password",
+                    onToggleObscure: () {
+                      controller.togglePasswordVisibility();
+                    },
+                  );
+                }),
 
                 const SizedBox(height: 60,),
 

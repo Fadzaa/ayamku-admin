@@ -10,9 +10,10 @@ class LoginPageController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+
+  RxBool isPasswordVisible = false.obs;
   RxBool isLoading = false.obs;
   late AuthenticationService authenticationService;
-
   @override
   void onInit() {
     super.onInit();
@@ -21,6 +22,11 @@ class LoginPageController extends GetxController {
 
     authenticationService = AuthenticationService();
 
+  }
+
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
   }
 
   Future<void> login() async {
@@ -47,7 +53,6 @@ class LoginPageController extends GetxController {
       isLoading(false);
     }
   }
-
 
 
   void validateForm() {

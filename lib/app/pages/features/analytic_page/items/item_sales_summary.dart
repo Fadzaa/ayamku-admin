@@ -31,8 +31,8 @@ class ItemSalesSummary extends StatelessWidget {
                     Row(
                       children: [
                         Text("Total Order", style: txtCaption),
-                        const SizedBox(width: 5,),
-                        Text("(in items)", style: txtNavbar.copyWith(color: blackColor50))
+                        const SizedBox(width: 3,),
+                        Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
                       ],
                     ),
 

@@ -35,9 +35,9 @@ class SalesSummarySection extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 10,
+                crossAxisSpacing: 5,
                 mainAxisSpacing: 10,
-                childAspectRatio: 2
+                childAspectRatio: 1.9
             ),
             itemBuilder: (context, index) =>
                 ItemSalesSummary(

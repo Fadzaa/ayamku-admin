@@ -40,3 +40,4 @@ String icDate = '${svgImages}ic_date.svg';
 String icUser = '${svgImages}ic_user.svg';
 String icChat = '${svgImages}ic_chat.svg';
 String icSidebarNotif = '${svgImages}ic_notif.svg';
+String icFilter = '${svgImages}ic_filter.svg';

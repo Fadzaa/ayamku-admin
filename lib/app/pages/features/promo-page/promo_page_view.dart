@@ -23,10 +23,15 @@ class PromoPageView extends GetView<PromoPageController> {
           title: Row(
             children: [
 
-              SvgPicture.asset(
-                icBack,
-                width: 30,
-                height: 30,
+              InkWell(
+                onTap: (){
+                  Get.back();
+                },
+                child: SvgPicture.asset(
+                  icBack,
+                  width: 30,
+                  height: 30,
+                ),
               ),
 
               SizedBox(width: 10,),

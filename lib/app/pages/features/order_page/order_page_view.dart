@@ -1,6 +1,9 @@
 import 'package:ayamku_admin/app/pages/features/order_page/sections/list_order_section.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/sections/order_summary_section.dart';
+import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
+import 'package:ayamku_admin/common/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../common/theme.dart';
@@ -16,18 +19,35 @@ class OrderPageView extends GetView<OrderPageController> {
 
       appBar: AppBar(
         backgroundColor: baseColor,
+          automaticallyImplyLeading: false,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Order", style: txtTitlePage,),
 
-            Container(
-              height: 30,
-              width: 100,
-              color: primaryColor,
-            )
+            InkWell(
+              onTap: (){
+                Get.back();
+              },
+              child: SvgPicture.asset(
+                icBack,
+                width: 30,
+                height: 30,
+              ),
+            ),
+
+            SizedBox(width: 10,),
+
+            Text(
+              "Order",
+              style: txtTitlePage.copyWith(
+                color: blackColor,
+              ),
+            ),
+
+            Spacer(),
+
+            ItemDropdownDay()
           ],
-        ),
+        )
       ),
 
       body: const SafeArea(

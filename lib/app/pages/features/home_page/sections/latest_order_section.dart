@@ -1,5 +1,6 @@
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/items/item_order_vertical.dart';
+import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,14 +26,7 @@ class LatestOrderSection extends GetView<HomePageController> {
           children: [
             Text("Latest Order", style: txtHeadline3),
 
-            Container(
-              width: 100,
-              height: 30,
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            )
+            ItemDropdownDay()
           ],
         ),
 

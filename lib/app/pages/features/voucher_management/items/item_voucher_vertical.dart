@@ -16,36 +16,43 @@ class ItemVoucherActiveVertical extends StatelessWidget {
     final controller = Get.put(VoucherPageController());
     
     return Container(
-
+      margin: EdgeInsets.only(bottom: 15),
       child: Column(
-
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
 
-          ListTile(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
 
-            title: Text(name,style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-            subtitle: Row(
-              children: [
+                   Text("Diskon makanan 50%, maks. 20rb",style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),),
 
-                Text(startDate),
+                  SizedBox(height: 10),
 
-                SizedBox(width: 10),
+                  Row(
+                    children: [
 
-                Text("-"),
+                      Text("20 Jan 2024"),
 
-                SizedBox(width: 10),
+                      SizedBox(width: 10),
 
-                Text(endDate),
-              ],
-            ),
+                      Text("-"),
 
-            trailing: Text("active",style: TextStyle(color: greenMedium, fontSize: 14),),
+                      SizedBox(width: 10),
+
+                      Text("20 Jan 2024"),
+                    ],
+                  ),
+                ],
+              ),
+            Text("active",style: TextStyle(color: greenMedium, fontSize: 14),)
+
+            ],
           ),
-
           Divider(),
-
         ],
       ),
     );
@@ -60,38 +67,44 @@ class ItemVoucherDeactiveVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Container(
-
+    returnContainer(
+      margin: EdgeInsets.only(bottom: 15),
       child: Column(
-
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
 
-          ListTile(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
 
-            title: Text(name,style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-            subtitle: Row(
-              children: [
+                  Text("Diskon makanan 50%, maks. 20rb",style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),),
 
-                Text(startDate),
+                  SizedBox(height: 10),
 
-                SizedBox(width: 10),
+                  Row(
+                    children: [
 
-                Text("-"),
+                      Text("20 Jan 2024"),
 
-                SizedBox(width: 10),
+                      SizedBox(width: 10),
 
-                Text(endDate),
-              ],
-            ),
+                      Text("-"),
 
-            trailing: Text("active",style: TextStyle(color: errorColor, fontSize: 14),),
+                      SizedBox(width: 10),
 
+                      Text("20 Jan 2024"),
+                    ],
+                  ),
+                ],
+              ),
+              Text("deactive",style: TextStyle(color: errorColor, fontSize: 14),)
+
+            ],
           ),
-
           Divider(),
-          
         ],
       ),
     );

@@ -24,15 +24,15 @@ class OrderSummarySection extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 10,
+                crossAxisSpacing: 5,
                 mainAxisSpacing: 10,
-                childAspectRatio: 2
+                childAspectRatio: 1.9
             ),
             itemBuilder: (context, index) =>
                 ItemOrderSummary(
                     title: order_summary_data[index].title,
                     icon: order_summary_data[index].icon,
-                    count: order_summary_data[index].count
+                    count: order_summary_data[index].count,
                 )
         )
       ],

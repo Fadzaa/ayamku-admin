@@ -1,8 +1,10 @@
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/items/item_order_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
+import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ListOrderSection extends GetView<OrderPageController> {
@@ -11,48 +13,54 @@ class ListOrderSection extends GetView<OrderPageController> {
   @override
   Widget build(BuildContext context) {
 
-    List<String> listOrder = [
-      "On Delivery",
-      "Pickup"
-    ];
+    // List<String> listOrder = [
+    //   "On Delivery",
+    //   "Pickup"
+    // ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("List Order", style: txtHeadline3),
-
             Container(
-              width: 100,
-              height: 30,
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
               decoration: BoxDecoration(
                 color: primaryColor,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
-            )
+              child: Text("09.40", style: txtCaption)
+            ),
+
+            SizedBox(width: 10,),
+
+            Text("List Order", style: txtHeadline3),
+
+            Spacer(),
+
+            SvgPicture.asset(icFilter)
           ]
         ),
 
-        const SizedBox(height: 20,),
+        const SizedBox(height: 5,),
 
-        SizedBox(
-          height: 30,
-          child: ListView.builder(
-              itemCount: listOrder.length,
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) =>
-                  Obx(() => ChipOrder(
-                      text: listOrder[index],
-                      totalOrder: 2,
-                      index: index,
-                      isSelected: controller.currentIndex.value == index
-                  ))
-          ),
-        ),
+        // SizedBox(
+        //   height: 30,
+        //   child: ListView.builder(
+        //       itemCount: listOrder.length,
+        //       scrollDirection: Axis.horizontal,
+        //       shrinkWrap: true,
+        //       physics: const NeverScrollableScrollPhysics(),
+        //       itemBuilder: (context, index) =>
+        //           Obx(() => ChipOrder(
+        //               text: listOrder[index],
+        //               totalOrder: 2,
+        //               index: index,
+        //               isSelected: controller.currentIndex.value == index
+        //           ))
+        //   ),
+        // ),
 
         const SizedBox(height: 20,),
 

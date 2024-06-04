@@ -10,7 +10,7 @@ final List <OrderSummary> order_summary_data = [
   OrderSummary(
       icon: icTotalPickup,
       title: "Total Pickup",
-      count: 2
+      count: 2,
   ),
   OrderSummary(
       icon: icTotalDelivery,

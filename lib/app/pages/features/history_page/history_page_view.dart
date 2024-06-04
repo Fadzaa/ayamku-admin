@@ -1,7 +1,9 @@
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/items/item_order_today_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/model/data/history_data.dart';
+import 'package:ayamku_admin/common/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../common/theme.dart';
@@ -17,14 +19,21 @@ class HistoryPageView extends GetView<HistoryPageController> {
         backgroundColor: baseColor,
         automaticallyImplyLeading: false,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios), 
-          onPressed: () {
-            // Tambahkan aksi ketika tombol arrow left diklik
-         },
-      ),
         title: Row(
           children: [
+            InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: SvgPicture.asset(
+                icBack,
+                width: 30,
+                height: 30,
+              ),
+            ),
+
+            SizedBox(width: 10,),
+
             Text(
               "History ",
               style: txtTitlePage.copyWith(
@@ -64,8 +73,9 @@ class HistoryPageView extends GetView<HistoryPageController> {
                           height: 20,
                           decoration: const BoxDecoration(
                             color: primaryColor,
-                            shape: BoxShape.circle
+                            shape: BoxShape.circle,
                           ),
+                          child: Center(child: Text("2", style: txtNavbar.copyWith(color: Colors.white),)),
 
                         ) : Container()
                       ],

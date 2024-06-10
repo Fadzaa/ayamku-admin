@@ -15,6 +15,7 @@ String icSpoon = '${images}ic_spoon.png';
 String icWarning = '${images}ic_warning.png';
 String icPerson = '${images}person.png';
 String promoNatal = '${images}promo_natal.png';
+String imgPos = '${images}img_pos.png';
 
 
 
@@ -41,3 +42,4 @@ String icUser = '${svgImages}ic_user.svg';
 String icChat = '${svgImages}ic_chat.svg';
 String icSidebarNotif = '${svgImages}ic_notif.svg';
 String icFilter = '${svgImages}ic_filter.svg';
+String icDown = '${svgImages}ic_arrow_down.svg';

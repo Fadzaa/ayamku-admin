@@ -41,7 +41,7 @@ class ProductPage extends StatelessWidget {
 
         PickImg(
           onTap: imageController,
-          imagePath: selectedImagePath,
+          imagePath: selectedImagePath ?? "",
         ),
 
         DropdownCategory(

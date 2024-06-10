@@ -31,15 +31,14 @@ class ItemTextField extends StatelessWidget {
         SizedBox(height: 5,),
         TextFormField(
           controller: controller,
-          minLines: minLines ?? 1,
           maxLines: maxLines ?? 2,
           style: txtCaption,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: txtFormTitle.copyWith(color: color ?? blackColor50),
+            hintStyle: txtFormTitle.copyWith(color: blackColor50),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: borderColor ?? blackColor50),
+              borderSide: BorderSide(color: blackColor50),
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             focusedBorder: OutlineInputBorder(

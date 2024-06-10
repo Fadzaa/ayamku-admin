@@ -1,3 +1,5 @@
+import 'package:ayamku_admin/app/pages/features/add_pos_page/add_pos_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/add_pos_page/add_pos_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/add_promo_page/add_promo_page_binding.dart';
@@ -6,6 +8,8 @@ import 'package:ayamku_admin/app/pages/features/analytic_page/analytic_page_bind
 import 'package:ayamku_admin/app/pages/features/analytic_page/analytic_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_view.dart';
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_binding.dart';
+import 'package:ayamku_admin/app/pages/features/edit_pos_page/edit_pos_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/edit_pos_page/edit_pos_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/edit_promo_page/edit_promo_page_binding.dart';
@@ -20,6 +24,8 @@ import 'package:ayamku_admin/app/pages/features/notification_page/notification_p
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_detail_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/pos_page/pos_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/pos_page/pos_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_binding.dart';
@@ -39,7 +45,7 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.LOGIN_PAGE  ;
+  static const INITIAL = Routes.ADD_POS_PAGE   ;
 
   static final routes = [
     GetPage(
@@ -149,6 +155,24 @@ class AppPages {
       name: _Paths.ADD_VOUCHER_PAGE,
       page: () => const AddVoucherPageView(),
       binding: AddVoucherPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.ADD_POS_PAGE,
+      page: () => const AddPosPageView(),
+      binding: AddPosPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.EDIT_POS_PAGE,
+      page: () => const EditPosPageView(),
+      binding: EditPosPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.POS_PAGE,
+      page: () => const PosPageView(),
+      binding: PosPageBinding(),
       transition: Transition.noTransition,
     ),
   ];

@@ -9,7 +9,7 @@ class PromoPage extends StatelessWidget {
   final Color? borderColor;
   final Color? color;
   final String? hintTxtName;
-  final VoidCallback onTapStartDate, onTapEndDate; // Mengubah tipe dateController menjadi VoidCallback
+  final VoidCallback onTapStartDate, onTapEndDate;
 
   const PromoPage({
     Key? key,
@@ -19,8 +19,8 @@ class PromoPage extends StatelessWidget {
     this.borderColor,
     this.color,
     this.hintTxtName,
-    required this.onTapStartDate, // Mengubah tipe dateController menjadi VoidCallback
-    required this.onTapEndDate, // Mengubah tipe dateController menjadi VoidCallback
+    required this.onTapStartDate,
+    required this.onTapEndDate,
     required this.eventController,
     required this.startDateController,
     required this.endDateController,

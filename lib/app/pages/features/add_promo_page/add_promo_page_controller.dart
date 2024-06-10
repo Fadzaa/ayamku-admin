@@ -18,7 +18,7 @@ class AddPromoPageController extends GetxController{
 
   final ImagePicker _picker = ImagePicker();
 
-  RxString imagePath = RxString("");
+
   RxString selectedImagePath = ''.obs;
 
   Future<void> pickImage() async {

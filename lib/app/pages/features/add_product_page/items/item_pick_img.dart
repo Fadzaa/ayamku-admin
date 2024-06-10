@@ -8,45 +8,51 @@ class PickImg extends StatelessWidget {
   const PickImg({
     Key? key,
     required this.onTap,
-    this.imagePath,
+    required this.imagePath,
   }) : super(key: key);
 
   final VoidCallback onTap;
-  final String? imagePath;
+  final String imagePath;
+
+  Widget _buildChild() {
+    if (imagePath == null || imagePath!.isEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            icPickImg,
+          ),
+          SizedBox(height: 10,),
+          Text(
+            "Pilih gambar",
+            style: txtFormTitle.copyWith(color: blackColor50),
+          ),
+        ],
+      );
+    } else {
+      return Image.file(
+        File(imagePath!),
+        fit: BoxFit.cover
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: InkWell(
-        onTap: onTap,
-        child: imagePath == null || imagePath!.isEmpty
-            ? Container(
-             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 50),
-             decoration: BoxDecoration(
-             border: Border.all(color: blackColor50),
-             borderRadius: BorderRadius.circular(15),
-          ),
-            child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                icPickImg,
-              ),
-              SizedBox(height: 10,),
-              Text(
-                "Pilih gambar",
-                style: txtFormTitle.copyWith(color: blackColor50),
-              ),
-            ],
-          ),
-        )
-            : Image.file(
-          File(imagePath!),
-          fit: BoxFit.cover,
-          height: 200,
-          width: double.infinity,
+    double screenWidth = MediaQuery.of(context).size.height;
+
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: screenWidth,
+        padding: EdgeInsets.all(10),
+        height: 184,
+        decoration: BoxDecoration(
+          border: Border.all(color: blackColor50),
+          borderRadius: BorderRadius.circular(15),
         ),
+        child: _buildChild(),
       ),
     );
   }

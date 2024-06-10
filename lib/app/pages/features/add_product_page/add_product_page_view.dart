@@ -16,7 +16,6 @@ class AddProductPageView extends GetView<AddProductPageController> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AddProductPageController());
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(

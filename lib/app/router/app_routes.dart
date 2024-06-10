@@ -20,6 +20,9 @@ abstract class Routes {
   static const ANALYTIC_PAGE = _Paths.ANALYTIC_PAGE;
   static const MANAGEMENT_VOUCHER = _Paths.MANAGEMENT_VOUCHER;
   static const ADD_VOUCHER_PAGE = _Paths.ADD_VOUCHER_PAGE;
+  static const ADD_POS_PAGE = _Paths.ADD_POS_PAGE;
+  static const POS_PAGE = _Paths.POS_PAGE;
+  static const EDIT_POS_PAGE = _Paths.EDIT_POS_PAGE;
 }
 
 abstract class _Paths {
@@ -42,4 +45,7 @@ abstract class _Paths {
   static const ANALYTIC_PAGE = '/analytic-page';
   static const MANAGEMENT_VOUCHER = '/management-voucher';
   static const ADD_VOUCHER_PAGE = '/add-voucher-page';
+  static const ADD_POS_PAGE = '/add-pos-page';
+  static const POS_PAGE = '/pos-page';
+  static const EDIT_POS_PAGE = '/edit-pos-page';
 }

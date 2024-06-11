@@ -37,7 +37,6 @@ class CommonButton extends StatelessWidget {
           text,
           style: style ?? txtButtonTab.copyWith(
             color: blackColor,
-            fontWeight: FontWeight.w600,
           ),
         )
 

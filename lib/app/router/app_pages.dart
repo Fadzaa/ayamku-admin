@@ -8,6 +8,7 @@ import 'package:ayamku_admin/app/pages/features/analytic_page/analytic_page_bind
 import 'package:ayamku_admin/app/pages/features/analytic_page/analytic_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_view.dart';
 import 'package:ayamku_admin/app/pages/features/chat_management/chat_management_binding.dart';
+import 'package:ayamku_admin/app/pages/features/detail_order-page/detail_order_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/edit_pos_page/edit_pos_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/edit_pos_page/edit_pos_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_page_binding.dart';
@@ -22,7 +23,7 @@ import 'package:ayamku_admin/app/pages/features/notification_page/empty_notifica
 import 'package:ayamku_admin/app/pages/features/notification_page/notfication_binding.dart';
 import 'package:ayamku_admin/app/pages/features/notification_page/notification_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_binding.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/order_detail_view.dart';
+import 'package:ayamku_admin/app/pages/features/detail_order-page/detail_order_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/pos_page/pos_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/pos_page/pos_page_view.dart';
@@ -45,7 +46,7 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.ADD_POS_PAGE   ;
+  static const INITIAL = Routes.DETAIL_ORDER_PAGE   ;
 
   static final routes = [
     GetPage(
@@ -75,8 +76,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DETAIL_ORDER_PAGE,
-      page: () => const OrderPageDetailView(),
-      binding: OrderPageBinding(),
+      page: () => const DetailOrderPageView(),
+      binding: DetailOrderPageBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(

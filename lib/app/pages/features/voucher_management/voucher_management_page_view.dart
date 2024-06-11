@@ -1,8 +1,11 @@
+import 'package:ayamku_admin/app/pages/features/voucher_management/items/filter_voucher.dart';
 import 'package:ayamku_admin/app/pages/features/voucher_management/items/item_voucher_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_search.dart';
+import 'package:ayamku_admin/common/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../../common/theme.dart';
 import '../../../router/app_pages.dart';
@@ -19,32 +22,33 @@ class VoucherManagementPage extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(
-        
           backgroundColor: baseColor,
           automaticallyImplyLeading: false,
-          elevation: 0,
-          leading: IconButton(
-            
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Get.back();
-            },
-          ),
-
           title: Row(
             children: [
-              Text("Voucher ",style: txtTitlePage.copyWith(color: blackColor,),),
 
-              Spacer(),
-
-              IconButton(
-                icon: Icon(Icons.tune),
-                onPressed: () {
+              InkWell(
+                onTap: (){
+                  Get.back();
                 },
+                child: SvgPicture.asset(
+                  icBack,
+                  width: 30,
+                  height: 30,
+                ),
               ),
 
+              SizedBox(width: 10,),
+
+              Text(
+                "Voucher",
+                style: txtTitlePage.copyWith(
+                  color: blackColor,
+                ),
+              )
             ],
-          )),
+          )
+      ),
 
       body: Stack(
         children: [
@@ -63,6 +67,10 @@ class VoucherManagementPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
 
                   children: [
+                    SizedBox(height: 15,),
+
+                    FilterVoucher(),
+
                     SizedBox(height: 15,),
 
                     CommonSearch(text: "Search"),

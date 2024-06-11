@@ -8,11 +8,8 @@ import 'package:get/get.dart';
 class LatestOrderSection extends GetView<HomePageController> {
   const LatestOrderSection({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
-
     List<String> listOrder = [
       "On Delivery",
       "Pickup"
@@ -25,7 +22,6 @@ class LatestOrderSection extends GetView<HomePageController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Latest Order", style: txtHeadline3),
-
             ItemDropdownDay()
           ],
         ),
@@ -51,21 +47,35 @@ class LatestOrderSection extends GetView<HomePageController> {
 
         const SizedBox(height: 20,),
 
-        ListView.builder(
-          itemCount: 2,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => ItemOrderVertical(
-              orderName: "PAHE GEPREK",
-              orderPrice: 20000,
-              orderStatus: OrderStatus.done,
-              orderTime: DateTime.now(),
-              username: "Fattah Anggit",
-            ),
-
-        )
-
-
+        Obx(() {
+          if (controller.currentIndex.value == 0) {
+            return ListView.builder(
+              itemCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => ItemOrderVertical(
+                orderName: "PAHE GEPREK",
+                orderPrice: 20000,
+                orderStatus: OrderStatus.done,
+                orderTime: DateTime.now(),
+                username: "Fattah Anggit",
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => ItemPickupVertical(
+                orderName: "PAHE GEPREK",
+                orderPrice: 20000,
+                orderStatus: OrderStatus.done,
+                orderTime: DateTime.now(),
+                username: "Fattah Anggit",
+              ),
+            );
+          }
+        }),
       ],
     );
   }

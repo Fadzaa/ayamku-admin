@@ -1,7 +1,9 @@
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class DeliverySection extends StatelessWidget {
   const DeliverySection({super.key});
@@ -52,17 +54,27 @@ class DeliverySection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+
               SvgPicture.asset(
                 icLocation
               ),
+
               SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Pos 1 - Gazebo",style: txtSecondaryTitle,),
-                  SizedBox(height: 5),
-                  Text("Pos ini terletak di gazebo dekat gerbang kedua.",style: txtSecondaryTitle,),
-                ],
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Pos 1 - Gazebo",style: txtSecondaryTitle,),
+                    SizedBox(height: 5),
+                    AutoSizeText(
+                      "Pos ini terletak di gazebo dekat gerbang kedua.",
+                      softWrap: true,
+                      maxLines: 3,
+                      style: txtSecondaryTitle,
+                    ),
+                  ],
+                ),
               )
             ],
           ),

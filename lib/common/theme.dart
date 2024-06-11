@@ -92,6 +92,7 @@ const Color blackColor = Color(0xFF0F0F0F);
 const Color blackColor30 = Color(0xFF3F3F3F);
 const Color blackColor40 = Color(0xFF575757);
 const Color blackColor50 = Color(0xFF6F6F6F);
+const Color blackColor70 = Color(0xFF9F9F9F);
 const Color blackColor80 = Color(0xFFB7B7B7);
 const Color blackColor90 = Color(0xFFCFCFCF);
 const Color orange = Color(0xFFFFB240);

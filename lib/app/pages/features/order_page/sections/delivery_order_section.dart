@@ -1,12 +1,12 @@
+import 'package:ayamku_admin/app/pages/features/home_page/items/item_order_vertical.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/items/filter_all_order.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../home_page/items/item_order_vertical.dart';
-
-class ItemPickupSection extends StatelessWidget {
-  const ItemPickupSection({super.key});
+class DeliveryOrderSection extends StatelessWidget {
+  const DeliveryOrderSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +16,14 @@ class ItemPickupSection extends StatelessWidget {
         Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Text("09.40", style: txtCaption)
+              ),
 
               SizedBox(width: 10,),
 
@@ -23,7 +31,10 @@ class ItemPickupSection extends StatelessWidget {
 
               Spacer(),
 
-              SvgPicture.asset(icFilter)
+              InkWell(
+                  onTap: () => voidFilterAllOrder(context),
+                  child: SvgPicture.asset(icFilter)
+              )
             ]
         ),
 

@@ -54,13 +54,6 @@ class HomePageController extends GetxController {
     updateStore();
   }
 
-  void changePage(int index) {
-    pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-  }
-
-  void onPageChanged(int index) {
-    pageIndex.value = index;
-  }
 
   void changeIndex(int index) {
     currentIndex.value = index;

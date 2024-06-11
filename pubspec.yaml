@@ -39,6 +39,7 @@ dependencies:
   flutter_charts: ^0.5.2
   charts_flutter:
   flutter_switch:
+  auto_size_text: ^3.0.0
   flutter:
     sdk: flutter
 

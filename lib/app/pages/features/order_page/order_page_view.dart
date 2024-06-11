@@ -1,4 +1,4 @@
-import 'package:ayamku_admin/app/pages/features/order_page/sections/list_order_section.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/sections/all_order_section.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/sections/order_summary_section.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
 import 'package:ayamku_admin/common/constant.dart';
@@ -50,7 +50,7 @@ class OrderPageView extends GetView<OrderPageController> {
         )
       ),
 
-      body: const SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(20.0),
@@ -59,9 +59,9 @@ class OrderPageView extends GetView<OrderPageController> {
               children: [
                 OrderSummarySection(),
 
-                SizedBox(height: 25,),
-
-                ListOrderSection()
+                // SizedBox(height: 25,),
+                //
+                // ListOrderSection()
               ],
             ),
           ),

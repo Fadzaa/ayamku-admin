@@ -9,6 +9,12 @@ class VoucherPageController extends GetxController
     with SingleGetTickerProviderMixin {
   TabController? tabController;
   RxList<Voucher> voucherList = voucher_data;
+  RxString selectedValue = 'Semua'.obs;
+
+  void updateSelectedValue(String value) {
+    selectedValue.value = value;
+    update();
+  }
 
   @override
   void onInit() {

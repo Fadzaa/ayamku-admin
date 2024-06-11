@@ -56,63 +56,78 @@ class ItemPromo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWIdth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return InkWell(
       onTap: (){
         Get.toNamed(Routes.EDIT_PROMO_PAGE);
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    Text(
-                      name,
-                      style: txtListItemTitle,
-                    ),
-
-                    SizedBox(height: 5),
-
-                    Text(
-                      startDate,
-                      style: txtSecondaryTitle.copyWith(color: blackColor40),
-                    ),
-                  ],
-                ),
-
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    event,
-                    style: txtSecondaryTitle.copyWith(color: blackColor40),
-                  ),
-                ),
-              ],
+        margin: EdgeInsets.only(bottom: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 0,
+              blurRadius: 2,
+              offset: Offset(0, 3),
             ),
-
-            SizedBox(height: 10),
-
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-              child: Image.network(
-                image,
-                width: screenWIdth,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: screenWidth,
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
+                    child: Image.network(
+                      image,
+                    ),
+                  ),
+                ],
               ),
             ),
 
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-            Divider(color: blackColor90,)
+                  Text(
+                    name,
+                    style: txtListItemTitle.copyWith(color: blackColor),
+                  ),
+
+                  SizedBox(height: 5,),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        startDate,
+                        style: txtSecondaryTitle,
+                      ),
+                      Text(
+                        event,
+                        style: txtSecondaryTitle,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-

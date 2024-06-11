@@ -46,7 +46,7 @@ class HistoryPageView extends GetView<HistoryPageController> {
       backgroundColor: baseColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -55,7 +55,7 @@ class HistoryPageView extends GetView<HistoryPageController> {
                   labelColor: primaryColor,
                   unselectedLabelColor: const Color(0xFF707070).withOpacity(0.7),
                   labelStyle: txtButtonTab,
-                  unselectedLabelStyle: txtButtonTab,
+                  unselectedLabelStyle: txtButtonTab.copyWith(color: blackColor90),
                   dividerColor: Colors.transparent,
                   tabAlignment: TabAlignment.start,
                   labelPadding: const EdgeInsets.only(right: 20),
@@ -66,18 +66,18 @@ class HistoryPageView extends GetView<HistoryPageController> {
                     Tab(child: Row(
                       children: [
                         const Text("Delivery"),
-                        const SizedBox(width: 10,),
-
-                        history_data.length > 0 ? Container(
-                          width: 20,
-                          height: 20,
-                          decoration: const BoxDecoration(
-                            color: primaryColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(child: Text("2", style: txtNavbar.copyWith(color: Colors.white),)),
-
-                        ) : Container()
+                        // const SizedBox(width: 10,),
+                        //
+                        // history_data.length > 0 ? Container(
+                        //   width: 20,
+                        //   height: 20,
+                        //   decoration: const BoxDecoration(
+                        //     color: primaryColor,
+                        //     shape: BoxShape.circle,
+                        //   ),
+                        //   child: Center(child: Text("2", style: txtNavbar.copyWith(color: Colors.white),)),
+                        //
+                        // ) : Container()
                       ],
                     )),
                     
@@ -168,16 +168,29 @@ class OrderPickupView extends StatelessWidget {
               children: [
                 Text("Today", style: txtHeadline3),
 
-                const SizedBox(height: 10,),
+                const SizedBox(height: 20,),
 
                 ListView.builder(
+                    itemCount: history_data[index].menu.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, indexMenu) =>
-                        ItemHistoryTodayVertical(
-                          
-                        )
+
+                        ItemHistoryTodayVertical()
                 ),
+
+                Text("Yesterday", style: txtHeadline3),
+
+                const SizedBox(height: 20,),
+                ListView.builder(
+                    itemCount: history_data[index].menu.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, indexMenu) =>
+
+                        ItemHistoryYesterdayVertical()
+                ),
+
                 const SizedBox(height: 20,)
               ],
             )

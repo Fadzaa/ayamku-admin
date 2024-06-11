@@ -1,5 +1,5 @@
+import 'package:ayamku_admin/app/pages/features/promo-page/items/item_promo.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_controller.dart';
-import 'package:ayamku_admin/app/pages/features/promo-page/section/item_promo.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_search.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';

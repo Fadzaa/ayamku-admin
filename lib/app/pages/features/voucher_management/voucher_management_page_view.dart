@@ -77,29 +77,32 @@ class VoucherManagementPage extends StatelessWidget {
 
                     SizedBox(height: 15,),
 
-                    Obx(() => ListView.builder(
-                      itemCount: controller.voucherList.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final voucher = controller.voucherList[index];
-                        final startDate = DateFormat('dd MMMM yyyy').format(voucher.startDate);
-                        final endDate = DateFormat('dd MMMM yyyy').format(voucher.endDate);
-                        return ItemVoucherActiveVertical(
-                          name: voucher.name,
-                          startDate: startDate,
-                          endDate: endDate,
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        return ListView.builder(
+                          itemCount: controller.voucherList.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final voucher = controller.voucherList[index];
+                            final startDate = DateFormat('dd MMMM yyyy')
+                                .format(DateTime.parse(voucher.startDate ?? ''));
+                            final endDate = DateFormat('dd MMMM yyyy')
+                                .format(DateTime.parse(voucher.endDate ?? ''));
+                            return InkWell(
+                              onTap: (){},
+                              child: ItemVoucherVertical(
+                                name: voucher.code.toString(),
+                                startDate: startDate,
+                                endDate: endDate,
+                              ),
+                            );
+                          },
                         );
-                      },
-
-                    // ListView.builder(
-                    //   itemCount: 3,
-                    //   shrinkWrap: true,
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   itemBuilder: (context, index) =>
-                    //       ItemVoucherDeactiveVertical(),
-                    // )
-                ))]
+                      }
+                    })]
                 ),
               ),
             ),

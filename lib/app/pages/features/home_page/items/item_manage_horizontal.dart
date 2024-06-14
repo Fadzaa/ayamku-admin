@@ -28,7 +28,7 @@ class ItemManageHorizontal extends StatelessWidget {
             width: 60,
             height: 60,
             decoration: const BoxDecoration(
-                color: primaryColor80, shape: BoxShape.circle),
+                color: primaryColor40, shape: BoxShape.circle),
             child: Center(child: Image.asset(image)),
           ),
         ),

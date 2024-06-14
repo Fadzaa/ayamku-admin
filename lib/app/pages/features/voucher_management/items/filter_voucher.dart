@@ -10,7 +10,11 @@ class FilterVoucher extends GetView<VoucherPageController> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> filter_voucher = ["Semua", "Active", "Deactive", "Masukkan tanggal"];
+    final List<String> filter_voucher = [
+      "Semua",
+      "Expired",
+      "Masukkan tanggal"
+    ];
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

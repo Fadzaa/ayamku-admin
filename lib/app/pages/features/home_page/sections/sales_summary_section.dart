@@ -10,7 +10,6 @@ class SalesSummarySection extends StatelessWidget {
   Widget build(BuildContext context) {
     List salesSummary = [
       SalesItem.analytic,
-      SalesItem.totalSales,
       SalesItem.totalOrders,
       SalesItem.products
     ];
@@ -34,7 +33,7 @@ class SalesSummarySection extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 7,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 childAspectRatio: 1.8
             ),

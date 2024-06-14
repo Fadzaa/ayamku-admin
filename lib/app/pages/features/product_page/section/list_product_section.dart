@@ -2,7 +2,6 @@ import 'package:ayamku_admin/app/pages/features/product_page/items/item_filter_l
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_search.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
-import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +11,7 @@ class ListProductSection extends GetView<ProductPageController> {
 
   @override
   Widget build(BuildContext context) {
+    final ProductPageController controller = Get.put(ProductPageController());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +20,7 @@ class ListProductSection extends GetView<ProductPageController> {
 
         SizedBox(height: 10,),
 
-        CommonSearch(text: "Search"),
+        CommonSearch(text: "Search", controller: controller.searchController,),
 
         SizedBox(height: 10,),
 
@@ -28,27 +28,26 @@ class ListProductSection extends GetView<ProductPageController> {
 
         SizedBox(height: 10,),
 
-        Obx(() => controller.isLoadingAll.value ? Center(child: CircularProgressIndicator(),) 
-        :  ListView.builder(
-          itemCount: controller.listProduct.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            final product = controller.listProduct[index];
-            return ItemListProductSection(
-              image: product.image.toString(),
-              cattegory: product.category.toString(),
-              name: product.name.toString(),
-              price: product.price!,
-              stok: product.stock!,
-              onPressed: () {
-                Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: product);
-              },
-            );
-          }
-        ))
-        
-
+        Obx(() => controller.isLoading.value
+            ? Center(child: CircularProgressIndicator(),)
+            : ListView.builder(
+            itemCount: controller.listProduct.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final product = controller.listProduct[index];
+              return ItemListProductSection(
+                image: product.image.toString(),
+                category: product.category.toString(),
+                name: product.name.toString(),
+                price: product.price!,
+                stock: product.stock!,
+                onPressed: () {
+                  Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: product);
+                },
+              );
+            }
+        )),
       ],
     );
   }
@@ -58,16 +57,16 @@ class ItemListProductSection extends StatelessWidget {
   const ItemListProductSection({
     super.key,
     required this.image,
-    required this.cattegory,
+    required this.category,
     required this.name,
     required this.onPressed,
     required this.price,
-    required this.stok
+    required this.stock,
   });
 
-  final String image, cattegory, name, price;
+  final String image, category, name, price;
   final VoidCallback onPressed;
-  final int stok;
+  final int stock;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +77,6 @@ class ItemListProductSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
               Row(
                 children: [
                   Image.network(
@@ -92,17 +90,14 @@ class ItemListProductSection extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Container(
-                        // width: 63,
-                        // height: 20,
-                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          cattegory,
+                          category,
                           style: txtCaption.copyWith(color: blackColor),
                         ),
                       ),
@@ -118,7 +113,6 @@ class ItemListProductSection extends StatelessWidget {
 
                       Row(
                         children: [
-
                           Text(
                             price.toString(),
                             style: txtCaption,
@@ -134,16 +128,13 @@ class ItemListProductSection extends StatelessWidget {
                           SizedBox(width: 10,),
 
                           Text(
-                            stok.toString(),
+                            stock.toString(),
                             style: txtCaption,
-                          )
-
+                          ),
                         ],
-                      )
-
+                      ),
                     ],
                   ),
-
                 ],
               ),
 
@@ -154,12 +145,9 @@ class ItemListProductSection extends StatelessWidget {
                   style: txtSecondaryTitle.copyWith(color: primaryColor),
                 ),
               ),
-
             ],
           ),
-
           SizedBox(height: 5,),
-
           Divider(color: blackColor90, thickness: 0.5,)
         ],
       ),

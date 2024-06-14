@@ -1,15 +1,9 @@
 import 'package:ayamku_admin/app/pages/features/product_page/model/product.dart';
-import 'package:ayamku_admin/app/pages/features/voucher_management/model/voucher_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../voucher_management/model/voucher.dart';
-import '../voucher_management/voucher_management_controller.dart';
-
 class AddVoucherPageController extends GetxController {
-
-  // final VoucherPageController voucherPageController = Get.put(VoucherPageController());
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();

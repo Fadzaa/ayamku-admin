@@ -8,8 +8,7 @@ class ItemFilterListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> filter_list =
-    [
+    final List<String> filterList = [
       "All",
       "Geprek",
       "Ricebowl",
@@ -21,24 +20,29 @@ class ItemFilterListProduct extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Obx(() => Row(
-        children: List.generate(filter_list.length, (index) {
+        children: List.generate(filterList.length, (index) {
           return Padding(
             padding: const EdgeInsets.only(right: 15),
             child: InkWell(
-              onTap: (){
-                controller.updateSelectedValue(filter_list[index]);
+              onTap: () {
+                controller.updateSelectedValue(filterList[index]);
+                if (filterList[index] == "All") {
+                  controller.getAllProduct();
+                } else {
+                  controller.getProductCategory(filterList[index]);
+                }
               },
               child: ChipTheme(
                 data: ChipTheme.of(context).copyWith(
-                  side: controller.selectedValue.value == filter_list[index]
+                  side: controller.selectedValue.value == filterList[index]
                       ? BorderSide.none
                       : BorderSide(color: Colors.grey),
                 ),
                 child: Chip(
-                  label: Text(filter_list[index],
+                  label: Text(filterList[index],
                     style: txtCaption.copyWith(color: blackColor),
                   ),
-                  backgroundColor: controller.selectedValue.value == filter_list[index] ? primaryColor : baseColor,
+                  backgroundColor: controller.selectedValue.value == filterList[index] ? primaryColor : baseColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),

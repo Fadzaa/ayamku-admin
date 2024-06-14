@@ -16,6 +16,7 @@ class ItemSalesSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScreenWidth = MediaQuery.of(context).size.width;
     switch(typeSalesItem) {
       case SalesItem.analytic:
         return InkWell(
@@ -23,6 +24,7 @@ class ItemSalesSummary extends StatelessWidget {
             Get.toNamed(Routes.ANALYTIC_PAGE);
           },
           child: Container(
+            width: ScreenWidth,
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
                 color: primaryColor,
@@ -35,47 +37,47 @@ class ItemSalesSummary extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Analytic", style: txtCaption.copyWith(color: Colors.white)),
+                    Text("Analytic", style: txtListItemTitle),
 
-                    const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,)
+                    const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16,)
                   ],
                 ),
 
                 const SizedBox(height: 10,),
 
-                Text("Rp. 1.120.000", style: txtHarga.copyWith(color: Colors.white),)
+                Text("Rp. 1.120.000", style: txtHeadline2,)
               ],
             ),
           ),
         );
 
-      case SalesItem.totalSales:
-        return Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-              color: const Color(0xFFF8F9FB),
-              borderRadius: BorderRadius.circular(16)
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Total Sales", style: txtCaption),
-
-                  const SizedBox(width: 10,),
-
-                  Text("-10%", style: txtCaption.copyWith(color: pinkLight))
-                ],
-              ),
-
-              Text("Rp. 1.120.000", style: txtHarga)
-
-            ],
-          ),
-        );
+      // case SalesItem.totalSales:
+      //   return Container(
+      //     padding: const EdgeInsets.all(16.0),
+      //     decoration: BoxDecoration(
+      //         color: const Color(0xFFF8F9FB),
+      //         borderRadius: BorderRadius.circular(16)
+      //     ),
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         Row(
+      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //           children: [
+      //             Text("Total Sales", style: txtCaption),
+      //
+      //             const SizedBox(width: 10,),
+      //
+      //             Text("-10%", style: txtCaption.copyWith(color: pinkLight))
+      //           ],
+      //         ),
+      //
+      //         Text("Rp. 1.120.000", style: txtHarga)
+      //
+      //       ],
+      //     ),
+      //   );
 
       case SalesItem.totalOrders:
         return Container(
@@ -165,4 +167,4 @@ class ItemSalesSummary extends StatelessWidget {
   }
 }
 
-enum SalesItem {analytic, totalSales, totalOrders, products }
+enum SalesItem {analytic, totalOrders, products }

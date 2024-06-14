@@ -1,7 +1,5 @@
 class ApiEndPoint {
-  // static String baseUrl = 'http://ayamku-api.rplrus.com/api';
-  // static String baseUrl = 'http://127.0.0:8000/api';
-  static String baseUrl = 'http://10.0.2.2/api';
+  static String baseUrl = 'http://ayamku-api.rplrus.com/api';
   static String baseUrlAuth = '$baseUrl/users';
 
   //Store
@@ -11,6 +9,12 @@ class ApiEndPoint {
   static String login = '$baseUrlAuth/login';
   static String register = '$baseUrlAuth';
   static String logout = '$baseUrlAuth/logout';
+
+  //Product
+  static String product = '$baseUrl/products';
+
+  //Voucher
+   static String voucher = '$baseUrl/vouchers';
 
 
 }

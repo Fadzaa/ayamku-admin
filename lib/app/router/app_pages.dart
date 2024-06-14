@@ -22,6 +22,8 @@ import 'package:ayamku_admin/app/pages/features/home_page/home_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/notification_page/empty_notification_page.dart';
 import 'package:ayamku_admin/app/pages/features/notification_page/notfication_binding.dart';
 import 'package:ayamku_admin/app/pages/features/notification_page/notification_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/option_user/option_user_binding.dart';
+import 'package:ayamku_admin/app/pages/features/option_user/option_user_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/detail_order-page/detail_order_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_view.dart';
@@ -31,7 +33,6 @@ import 'package:ayamku_admin/app/pages/features/product_page/product_page_bindin
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_view.dart';
-
 import 'package:get/get.dart';
 import '../pages/features/add_voucher/add_voucher_binding.dart';
 import '../pages/features/add_voucher/add_voucher_page.dart';
@@ -174,6 +175,12 @@ class AppPages {
       name: _Paths.POS_PAGE,
       page: () => const PosPageView(),
       binding: PosPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.OPTION_USER,
+      page: () => const OptionUserView(),
+      binding: OptionUserBinding(),
       transition: Transition.noTransition,
     ),
   ];

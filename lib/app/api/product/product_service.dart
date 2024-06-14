@@ -9,7 +9,7 @@ class ProductService {
   Future<Response> getAllProduct() async {
     try {
       final response = await _dioInstance.getRequest(
-          endpoint: 'http://ayamku-api.rplrus.com/api/products',
+          endpoint: ApiEndPoint.product,
       );
 
       return response;
@@ -56,18 +56,38 @@ class ProductService {
           throw Exception(e);
         }
       }
+  Future<Response> getProductCategory({required String category}) async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.product,
+          isAuthorize: true,
+          queryParameters: {
+            'category': category
+          }
+      );
 
-  Future<Response> allProductTerlaris() async {
-        try {
-          final response = await _dioInstance.getRequest(
-              endpoint: 'http://ayamku-api.rplrus.com/api/products/terlaris',
-          );
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
-          return response;
-        } catch (e) {
-          throw Exception(e);
-        }
-      }
+  Future<Response> getProductSearch({required String search}) async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.product,
+          isAuthorize: true,
+          queryParameters: {
+            'search': search
+          }
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
 
 
 }

@@ -46,54 +46,45 @@ class ProductPageView extends GetView<ProductPageController> {
             ],
           )
       ),
-      body: Stack(
-        children: [
-          Container(
-            height: screenHeight,
-            color: baseColor,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    InventorySection(),
+      resizeToAvoidBottomInset: true,
+      body: Container(
+        height: screenHeight,
+        color: baseColor,
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InventorySection(),
 
-                    SizedBox(height: 20,),
+                SizedBox(height: 20,),
 
-                    ProdukTerlarisSection(),
+                ProdukTerlarisSection(),
 
-                    SizedBox(height: 20,),
+                SizedBox(height: 20,),
 
-                    ListProductSection(),
+                ListProductSection(),
 
-                    SizedBox(height: 80,)
-                  ],
-                ),
-              ),
+                SizedBox(height: 80,)
+              ],
             ),
           ),
-
-          Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: baseColor,
-                  border: Border.all(width: 1, color: Colors.grey),
-                ),
-                child: CommonButton(
-                  text: '+ Tambahkan menu baru',
-                  onPressed: () {
-                    Get.toNamed(Routes.ADD_PRODUCT_PAGE);
-                  },
-                ),
-              )
-          )
-        ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: baseColor,
+          border: Border.all(width: 1, color: Colors.grey),
+        ),
+        child: CommonButton(
+          text: '+ Tambahkan menu baru',
+          onPressed: () {
+            Get.toNamed(Routes.ADD_PRODUCT_PAGE);
+          },
+        ),
       ),
     );
   }

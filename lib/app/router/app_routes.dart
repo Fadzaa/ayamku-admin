@@ -23,6 +23,7 @@ abstract class Routes {
   static const ADD_POS_PAGE = _Paths.ADD_POS_PAGE;
   static const POS_PAGE = _Paths.POS_PAGE;
   static const EDIT_POS_PAGE = _Paths.EDIT_POS_PAGE;
+  static const OPTION_USER = _Paths.OPTION_USER;
 }
 
 abstract class _Paths {
@@ -48,4 +49,5 @@ abstract class _Paths {
   static const ADD_POS_PAGE = '/add-pos-page';
   static const POS_PAGE = '/pos-page';
   static const EDIT_POS_PAGE = '/edit-pos-page';
+  static const OPTION_USER = '/option-user-page';
 }

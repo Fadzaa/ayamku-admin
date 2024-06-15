@@ -1,4 +1,5 @@
 import 'package:ayamku_admin/app/pages/features/add_promo_page/add_promo_page_controller.dart';
+import 'package:ayamku_admin/app/pages/features/add_promo_page/section/add_promo_page.dart';
 import 'package:ayamku_admin/app/pages/features/add_promo_page/section/promo_page.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_bottom.dart';
 import 'package:ayamku_admin/common/constant.dart';
@@ -37,7 +38,7 @@ class AddPromoPageView extends GetView<AddPromoPageController>{
               SizedBox(width: 10,),
 
               Text(
-                "Tambah produk",
+                "Tambah promo",
                 style: txtTitlePage.copyWith(
                   color: blackColor,
                 ),
@@ -45,59 +46,38 @@ class AddPromoPageView extends GetView<AddPromoPageController>{
             ],
           )
       ),
-      body: Stack(
-        children: [
-          Container(
-            height: screenHeight,
-            color: baseColor,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Obx(() => PromoPage(
-                        selectedImagePath: controller.selectedImagePath.value,
-                        imageController: () {
-                          controller.pickImage();
-                        },
-                        nameController: controller.nameController,
-                        eventController: controller.eventController,
-                        startDateController: controller.startDateController,
-                        endDateController: controller.endDateController,
-                        onTapStartDate: () => controller.selectDate(context, controller.startDateController),
-                        onTapEndDate: () => controller.selectDate(context, controller.endDateController),
-                      )),
+      body: Container(
+        height: screenHeight,
+        color: baseColor,
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AddPromoPage()
 
-                    ],
-                  ),
-                )
-            ),
-          ),
+                ],
+              ),
+            )
+        ),
+      ),
+      bottomNavigationBar: CommonBottom(
+        onPressed1: () {
+          Get.back();
+        },
+        onPressed2: () {
 
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: CommonBottom(
-              onPressed1: () {
-                Get.back();
-              },
-              onPressed2: () {
-
-              },
-              bgColor1: red,
-              bgColor2: primaryColor,
-              ic1: icCancel,
-              ic2: icUpload,
-              txtColor1: Colors.white,
-              txtColor2: blackColor,
-              txt1: 'Batalkan',
-              txt2: 'Tambahkan',
-            ),
-          )
-        ],
+        },
+        bgColor1: red,
+        bgColor2: primaryColor,
+        ic1: icCancel,
+        ic2: icUpload,
+        txtColor1: Colors.white,
+        txtColor2: blackColor,
+        txt1: 'Batalkan',
+        txt2: 'Tambahkan',
       ),
     );
   }

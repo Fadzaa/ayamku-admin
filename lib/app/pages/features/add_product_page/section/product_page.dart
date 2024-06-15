@@ -45,7 +45,6 @@ class ProductPage extends StatelessWidget {
         ),
 
         DropdownCategory(
-          color: color,
           categories: categories,
           selectedValue: selectedCategory,
           onChanged: onCategoryChanged,
@@ -55,8 +54,6 @@ class ProductPage extends StatelessWidget {
           text: "Nama",
           hintText: hintTxtName ?? "Pahe Geprek",
           controller: nameController,
-          borderColor: borderColor ?? blackColor50,
-          color: color ?? blackColor50,
         ),
 
         SizedBox(height: 15,),
@@ -69,8 +66,6 @@ class ProductPage extends StatelessWidget {
                 text: "Harga",
                 hintText: hintTxtPrice ?? "Rp.13.000",
                 controller: priceController,
-                borderColor: borderColor ?? blackColor50,
-                color: color ?? blackColor50,
               ),
             ),
 
@@ -81,8 +76,6 @@ class ProductPage extends StatelessWidget {
                 text: "QTY",
                 hintText: hintTxtQty ?? "3",
                 controller: qtyController,
-                borderColor: borderColor ?? blackColor50,
-                color: color ?? blackColor50,
               ),
             ),
           ],
@@ -96,8 +89,6 @@ class ProductPage extends StatelessWidget {
           minLines: 5,
           maxLines: 6,
           controller: descriptionController,
-          borderColor: borderColor ?? blackColor50,
-          color: color ?? blackColor50,
         ),
       ],
     );

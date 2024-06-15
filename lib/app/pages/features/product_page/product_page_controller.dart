@@ -29,12 +29,6 @@ class ProductPageController extends GetxController{
   void onInit() {
     super.onInit();
 
-    // String category = Get.arguments;
-    //
-    // if (category.isNotEmpty) {
-    //   getProductCategory(category);
-    // }
-
     getAllProduct();
 
     searchController.addListener(() {

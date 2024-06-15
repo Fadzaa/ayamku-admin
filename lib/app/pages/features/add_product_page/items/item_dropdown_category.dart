@@ -40,12 +40,15 @@ class DropdownCategory extends StatelessWidget {
           items: categories.map((String category) {
             return DropdownMenuItem<String>(
               value: category,
-              child: Text(category,style: txtSecondaryTitle.copyWith(color: color ?? blackColor50),),
+              child: Text(
+                category,
+                style: txtSecondaryTitle.copyWith(color: color ?? blackColor50),
+              ),
             );
           }).toList(),
           hint: const Text("Pilih Kategori"),
           onChanged: onChanged,
-          value: selectedValue,
+          value: selectedValue.isEmpty ? null : selectedValue,
         ),
       ),
     );

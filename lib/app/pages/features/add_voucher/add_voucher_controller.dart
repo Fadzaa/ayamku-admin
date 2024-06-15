@@ -1,12 +1,11 @@
-import 'package:ayamku_admin/app/pages/features/product_page/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AddVoucherPageController extends GetxController {
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
+  final TextEditingController discountController = TextEditingController();
   final TextEditingController qtyController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
@@ -47,16 +46,16 @@ Future<void> selectDate(BuildContext context, TextEditingController controller) 
   // }
 
   void clearForm() {
-    nameController.clear();
-    priceController.clear();
+    codeController.clear();
+    discountController.clear();
     qtyController.clear();
     descriptionController.clear();
   }
 
   @override
   void onClose() {
-    nameController.dispose();
-    priceController.dispose();
+    codeController.dispose();
+    discountController.dispose();
     qtyController.dispose();
     descriptionController.dispose();
     super.onClose();

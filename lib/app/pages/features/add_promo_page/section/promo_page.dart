@@ -42,8 +42,6 @@ class PromoPage extends StatelessWidget {
           text: "Nama Promo",
           hintText: hintTxtName ?? "Promo Natal",
           controller: nameController,
-          borderColor: borderColor ?? Colors.black.withOpacity(0.5),
-          color: color ?? Colors.black.withOpacity(0.5),
         ),
         SizedBox(height: 15),
 
@@ -51,8 +49,6 @@ class PromoPage extends StatelessWidget {
           text: "Nama Event",
           hintText: hintTxtName ?? "Selama Natal",
           controller: eventController,
-          borderColor: borderColor ?? Colors.black.withOpacity(0.5),
-          color: color ?? Colors.black.withOpacity(0.5),
         ),
 
         SizedBox(height: 15),

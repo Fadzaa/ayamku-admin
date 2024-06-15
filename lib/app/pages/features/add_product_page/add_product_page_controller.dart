@@ -1,6 +1,6 @@
 import 'dart:ffi';
-
-import 'package:ayamku_admin/app/pages/features/product_page/model/product.dart';
+import 'package:ayamku_admin/app/api/product/model/product_response.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +11,7 @@ import '../product_page/product_page_controller.dart';
 
 class AddProductPageController extends GetxController {
 
-  final ProductPageController productPageController = Get.put(ProductPageController());
+  final ProductPageController productController = Get.put(ProductPageController());
   ProductService productService = ProductService();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -39,15 +39,31 @@ class AddProductPageController extends GetxController {
       dio.FormData formData = dio.FormData.fromMap({
         "name" : nameController.text,
         "description" : descriptionController.text,
-        "price" : priceController.text,
-        "category" : categories,
-        "stock" : qtyController.text,
+        "price" : int.parse(priceController.text),
+        "category" : categories.join(", "),
+        "stock" : int.parse(qtyController.text),
         'image': await dio.MultipartFile.fromFile(filePathImage.value),
       });
 
       await productService.addProduct(
           formData
       );
+
+      Product product = Product(
+          name: nameController.text,
+          description: descriptionController.text,
+          price: (int.tryParse(priceController.text) ?? 0).toString(),
+          category: categories.join(", "),
+          stock: int.parse(qtyController.text),
+          image: filePathImage.value
+      );
+
+      productController.listProduct.add(product);
+
+      update();
+
+      Get.toNamed(Routes.HOME_PAGE);
+      Get.snackbar("Tambah produk Sukses", "Berhasil menambahkan produk!");
     }
     catch(e){
       isLoading.value = true;
@@ -57,6 +73,7 @@ class AddProductPageController extends GetxController {
       isLoading.value = false;
     }
   }
+
 
   void onChangeCategory(String category) {
     selectedCategory.value = category;

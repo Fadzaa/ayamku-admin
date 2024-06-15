@@ -12,22 +12,21 @@ class EditProductPageController extends GetxController {
   final TextEditingController qtyController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  RxString selectedCategory = "Geprek".obs;
+  final Product product = Get.arguments;
+
+  RxString selectedCategory = ''.obs;
   RxList<String> categories = ["Geprek", "Snack", "Minuman"].obs;
   ProductResponse productResponse = ProductResponse();
   ProductService productService = ProductService();
 
+  // fetch product
   final ProductPageController productPageController = Get.find<ProductPageController>();
   late int productIndex;
   final ImagePicker _picker = ImagePicker();
   RxBool isLoading = false.obs;
 
-
+  //image
   RxString selectedImagePath = ''.obs;
-
-  Product product = Get.arguments;
-  
-
   Future<void> pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -40,19 +39,19 @@ class EditProductPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-
     nameController.text = product.name!;
     priceController.text = product.price!;
     qtyController.text = product.stock.toString();
     descriptionController.text = product.description!;
-    // selectedCategory.value = product.category!;
+    selectedCategory.value = product.category!;
     selectedImagePath.value = product.image!;
 
-    // // Ensure the selectedCategory is valid
-    // if (!categories.contains(selectedCategory.value)) {
-    //   selectedCategory.value = categories.first;
-    // }
+    // Set selectedCategory only if it exists in categories list
+    if (categories.contains(product.category)) {
+      selectedCategory.value = product.category!;
+    } else {
+      selectedCategory.value = categories.first; // or set to a default value
+    }
   }
 
   void onChangeCategory(String category) {

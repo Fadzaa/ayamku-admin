@@ -9,14 +9,11 @@ class ItemTextField extends StatelessWidget {
     required this.hintText,
     this.minLines,
     this.maxLines,
-    this.color,
-    this.borderColor,
     this.controller,
   });
 
   final String text, hintText;
   final int? minLines, maxLines;
-  final Color? color,borderColor;
   final TextEditingController? controller;
 
   @override
@@ -31,14 +28,14 @@ class ItemTextField extends StatelessWidget {
         SizedBox(height: 5,),
         TextFormField(
           controller: controller,
-          maxLines: maxLines ?? 2,
+          maxLines: maxLines ?? 1,
           style: txtCaption,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: txtFormTitle.copyWith(color: blackColor50),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: blackColor50),
+              borderSide: BorderSide(color: blackColor),
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             focusedBorder: OutlineInputBorder(

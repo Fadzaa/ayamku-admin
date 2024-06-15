@@ -9,9 +9,16 @@ import '../../../../../common/constant.dart';
 import '../../../../../common/theme.dart';
 
 class ItemVoucherVertical extends GetView<VoucherPageController> {
-  const ItemVoucherVertical({super.key, required this.name, required this.startDate, required this.endDate});
+  const ItemVoucherVertical({
+    super.key,
+    required this.name,
+    required this.startDate,
+    required this.endDate,
+    required this.onPressed,
+  });
 
   final String name, startDate, endDate;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +58,27 @@ class ItemVoucherVertical extends GetView<VoucherPageController> {
                 ],
               ),
 
-              InkWell(
-                onTap: () => voidGiftVoucher(context),
-                child: SvgPicture.asset(icMenu)
-              )
+              Row(
+                children: [
+                  InkWell(
+                    onTap: onPressed,
+                    child: Text(
+                      "Edit",
+                      style: txtSecondaryTitle.copyWith(color: primaryColor),
+                    ),
+                  ),
+
+                  SizedBox(width: 20),
+
+                  InkWell(
+                      onTap: () => voidGiftVoucher(context),
+                      child: SvgPicture.asset(icMenu)
+                  ),
+                ],
+              ),
+
+
+
 
             ],
           ),

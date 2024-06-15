@@ -91,13 +91,13 @@ class VoucherManagementPage extends StatelessWidget {
                                 .format(DateTime.parse(voucher.startDate ?? ''));
                             final endDate = DateFormat('dd MMMM yyyy')
                                 .format(DateTime.parse(voucher.endDate ?? ''));
-                            return InkWell(
-                              onTap: (){},
-                              child: ItemVoucherVertical(
-                                name: voucher.code.toString(),
-                                startDate: startDate,
-                                endDate: endDate,
-                              ),
+                            return ItemVoucherVertical(
+                              name: voucher.code.toString(),
+                              startDate: startDate,
+                              endDate: endDate,
+                              onPressed: () {
+                                // Get.toNamed(Routes.EDIT_VOUCHER_PAGE, arguments: voucher);
+                              },
                             );
                           },
                         );

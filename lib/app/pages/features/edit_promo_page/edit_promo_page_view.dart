@@ -37,7 +37,7 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
             SizedBox(width: 10),
 
             Text(
-              "Edit produk",
+              "Edit promo",
               style: txtTitlePage.copyWith(
                 color: blackColor,
               ),
@@ -46,59 +46,49 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
         ),
       ),
 
-      body: Stack(
-        children: [
-          Container(
-            height: screenHeight,
-            color: baseColor,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Obx(() => PromoPage(
-                      selectedImagePath: controller.selectedImagePath.value,
-                      imageController: () {
-                        controller.pickImage();
-                      },
-                      
-                      nameController: controller.nameController,
-                      eventController: controller.eventController,
-                      startDateController: controller.startDateController,
-                      endDateController: controller.endDateController,
-                      onTapStartDate: () => controller.selectDate(context, controller.startDateController),
-                      onTapEndDate: () => controller.selectDate(context, controller.endDateController),
-                    )),
-                  ],
-                ),
-              ),
+      body: Container(
+        height: screenHeight,
+        color: baseColor,
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Obx(() => PromoPage(
+                  selectedImagePath: controller.selectedImagePath.value,
+                  imageController: () {
+                    controller.pickImage();
+                  },
+
+                  nameController: controller.nameController,
+                  eventController: controller.eventController,
+                  startDateController: controller.startDateController,
+                  endDateController: controller.endDateController,
+                  onTapStartDate: () => controller.selectDate(context, controller.startDateController),
+                  onTapEndDate: () => controller.selectDate(context, controller.endDateController),
+                )),
+              ],
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: CommonBottom(
+        onPressed1: () {
+          Get.back();
+        },
+        onPressed2: () {
 
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: CommonBottom(
-              onPressed1: () {
-                Get.back();
-              },
-              onPressed2: () {
-
-              },
-              bgColor1: red,
-              bgColor2: primaryColor,
-              ic1: icCancel,
-              ic2: icEdit,
-              txtColor1: Colors.white,
-              txtColor2: blackColor,
-              txt1: 'Hapus',
-              txt2: 'Edit',
-            ),
-          )
-        ],
+        },
+        bgColor1: red,
+        bgColor2: primaryColor,
+        ic1: icCancel,
+        ic2: icEdit,
+        txtColor1: Colors.white,
+        txtColor2: blackColor,
+        txt1: 'Hapus',
+        txt2: 'Edit',
       ),
     );
   }

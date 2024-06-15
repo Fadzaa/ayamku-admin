@@ -15,7 +15,7 @@ class PickImg extends StatelessWidget {
   final String imagePath;
 
   Widget _buildChild() {
-    if (imagePath == null || imagePath!.isEmpty) {
+    if (imagePath == null || imagePath.isEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,9 +31,9 @@ class PickImg extends StatelessWidget {
         ],
       );
     } else {
-      return Image.file(
-        File(imagePath!),
-        fit: BoxFit.cover
+      return Image.network(
+        imagePath,
+        fit: BoxFit.cover,
       );
     }
   }

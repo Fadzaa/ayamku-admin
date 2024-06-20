@@ -3,6 +3,7 @@ import 'package:ayamku_admin/app/pages/features/voucher_management/items/item_vo
 import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_search.dart';
+import 'package:ayamku_admin/app/pages/global_component/not_found_page/not_found_page.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,12 +12,11 @@ import '../../../../common/theme.dart';
 import '../../../router/app_pages.dart';
 import 'package:intl/intl.dart';
 
-class VoucherManagementPage extends StatelessWidget {
+class VoucherManagementPage extends GetView<VoucherPageController> {
   const VoucherManagementPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(VoucherPageController());
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -24,111 +24,113 @@ class VoucherManagementPage extends StatelessWidget {
       appBar: AppBar(
           backgroundColor: baseColor,
           automaticallyImplyLeading: false,
-          title: Row(
+          title: Column(
             children: [
+              Row(
+                children: [
 
-              InkWell(
-                onTap: (){
-                  Get.back();
-                },
-                child: SvgPicture.asset(
-                  icBack,
-                  width: 30,
-                  height: 30,
-                ),
+                  InkWell(
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: SvgPicture.asset(
+                      icBack,
+                      width: 30,
+                      height: 30,
+                    ),
+                  ),
+
+                  SizedBox(width: 10,),
+
+                  Text(
+                    "Voucher",
+                    style: txtTitlePage.copyWith(
+                      color: blackColor,
+                    ),
+                  )
+                ],
               ),
-
-              SizedBox(width: 10,),
-
-              Text(
-                "Voucher",
-                style: txtTitlePage.copyWith(
-                  color: blackColor,
-                ),
-              )
             ],
           )
       ),
 
-      body: Stack(
-        children: [
+      body: Container(
+        height: screenHeight,
+        color: baseColor,
+        padding: EdgeInsets.symmetric(horizontal: 16),
 
-          Container(
-            height: screenHeight,
-            color: baseColor,
-            padding: EdgeInsets.symmetric(horizontal: 16),
+        child: SafeArea(
 
-            child: SafeArea(
+          child: SingleChildScrollView(
 
-              child: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
 
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: 15,),
 
-                  children: [
-                    SizedBox(height: 15,),
+                  FilterVoucher(),
 
-                    FilterVoucher(),
+                  SizedBox(height: 15,),
 
-                    SizedBox(height: 15,),
+                  CommonSearch(text: "Search", ),
 
-                    CommonSearch(text: "Search"),
+                  SizedBox(height: 15,),
 
-                    SizedBox(height: 15,),
-
-                    Obx(() {
-                      if (controller.isLoading.value) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        return ListView.builder(
-                          itemCount: controller.voucherList.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            final voucher = controller.voucherList[index];
-                            final startDate = DateFormat('dd MMMM yyyy')
-                                .format(DateTime.parse(voucher.startDate ?? ''));
-                            final endDate = DateFormat('dd MMMM yyyy')
-                                .format(DateTime.parse(voucher.endDate ?? ''));
-                            return ItemVoucherVertical(
-                              name: voucher.code.toString(),
-                              startDate: startDate,
-                              endDate: endDate,
-                              onPressed: () {
-                                // Get.toNamed(Routes.EDIT_VOUCHER_PAGE, arguments: voucher);
-                              },
-                            );
-                          },
-                        );
-                      }
-                    })]
-                ),
-              ),
+                  Obx(() {
+                    if (controller.isLoading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (controller.voucherList.isEmpty) {
+                      return NotFoundPage(
+                          image: notFound,
+                          title: "Voucher not found",
+                          subtitle: "Voucher yang anda inginkan tidak ditemukan, silahkan coba lagi"
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: controller.voucherList.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final voucher = controller.voucherList[index];
+                          final startDate = DateFormat('dd MMMM yyyy')
+                              .format(DateTime.parse(voucher.startDate ?? ''));
+                          final endDate = DateFormat('dd MMMM yyyy')
+                              .format(DateTime.parse(voucher.endDate ?? ''));
+                          return ItemVoucherVertical(
+                            name: voucher.code.toString(),
+                            startDate: startDate,
+                            endDate: endDate,
+                            stock: voucher.qty.toString(),
+                            discount: voucher.discount.toString(),
+                            onPressed: () {
+                              Get.toNamed(Routes.EDIT_VOUCHER_PAGE, arguments: voucher);
+                            },
+                          );
+                        },
+                      );
+                    }
+                  })]
             ),
           ),
+        ),
+      ),
 
-          Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(20),
 
-              child: Container(
-                padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: baseColor,
+          border: Border.all(width: 1, color: Colors.grey),
+        ),
 
-                decoration: BoxDecoration(
-                  color: baseColor,
-                  border: Border.all(width: 1, color: Colors.grey),
-                ),
-
-                child: CommonButton(
-                  text: '+ Add New Voucher',
-                  onPressed: () {
-                    Get.toNamed(Routes.ADD_VOUCHER_PAGE);
-                  },
-                ),
-              ))
-        ],
+        child: CommonButton(
+          text: '+ Add New Voucher',
+          onPressed: () {
+            Get.toNamed(Routes.ADD_VOUCHER_PAGE);
+          },
+        ),
       ),
     );
   }

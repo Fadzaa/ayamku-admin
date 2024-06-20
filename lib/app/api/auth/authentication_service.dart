@@ -9,7 +9,7 @@ class AuthenticationService {
   Future<Response> login(String email, String password) async {
     try {
       final response = await _dioInstance.postRequest(
-          endpoint: 'http://ayamku-api.rplrus.com/api/users/login',
+          endpoint: 'https://ayamku-api.rplrus.com/api/users/login',
           data: {
             'email': email,
             'password': password

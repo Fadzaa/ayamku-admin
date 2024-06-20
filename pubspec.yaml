@@ -40,6 +40,8 @@ dependencies:
   charts_flutter:
   flutter_switch:
   auto_size_text: ^3.0.0
+  dotted_line: ^3.2.2
+  table_calendar: ^3.0.0
   flutter:
     sdk: flutter
 

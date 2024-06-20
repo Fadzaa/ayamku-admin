@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class EditProductPageView extends GetView<EditProductPageController> {
-  const EditProductPageView({Key? key}) : super(key: key);
+class EditProductPageView extends StatelessWidget{
+  EditProductPageView({Key? key}) : super(key: key);
+
+  final controller = Get.put(EditProductPageController());
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class EditProductPageView extends GetView<EditProductPageController> {
           Get.back();
         },
         onPressed2: () {
-          controller.updateProduct();
+          // controller.updateVoucher();
         },
         bgColor1: red,
         bgColor2: primaryColor,

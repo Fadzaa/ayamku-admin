@@ -1,9 +1,10 @@
 
 import 'package:ayamku_admin/app/api/voucher/model/voucher_response.dart';
 import 'package:ayamku_admin/app/api/voucher/voucher_service.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
+
 
 class VoucherPageController extends GetxController with SingleGetTickerProviderMixin {
   TabController? tabController;
@@ -18,47 +19,59 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
   final RxString value = "user".obs;
   RxString get optionType => value;
 
+  DateTimeRange? selectedDateRange;
+
   void setOption(String option) {
     value.value = option;
   }
 
   void updateSelectedValue(String value) {
     selectedValue.value = value;
-    update();
+    if (value != "Masukkan tanggal") {
+      selectedDateRange = null;
+    }
+    getAllVoucher();
   }
+
+  void updateDateRange(DateTimeRange? dateRange) {
+    selectedDateRange = dateRange;
+    selectedValue.value = "Masukkan tanggal";
+    getAllVoucher();
+  }
+
 
   @override
   void onInit() {
     super.onInit();
     tabController = TabController(length: 2, vsync: this);
-
     getAllVoucher();
-
   }
 
   @override
   void dispose() {
-// TODO: implement dispose
     super.dispose();
     tabController!.dispose();
   }
 
-  void getAllVoucher () async {
+  void getAllVoucher() async {
     try {
       isLoading.value = true;
-
       final response = await voucherService.getAllVoucher();
-
-      print("Fetch Semua Voucher");
-      print(response.data);
-
       voucherResponse = VoucherResponse.fromJson(response.data);
-      voucherList = voucherResponse.data!.obs;
+      var vouchers = voucherResponse.data!;
 
-      print(voucherList);
+      if (selectedDateRange != null) {
+        final start = selectedDateRange!.start;
+        final end = selectedDateRange!.end;
+        vouchers = vouchers.where((voucher) {
+          final startDate = DateTime.parse(voucher.startDate.toString());
+          final endDate = DateTime.parse(voucher.endDate.toString());
+          return (startDate.isBefore(end.add(Duration(days: 1))) && endDate.isAfter(start.subtract(Duration(days: 1))));
+        }).toList();
+      }
 
-
-      print(voucherResponse.data);
+      voucherList.assignAll(vouchers);
+      // voucherList = vouchers.obs;
     } catch (e) {
       isLoading.value = true;
       print(e);
@@ -67,4 +80,10 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
     }
   }
 
+  void optionGift() {
+    if (optionType.value == "user") {
+      Get.toNamed(Routes.OPTION_USER);
+    } else if (optionType.value == "massal") {
+    }
+  }
 }

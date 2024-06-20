@@ -20,27 +20,24 @@ class NotFoundPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset(image),
-          const SizedBox(height: 20),
-          // Text(
-          //   title,
-          //   style: tsBodyLarge.copyWith(
-          //     fontWeight: FontWeight.w600,
-          //     color: blackColor
-          //   ),
-          // ),
-          //
-          // Text(
-          //   subtitle,
-          //   style: tsBodySmall.copyWith(
-          //       fontWeight: FontWeight.w500,
-          //       color: greyColor
-          //   ),
-          // ),
+          SvgPicture.asset(image,width: 250,),
 
-          const SizedBox(height: 100,)
+          SizedBox(height: 20),
 
+          Text(
+            title,
+            style: txtTitlePage.copyWith(
+              color: primaryColor
+            ),
+          ),
 
+          SizedBox(height: 5),
+
+          Text(
+            subtitle,
+            textAlign: TextAlign.center,
+            style: txtButtonTab.copyWith(color: blackColor),
+          ),
 
         ],
       ),

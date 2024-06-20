@@ -15,6 +15,8 @@ import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_p
 import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/edit_promo_page/edit_promo_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/edit_promo_page/edit_promo_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/edit_voucher_page/edit_voucher_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/edit_voucher_page/edit_voucher_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_binding.dart';
@@ -35,7 +37,7 @@ import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_binding.da
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_view.dart';
 import 'package:get/get.dart';
 import '../pages/features/add_voucher/add_voucher_binding.dart';
-import '../pages/features/add_voucher/add_voucher_page.dart';
+import '../pages/features/add_voucher/add_voucher_page_view.dart';
 import '../pages/features/voucher_management/voucher_management_binding.dart';
 import '../pages/features/voucher_management/voucher_management_page_view.dart';
 import '../pages/initial_pages/login_page/login_page_binding.dart';
@@ -47,7 +49,7 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.HOME_PAGE   ;
+  static const INITIAL = Routes.LOGIN_PAGE;
 
   static final routes = [
     GetPage(
@@ -113,7 +115,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.EDIT_PRODUCT_PAGE,
-      page: () => const EditProductPageView(),
+      page: () =>  EditProductPageView(),
       binding: EditProductPageBinding(),
       transition: Transition.noTransition,
      ),
@@ -157,6 +159,12 @@ class AppPages {
       name: _Paths.ADD_VOUCHER_PAGE,
       page: () => const AddVoucherPageView(),
       binding: AddVoucherPageBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.EDIT_VOUCHER_PAGE,
+      page: () => EditVoucherPageView(),
+      binding: EditVoucherPageBinding(),
       transition: Transition.noTransition,
     ),
     GetPage(

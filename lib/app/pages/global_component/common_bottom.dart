@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../features/edit_product_page/edit_product_page_controller.dart';
 
-class CommonBottom extends GetView<EditProductPageController> {
+class CommonBottom extends StatelessWidget {
   const CommonBottom({
     super.key,
     required this.onPressed1,
@@ -41,7 +41,7 @@ class CommonBottom extends GetView<EditProductPageController> {
         children: [
 
           WidgetBottomBtn(
-              onPressed: () => controller.deleteProduct(),
+              onPressed: onPressed1,
               icon: ic1,
               text: txt1,
               bgColor: bgColor1,
@@ -49,7 +49,7 @@ class CommonBottom extends GetView<EditProductPageController> {
           ),
 
           WidgetBottomBtn(
-              onPressed: () => controller.editProduct(),
+              onPressed: onPressed2,
               icon: ic2,
               text: txt2,
               bgColor: bgColor2,

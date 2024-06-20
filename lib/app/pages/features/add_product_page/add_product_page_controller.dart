@@ -11,7 +11,7 @@ import '../product_page/product_page_controller.dart';
 
 class AddProductPageController extends GetxController {
 
-  final ProductPageController productController = Get.put(ProductPageController());
+  final ProductPageController controller = Get.put(ProductPageController());
   ProductService productService = ProductService();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -58,7 +58,7 @@ class AddProductPageController extends GetxController {
           image: filePathImage.value
       );
 
-      productController.listProduct.add(product);
+      controller.listProduct.add(product);
 
       update();
 

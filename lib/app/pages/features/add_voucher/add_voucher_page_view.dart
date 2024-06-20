@@ -64,7 +64,7 @@ class AddVoucherPageView extends GetView<AddVoucherPageController> {
           Get.back();
         },
         onPressed2: () {
-          // controller.addVoucher();
+          controller.addVoucher();
         },
         bgColor1: red,
         bgColor2: primaryColor,
@@ -72,8 +72,8 @@ class AddVoucherPageView extends GetView<AddVoucherPageController> {
         ic2: icUpload,
         txtColor1: Colors.white,
         txtColor2: blackColor,
-        txt1: 'Batalkan',
-        txt2: 'Upload Menu',
+        txt1: 'Batal',
+        txt2: 'Tambah Voucher',
       ) ,
     );
   }

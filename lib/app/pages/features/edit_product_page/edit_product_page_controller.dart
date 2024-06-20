@@ -46,11 +46,11 @@ class EditProductPageController extends GetxController {
     selectedCategory.value = product.category!;
     selectedImagePath.value = product.image!;
 
-    // Set selectedCategory only if it exists in categories list
+
     if (categories.contains(product.category)) {
       selectedCategory.value = product.category!;
     } else {
-      selectedCategory.value = categories.first; // or set to a default value
+      selectedCategory.value = categories.first;
     }
   }
 

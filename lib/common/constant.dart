@@ -49,3 +49,4 @@ String icCalender = '${svgImages}ic_calender.svg';
 String icLocation = '${svgImages}ic_location.svg';
 String icMenu = '${svgImages}ic_menu.svg';
 String icActiveRadioButton = '${svgImages}ic_radiobutton.svg';
+String notFound = '${svgImages}ic_not_found.svg';

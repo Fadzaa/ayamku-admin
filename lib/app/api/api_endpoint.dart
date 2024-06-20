@@ -1,5 +1,5 @@
 class ApiEndPoint {
-  static String baseUrl = 'http://ayamku-api.rplrus.com/api';
+  static String baseUrl = 'https://ayamku-api.rplrus.com/api';
   static String baseUrlAuth = '$baseUrl/users';
 
   //Store
@@ -15,6 +15,7 @@ class ApiEndPoint {
 
   //Voucher
    static String voucher = '$baseUrl/vouchers';
+   static String updateVoucher (String id) => '$baseUrl/vouchers/$id';
 
 
 }

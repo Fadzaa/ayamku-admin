@@ -5,8 +5,10 @@ import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_p
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EditProductPage extends GetView<EditProductPageController> {
-  const EditProductPage({super.key});
+class EditProductPage extends StatelessWidget {
+  EditProductPage({super.key});
+
+  final controller = Get.find<EditProductPageController>();
 
   @override
   Widget build(BuildContext context) {

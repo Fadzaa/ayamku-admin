@@ -8,10 +8,12 @@ class NotFoundPage extends StatelessWidget {
     super.key,
     required this.image,
     required this.title,
-    required this.subtitle
+    required this.subtitle,
+    this.commonButton,
   });
 
   final String image, title, subtitle;
+  final Widget? commonButton;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,11 @@ class NotFoundPage extends StatelessWidget {
             textAlign: TextAlign.center,
             style: txtButtonTab.copyWith(color: blackColor),
           ),
+
+          if (commonButton != null) ...[
+            SizedBox(height: 20),
+            commonButton!,
+          ]
 
         ],
       ),

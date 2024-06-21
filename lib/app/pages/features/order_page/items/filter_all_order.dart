@@ -40,30 +40,30 @@ voidFilterAllOrder(BuildContext context) {
                 ]
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(height: 15,),
 
-            FilterAllOrder(
+            WidgetFilter(
                 text: 'Status pemesanan',
                 filterAllOrder: filterStatus,
                 updateSelectedValue: controller.updateSelectedValue,
                 selectedValue: controller.selectedValue,
             ),
 
-            FilterAllOrder(
+            WidgetFilter(
                 text: 'Pos penjemputan',
                 filterAllOrder: filterStatus,
                 updateSelectedValue: controller.updateSelectedValue,
                 selectedValue: controller.selectedValue,
             ),
 
-            FilterAllOrder(
+            WidgetFilter(
               text: 'Type order',
               filterAllOrder: typeOrder,
               updateSelectedValue: controller.updateSelectedValue,
               selectedValue: controller.selectedValue,
             ),
 
-            SizedBox(height: 20,),
+            SizedBox(height: 5,),
 
             CommonButton(
               height: 45,
@@ -77,8 +77,8 @@ voidFilterAllOrder(BuildContext context) {
   );
 }
 
-class FilterAllOrder extends StatelessWidget {
-  const FilterAllOrder({
+class WidgetFilter extends StatelessWidget {
+  const WidgetFilter({
     super.key,
     required this.filterAllOrder,
     required this.updateSelectedValue,
@@ -139,3 +139,4 @@ class FilterAllOrder extends StatelessWidget {
     );
   }
 }
+

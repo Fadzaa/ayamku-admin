@@ -92,47 +92,78 @@ class CommonButtonOutline extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    required this.borderColor,
     required this.color,
     this.style,
-    required this.width,
-    this.height,
   });
 
   String text;
   VoidCallback onPressed;
   TextStyle? style;
-  Color borderColor;
   Color color;
-  double width;
-  double? height;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: baseColor,
-          foregroundColor: baseColor,
-          shadowColor: Colors.transparent,
-          surfaceTintColor: baseColor,
-          fixedSize: Size(width , height ?? 50 ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-            side: BorderSide(
-              color: borderColor,
-              width: 1,
-            ),
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: primaryColor,
+            width: 1,
           ),
         ),
-
         child: Text(
           text,
           style: style ?? txtButtonTab.copyWith(
             color: color,
           ),
-        )
+        ),
+      ),
+    );
+  }
+}
 
+class LittleBtn extends StatelessWidget {
+  LittleBtn({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.color,
+    this.txtColor,
+    this.width,
+    this.height,
+    this.style,
+    this.borderRadius
+  });
+
+  String text;
+  double? width;
+  double? height;
+  VoidCallback? onPressed;
+  TextStyle? style;
+  double? borderRadius;
+  Color? color;
+  Color? txtColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+        decoration: BoxDecoration(
+          color: color ?? primaryColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Text(
+          text,
+          style: style ?? txtButtonTab.copyWith(
+            color: txtColor ?? blackColor,
+          ),
+        ),
+      ),
     );
   }
 }

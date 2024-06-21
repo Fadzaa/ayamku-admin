@@ -110,13 +110,10 @@ class ItemVoucherVertical extends GetView<VoucherPageController> {
               children: [
                 Text("qty : $stock",style: txtBody.copyWith(color: blackColor50),),
 
-                CommonButtonOutline(
-                  width: 122,
-                  height: 5,
+                LittleBtn(
                   text: 'Gift voucher',
                   style: txtCaption.copyWith(color: primaryColor),
                   onPressed: () => voidGiftVoucher(context),
-                  borderColor: primaryColor,
                   color: primaryColor,
                 )
               ],

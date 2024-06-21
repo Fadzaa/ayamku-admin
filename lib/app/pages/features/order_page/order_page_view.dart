@@ -58,10 +58,6 @@ class OrderPageView extends GetView<OrderPageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 OrderSummarySection(),
-
-                // SizedBox(height: 25,),
-                //
-                // ListOrderSection()
               ],
             ),
           ),

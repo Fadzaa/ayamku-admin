@@ -1,5 +1,6 @@
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
-import 'package:ayamku_admin/app/pages/features/home_page/items/item_order_vertical.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/items/item_order_vertical.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/items/item_pickup_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class LatestOrderSection extends GetView<HomePageController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Latest Order", style: txtHeadline3),
-            ItemDropdownDay()
+            // ItemDropdownDay() => ak ga inget ni isinya apa aja, tp better di ilangin gas
           ],
         ),
 
@@ -69,7 +70,7 @@ class LatestOrderSection extends GetView<HomePageController> {
               itemBuilder: (context, index) => ItemPickupVertical(
                 orderName: "PAHE GEPREK",
                 orderPrice: 20000,
-                orderStatus: OrderStatus.done,
+                orderStatus: PickupStatus.done,
                 orderTime: DateTime.now(),
                 username: "Fattah Anggit",
               ),

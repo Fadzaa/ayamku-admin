@@ -8,7 +8,11 @@ class OrderPageController extends GetxController {
   RxInt pageIndex = 0.obs;
   RxInt currentIndex = 0.obs;
 
+  RxBool isOrderAccepted = false.obs;
 
+  void acceptOrder() {
+    isOrderAccepted.value = true;
+  }
   String selectedValue = 'Semua';
 
   void updateSelectedValue(String newValue) {

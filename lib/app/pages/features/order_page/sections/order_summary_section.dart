@@ -3,6 +3,7 @@ import 'package:ayamku_admin/app/pages/features/home_page/items/item_sales_summa
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_order_summary_grid.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/model/order_summary_data.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/sections/all_order_section.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/sections/cancel_order_section.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/sections/delivery_order_section.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/sections/pickup_section.dart';
 import 'package:ayamku_admin/common/theme.dart';
@@ -34,11 +35,16 @@ class OrderSummarySection extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  if (order_summary_data[index].title == "Total Pickup") {
+                  if (order_summary_data[index].title == "Total Order") {
+                    _currentSectionNotifier.value = OrderSection.ListOrder;
+                  }
+                  else if (order_summary_data[index].title == "Total Pickup") {
                     _currentSectionNotifier.value = OrderSection.Pickup;
                   } else if (order_summary_data[index].title == "Total Delivery") {
                     _currentSectionNotifier.value = OrderSection.Delivery;
-                  }
+                  } else if (order_summary_data[index].title == "Canceled") {
+                    _currentSectionNotifier.value = OrderSection.Cancel;
+                  };
                 },
                 child: ItemOrderSummary(
                   title: order_summary_data[index].title,
@@ -60,8 +66,10 @@ class OrderSummarySection extends StatelessWidget {
               return PickupSection();
             else if (currentSection == OrderSection.Delivery)
               return DeliveryOrderSection();
+            else if (currentSection == OrderSection.Cancel)
+              return CancelOrderSection();
             else
-              return SizedBox.shrink(); // or any other default widget
+              return SizedBox.shrink();
           },
         )
       ],
@@ -73,4 +81,5 @@ enum OrderSection {
   ListOrder,
   Pickup,
   Delivery,
+  Cancel,
 }

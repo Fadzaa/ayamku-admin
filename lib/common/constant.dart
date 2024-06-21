@@ -20,6 +20,7 @@ String icVoucherOutline = '${images}ic_voucher_outline.png';
 
 
 
+
 //CONSTANT SVG
 String icNotification = '${svgImages}ic_notification.svg';
 String icPersonChat = '${svgImages}ic_person_chat.svg';
@@ -50,3 +51,4 @@ String icLocation = '${svgImages}ic_location.svg';
 String icMenu = '${svgImages}ic_menu.svg';
 String icActiveRadioButton = '${svgImages}ic_radiobutton.svg';
 String notFound = '${svgImages}ic_not_found.svg';
+String sessionOrderOver = '${svgImages}order_over.svg';

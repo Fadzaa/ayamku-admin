@@ -56,6 +56,7 @@ class ProductService {
           throw Exception(e);
         }
       }
+      
   Future<Response> getProductCategory({required String category}) async {
     try {
       final response = await _dioInstance.getRequest(

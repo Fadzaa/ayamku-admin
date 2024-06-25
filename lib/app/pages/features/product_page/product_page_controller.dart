@@ -54,7 +54,7 @@ class ProductPageController extends GetxController{
     update();
   }
 
-  void getAllProduct () async {
+  void getAllProduct() async {
     try {
       isLoading.value = true;
 

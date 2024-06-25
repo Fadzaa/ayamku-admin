@@ -27,6 +27,12 @@ class AddPromoPage extends GetView<AddPromoPageController> {
               controller: controller.nameController,
             ),
 
+            ItemTextField(
+              text: "Nama event",
+              hintText: "Selamat ganteng",
+              controller: controller.descriptionController,
+            ),
+
             SizedBox(height: 15,),
 
             ItemTxtCalender(

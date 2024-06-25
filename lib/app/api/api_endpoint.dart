@@ -12,6 +12,8 @@ class ApiEndPoint {
 
   //Product
   static String product = '$baseUrl/products';
+  static String promo = '$baseUrl/promos';
+
 
   //Voucher
    static String voucher = '$baseUrl/vouchers';

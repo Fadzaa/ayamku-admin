@@ -68,7 +68,7 @@ class AddPromoPageView extends GetView<AddPromoPageController>{
           Get.back();
         },
         onPressed2: () {
-
+          controller.addPromo();
         },
         bgColor1: red,
         bgColor2: primaryColor,

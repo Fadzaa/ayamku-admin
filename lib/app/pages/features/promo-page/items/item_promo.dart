@@ -9,31 +9,45 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 
-class ItemPromoSection extends StatelessWidget {
-  const ItemPromoSection({Key? key});
+class ItemPromoSection extends GetView<PromoPageController> {
+  const ItemPromoSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PromoPageController());
-
-    return ListView.builder(
-      itemCount: controller.promosList.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        final promo = controller.promosList[index];
-        final startDate = DateFormat('dd MMMM yyyy').format(promo.startDate);
-        return ItemPromo(
-          name: promo.name,
-          event: promo.event,
-          image: promo.image,
-          startDate: startDate,
-          onPressed: () {
-            Get.toNamed(Routes.EDIT_PROMO_PAGE, arguments: {'index': index, 'startDate': promo.startDate, 'endDate': promo.endDate});
-          },
+    
+    return Obx(() {
+      if(controller.isLoading.value){
+        return Center(
+          child: CircularProgressIndicator(),
         );
-      },
-    );
+        
+      }else if(controller.promosList.isEmpty){
+        return Center(
+          child: Text("Data Kosong"),
+        );
+
+        }else{
+          return ListView.builder(
+            itemCount: controller.promosList.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final promo = controller.promosList[index];
+              final startDate = DateFormat('dd MMMM yyyy')
+                  .format(DateTime.parse(promo.startDate ?? ''));
+              return ItemPromo(
+                name: promo.name.toString(),
+                event: promo.description.toString(),
+                image: promo.image.toString(),
+                startDate: startDate,
+                onPressed: () {
+                  Get.toNamed(Routes.EDIT_PROMO_PAGE, arguments: {'index': index, 'startDate': promo.startDate, 'endDate': promo.endDate});
+                },
+              );
+            },
+          );
+      }
+    });
   }
 }
 

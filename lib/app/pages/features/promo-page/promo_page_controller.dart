@@ -1,22 +1,80 @@
-
-import 'package:ayamku_admin/app/pages/features/promo-page/model/promo.dart';
-import 'package:ayamku_admin/app/pages/features/promo-page/model/promo_data.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../api/promo/model/promo_response.dart';
+import '../../../api/promo/promo_service.dart';
+
 class PromoPageController extends GetxController {
-  RxList<Promo> promosList = promo_data;
+  TextEditingController searchController = TextEditingController();
+
+  RxList<Promo> promosList = <Promo>[].obs;
+  RxBool isLoading = false.obs;
+  DateTimeRange? selectedDateRange;
+  Timer? _debounce;
 
 
-  void addPromo(Promo promo) {
-    promosList.add(promo);
+  PromoService promoService = PromoService();
+  PromoResponse promoResponse = PromoResponse();
+
+@override
+void onInit() {
+    super.onInit();
+
+    getAllPromo();
+
+    searchController.addListener(() {
+      if (_debounce?.isActive ?? false) _debounce?.cancel();
+      _debounce = Timer(const Duration(milliseconds: 500), () {
+        if (searchController.text.isEmpty) {
+          getAllPromo();
+        } else {
+          getPromoSearch(searchController.text);
+        }
+      });
+    });
   }
 
-  void updatePromo(int index, Promo promo) {
-    promosList[index] = promo;
+void getAllPromo () async {
+
+    try {
+      isLoading.value = true;
+
+      final response = await promoService.getAllPromo();
+
+      print("Fetch Semua Product");
+      print(response.data);
+
+      promoResponse = PromoResponse.fromJson(response.data);
+      promosList = promoResponse.data!.obs;
+
+      print(promosList);
+
+
+      print(promoResponse.data);
+    } catch (e) {
+      isLoading.value = true;
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
   }
 
-  void deletePromo(int index) {
-    promosList.removeAt(index);
+  Future getPromoSearch(String search) async {
+    try {
+      print('value search = ' + search);
+
+      isLoading.value = true;
+
+      final response = await promoService.getPromoSearch(search: search);
+      promosList.clear();
+      promosList.addAll(PromoResponse.fromJson(response.data).data!);
+
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
   }
+
 }
-

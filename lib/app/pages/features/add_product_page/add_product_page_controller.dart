@@ -12,7 +12,6 @@ import '../product_page/product_page_controller.dart';
 class AddProductPageController extends GetxController {
 
   final ProductPageController controller = Get.put(ProductPageController());
-  ProductService productService = ProductService();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController qtyController = TextEditingController();
@@ -24,6 +23,9 @@ class AddProductPageController extends GetxController {
 
   RxString filePathImage = ''.obs;
   RxBool isLoading = false.obs;
+
+  ProductService productService = ProductService();
+
 
   Future<void> pickImage(RxString imagePath) async {
   final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);

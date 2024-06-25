@@ -1,4 +1,3 @@
-import 'package:ayamku_admin/app/pages/features/promo-page/model/promo.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,38 +45,6 @@ class EditPromoPageControlller extends GetxController{
     print(picked);
   }
 
-  void updateProduct() {
-    promoPageController.updatePromo(promoIndex, Promo(
-      name: nameController.text,
-      image: selectedImagePath.value,
-      event: eventController.text,
-      startDate: DateFormat('dd MMMM yyyy').parse(startDateController.text),
-      endDate: DateFormat('dd MMMM yyyy').parse(endDateController.text),
-    ));
-    Get.back();
-  }
-
-
-
-  @override
-  void onClose() {
-    nameController.dispose();
-    endDateController.dispose();
-    eventController.dispose();
-    startDateController.dispose();
-    super.onClose();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    final args = Get.arguments as Map<String, dynamic>;
-    promoIndex = args['index'] as int;
-    final promo = promoPageController.promosList[promoIndex];
-    nameController.text = promo.name;
-    selectedImagePath.value = promo.image;
-    startDateController.text = DateFormat('dd MMMM yyyy').format(args['startDate'] as DateTime);
-    endDateController.text = DateFormat('dd MMMM yyyy').format(args['endDate'] as DateTime);
-  }
+  
 
 }

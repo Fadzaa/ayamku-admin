@@ -27,20 +27,18 @@ class SalesSummarySection extends StatelessWidget {
 
         const SizedBox(height: 10,),
 
-        GridView.builder(
-            shrinkWrap: true,
-            itemCount: salesSummary.length,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 1.8
-            ),
-            itemBuilder: (context, index) =>
-                ItemSalesSummary(
-                  typeSalesItem: salesSummary[index],
-                )
+        ItemSalesSummary(typeSalesItem: salesSummary[0]),
+
+        const SizedBox(height: 15,),
+
+        Row(
+          children: [
+            Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[1])),
+
+            const SizedBox(width: 15,),
+
+            Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[2])),
+          ],
         )
       ],
     );

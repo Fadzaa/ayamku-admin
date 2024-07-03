@@ -16,6 +16,7 @@ String icPerson = '${images}person.png';
 String promoNatal = '${images}promo_natal.png';
 String imgPos = '${images}img_pos.png';
 String icVoucherOutline = '${images}ic_voucher_outline.png';
+String icPickup = '${images}pickupic.png';
 
 
 
@@ -52,3 +53,5 @@ String icMenu = '${svgImages}ic_menu.svg';
 String icActiveRadioButton = '${svgImages}ic_radiobutton.svg';
 String notFound = '${svgImages}ic_not_found.svg';
 String sessionOrderOver = '${svgImages}order_over.svg';
+String icAnalytic = '${svgImages}ic_analytic.svg';
+String icOrder = '${svgImages}ic_order.svg';

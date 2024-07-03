@@ -1,6 +1,7 @@
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_order_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_pickup_vertical.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/items/item_schedule_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ class LatestOrderSection extends GetView<HomePageController> {
   Widget build(BuildContext context) {
     List<String> listOrder = [
       "On Delivery",
-      "Pickup"
+      "Pickup",
+      "Terjadwal"
     ];
 
     return Column(
@@ -62,7 +64,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                 username: "Fattah Anggit",
               ),
             );
-          } else {
+          } else if (controller.currentIndex.value == 1){
             return ListView.builder(
               itemCount: 2,
               shrinkWrap: true,
@@ -75,6 +77,21 @@ class LatestOrderSection extends GetView<HomePageController> {
                 username: "Fattah Anggit",
               ),
             );
+          } else if (controller.currentIndex.value == 2) {
+            return ListView.builder(
+              itemCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => ItemScheduleVertical(
+                orderName: "PAHE GEPREK",
+                orderPrice: 20000,
+                orderStatus: ScheduleStatus.done,
+                orderTime: DateTime.now(),
+                username: "Fattah Anggit",
+              ),
+            );
+          } else {
+            return Container(); // return an empty widget when no conditions are met
           }
         }),
       ],

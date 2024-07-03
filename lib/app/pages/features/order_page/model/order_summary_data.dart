@@ -18,6 +18,11 @@ final List <OrderSummary> order_summary_data = [
       count: 148
   ),
   OrderSummary(
+      icon: icTotalDelivery,
+      title: "Total Schdule",
+      count: 148
+  ),
+  OrderSummary(
       icon: icCancel,
       title: "Canceled",
       count: 3

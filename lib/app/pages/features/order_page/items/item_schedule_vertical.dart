@@ -5,9 +5,8 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ItemPickupVertical extends StatelessWidget {
-  final controller = Get.put(OrderPageController());
-  ItemPickupVertical({
+class ItemScheduleVertical extends GetView<OrderPageController> {
+  const ItemScheduleVertical({
     super.key,
     required this.username,
     required this.orderName,
@@ -19,7 +18,7 @@ class ItemPickupVertical extends StatelessWidget {
   final String username, orderName;
   final DateTime orderTime;
   final int orderPrice;
-  final PickupStatus orderStatus;
+  final ScheduleStatus orderStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +61,33 @@ class ItemPickupVertical extends StatelessWidget {
 
               const SizedBox(height: 10,),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(orderName, style: txtSecondaryTitle),
+              Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("x2", style: txtSecondaryTitle.copyWith(color: blackColor50),),
+                        SizedBox(width: 10,),
+                        Text(orderName, style: txtListItemTitle),
+                      ],
+                    ),
 
-                  Text("x2", style: txtSecondaryTitle.copyWith(color: blackColor50),),
-
-                  Text("Rp. 11.000", style: txtCaption,)
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25,top: 5),
+                      child: Column(
+                        children: [
+                          SizedBox(width: 5,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("Level:", style: txtSecondaryTitle.copyWith(color: blackColor50),),
+                              SizedBox(width: 5,),
+                              Text("Pedas", style: txtSecondaryTitle),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )]
               ),
 
               const SizedBox(height: 10,),
@@ -81,23 +97,23 @@ class ItemPickupVertical extends StatelessWidget {
 
               Divider(height: 0.5, color: blackColor70,),
 
-              SizedBox(height: 15,),
-
+              // SizedBox(height: 15,),
+              //
               // Text("Note :",style: txtCaption,),
               //
               // SizedBox(height: 3,),
               //
               // Text("RAAAAWWRR, KIRIM NY CPT YH, SY LAPAR",style: txtCaption.copyWith(color: blackColor50),),
-              //
-              // SizedBox(height: 15,),
+
+              SizedBox(height: 15,),
 
               Row(
                 children: [
-                  Image.asset(icPickup),
+                  Icon(Icons.calendar_today_outlined, color: blackColor50, size: 20,),
 
                   SizedBox(width: 5,),
 
-                  Text("Akan diambil ", style: txtCaption,),
+                  Text("Akan dijemput", style: txtCaption,),
 
                   SizedBox(width: 10,),
 
@@ -107,13 +123,12 @@ class ItemPickupVertical extends StatelessWidget {
                       color: grey,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text("Hari ini, 10:00", style: txtCaption.copyWith(),),
+                    child: Text("Besok, 10:00", style: txtCaption.copyWith(),),
                   )
                 ],
               ),
 
-
-              SizedBox(height: 20,),
+              SizedBox(height: 15,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,32 +165,7 @@ class ItemPickupVertical extends StatelessWidget {
                           LittleBtn(
                             text: "Terima",
                             style: txtCaption.copyWith(color: Colors.white),
-                            onPressed: () {
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (BuildContext context) {
-                              //     return AlertDialog(
-                              //       title: Text('Confirm'),
-                              //       content: Text('Are you sure you want to accept the order?'),
-                              //       actions: <Widget>[
-                              //         TextButton(
-                              //           child: Text('Cancel'),
-                              //           onPressed: () {
-                              //             Navigator.of(context).pop();
-                              //           },
-                              //         ),
-                              //         TextButton(
-                              //           child: Text('Yes'),
-                              //           onPressed: () {
-                              //             controller.acceptOrder();
-                              //             Navigator.of(context).pop();
-                              //           },
-                              //         ),
-                              //       ],
-                              //     );
-                              //   },
-                              // );
-                            },
+                            onPressed: () {},
                             txtColor: Colors.white,
                             color: greenMedium,
                           ),
@@ -189,7 +179,7 @@ class ItemPickupVertical extends StatelessWidget {
   }
 }
 
-enum PickupStatus {
+enum ScheduleStatus {
   onGoing,
   done,
   cancel,

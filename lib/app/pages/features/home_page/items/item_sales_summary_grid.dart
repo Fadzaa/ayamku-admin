@@ -25,7 +25,7 @@ class ItemSalesSummary extends StatelessWidget {
           },
           child: Container(
             width: ScreenWidth,
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(15.0),
             decoration: BoxDecoration(
                 color: primaryColor,
                 borderRadius: BorderRadius.circular(16)
@@ -37,7 +37,7 @@ class ItemSalesSummary extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Analytic", style: txtListItemTitle),
+                    Text("Analytic Sales", style: txtListItemTitle),
 
                     const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16,)
                   ],
@@ -45,7 +45,26 @@ class ItemSalesSummary extends StatelessWidget {
 
                 const SizedBox(height: 10,),
 
-                Text("Rp. 1.120.000", style: txtHeadline2,)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text("Rp. 1.120.000", style: txtHeadline2,),
+
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                          color: baseColor,
+                          shape: BoxShape.circle
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(icAnalytic),
+                      ),
+                    )
+                  ],
+                )
+
               ],
             ),
           ),
@@ -81,7 +100,7 @@ class ItemSalesSummary extends StatelessWidget {
 
       case SalesItem.totalOrders:
         return Container(
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
           decoration: BoxDecoration(
               color: const Color(0xFFF8F9FB),
               borderRadius: BorderRadius.circular(16)
@@ -100,12 +119,11 @@ class ItemSalesSummary extends StatelessWidget {
                       Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
                     ],
                   ),
-
-
-
                   Text("+10%", style: txtCaption.copyWith(color: greenLight))
                 ]
               ),
+
+              SizedBox(height: 7,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,7 +149,7 @@ class ItemSalesSummary extends StatelessWidget {
 
       case SalesItem.products:
         return Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
           decoration: BoxDecoration(
               color: const Color(0xFFF8F9FB),
               borderRadius: BorderRadius.circular(16)
@@ -141,6 +159,8 @@ class ItemSalesSummary extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Products", style: txtCaption),
+
+              SizedBox(height: 7,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

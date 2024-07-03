@@ -32,6 +32,22 @@ class FilterVoucher extends GetView<VoucherPageController> {
                       child: Container(
                         height: 400,
                         child: TableCalendar(
+                          calendarStyle: CalendarStyle(
+                            selectedDecoration: BoxDecoration(
+                              color: baseColor,
+                              shape: BoxShape.circle,
+                            ),
+                            todayDecoration: BoxDecoration(
+                              color: primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                            selectedTextStyle: TextStyle(color: Colors.white),
+                            todayTextStyle: TextStyle(color: Colors.black),
+                          ),
+                          headerStyle: HeaderStyle(
+                            formatButtonVisible: false,
+                            titleCentered: true,
+                          ),
                           firstDay: DateTime.utc(1995, 1, 1),
                           lastDay: DateTime.utc(2030, 12, 31),
                           focusedDay: DateTime.now(),
@@ -87,4 +103,3 @@ class FilterVoucher extends GetView<VoucherPageController> {
     );
   }
 }
-

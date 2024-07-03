@@ -9,6 +9,8 @@ import 'package:ayamku_admin/app/pages/features/order_page/sections/pickup_secti
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 
+import 'schedule_order_section.dart';
+
 class OrderSummarySection extends StatelessWidget {
   final ValueNotifier<OrderSection> _currentSectionNotifier =
   ValueNotifier(OrderSection.ListOrder);
@@ -42,7 +44,9 @@ class OrderSummarySection extends StatelessWidget {
                     _currentSectionNotifier.value = OrderSection.Pickup;
                   } else if (order_summary_data[index].title == "Total Delivery") {
                     _currentSectionNotifier.value = OrderSection.Delivery;
-                  } else if (order_summary_data[index].title == "Canceled") {
+                  } else if (order_summary_data[index].title == "Total Schedule") {
+                    _currentSectionNotifier.value = OrderSection.Schedule;
+                  } else if (order_summary_data[index].title == "Canceled"){
                     _currentSectionNotifier.value = OrderSection.Cancel;
                   };
                 },
@@ -66,6 +70,8 @@ class OrderSummarySection extends StatelessWidget {
               return PickupSection();
             else if (currentSection == OrderSection.Delivery)
               return DeliveryOrderSection();
+            else if (currentSection == OrderSection.Schedule)
+              return ScheduleOrderSection();
             else if (currentSection == OrderSection.Cancel)
               return CancelOrderSection();
             else
@@ -81,5 +87,6 @@ enum OrderSection {
   ListOrder,
   Pickup,
   Delivery,
+  Schedule,
   Cancel,
 }

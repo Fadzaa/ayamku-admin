@@ -3,6 +3,7 @@ import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ItemOrderVertical extends StatelessWidget{
@@ -76,23 +77,39 @@ class ItemOrderVertical extends StatelessWidget{
               color: blackColor40
           )),
 
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Column(
             children: [
-              Text(orderName, style: txtSecondaryTitle),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("x2", style: txtSecondaryTitle.copyWith(color: blackColor50),),
+                  SizedBox(width: 10,),
+                  Text(orderName, style: txtListItemTitle),
+                ],
+              ),
 
-              Text("x2", style: txtSecondaryTitle.copyWith(color: blackColor50),),
-
-              Text("Rp. 11.000", style: txtCaption,)
-            ],
+              Padding(
+                padding: const EdgeInsets.only(left: 25,top: 3),
+                child: Column(
+                  children: [
+                    SizedBox(width: 5,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("Level:", style: txtSecondaryTitle.copyWith(color: blackColor50),),
+                        SizedBox(width: 5,),
+                        Text("Pedas", style: txtSecondaryTitle),
+                      ],
+                    ),
+                  ],
+                ),
+              )]
           ),
 
           const SizedBox(height: 10,),
-
-
+          
           SizedBox(height: 15,),
 
           Divider(height: 0.5, color: blackColor70,),
@@ -104,6 +121,29 @@ class ItemOrderVertical extends StatelessWidget{
           SizedBox(height: 3,),
 
           Text("RAAAAWWRR, KIRIM NY CPT YH, SY LAPAR",style: txtCaption.copyWith(color: blackColor50),),
+
+          SizedBox(height: 15,),
+
+          Row(
+            children: [
+              SvgPicture.asset(icOrder,),
+
+              SizedBox(width: 5,),
+
+              Text("Akan diantarkan ", style: txtCaption,),
+
+              SizedBox(width: 10,),
+
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text("09.40", style: txtCaption.copyWith(),),
+              )
+            ],
+          ),
 
           SizedBox(height: 15,),
 

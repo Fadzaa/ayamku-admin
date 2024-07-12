@@ -4,7 +4,7 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../items/item_order_vertical.dart';
+import '../items/item_delivery_vertical.dart';
 
 class CancelOrderSection extends StatelessWidget {
   const CancelOrderSection({super.key});

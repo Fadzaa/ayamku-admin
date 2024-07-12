@@ -1,28 +1,17 @@
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class ItemPickupVertical extends StatelessWidget {
+class ItemAllOrderVertical extends StatelessWidget {
+  const ItemAllOrderVertical({super.key, required this.username, required this.orderName, required this.namePos, required this.orderTime, required this.cartItems, required this.onTap, required this.method});
 
-  ItemPickupVertical({
-    super.key,
-    required this.username,
-    required this.orderName,
-    required this.orderTime,
-    required this.orderStatus,
-    required this.cartItems,
-    required this.onPressed,
-  });
-
-  final String username, orderName;
+  final String username, orderName, namePos, method;
   final DateTime orderTime;
   final List<CartItems> cartItems;
-  final PickupStatus orderStatus;
-  final VoidCallback onPressed;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +34,31 @@ class ItemPickupVertical extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage(icPerson),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundImage: AssetImage(icPerson),
+                      ),
+
+                      SizedBox(width: 10,),
+
+                      Text(username, style: txtSecondaryTitle,),
+                    ],
                   ),
 
-                  SizedBox(width: 10,),
-
-                  Text(username, style: txtSecondaryTitle,),
+                  if (method != 'pickup')
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: primaryColor40,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Text(namePos, style: txtCaption)
+                  )
                 ],
               ),
 
@@ -96,8 +101,8 @@ class ItemPickupVertical extends StatelessWidget {
                 }).toList(),
               ),
 
-              const SizedBox(height: 10,),
 
+              const SizedBox(height: 10,),
 
               SizedBox(height: 15,),
 
@@ -105,21 +110,21 @@ class ItemPickupVertical extends StatelessWidget {
 
               SizedBox(height: 15,),
 
-              // Text("Note :",style: txtCaption,),
-              //
-              // SizedBox(height: 3,),
-              //
-              // Text("RAAAAWWRR, KIRIM NY CPT YH, SY LAPAR",style: txtCaption.copyWith(color: blackColor50),),
-              //
-              // SizedBox(height: 15,),
+              Text("Note :",style: txtCaption,),
+
+              SizedBox(height: 3,),
+
+              Text("RAAAAWWRR, KIRIM NY CPT YH, SY LAPAR",style: txtCaption.copyWith(color: blackColor50),),
+
+              SizedBox(height: 15,),
 
               Row(
                 children: [
-                  Image.asset(icPickup),
+                  SvgPicture.asset(icOrder,),
 
                   SizedBox(width: 5,),
 
-                  Text("Akan diambil ", style: txtCaption,),
+                  Text(method == 'pickup' ? "Akan dijemput " : "Akan diantarkan ", style: txtCaption,),
 
                   SizedBox(width: 10,),
 
@@ -129,13 +134,12 @@ class ItemPickupVertical extends StatelessWidget {
                       color: grey,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text("Hari ini, 10:00", style: txtCaption.copyWith(),),
+                    child: Text("09.40", style: txtCaption.copyWith(),),
                   )
                 ],
               ),
 
-
-              SizedBox(height: 20,),
+              SizedBox(height: 15,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,7 +147,7 @@ class ItemPickupVertical extends StatelessWidget {
                   CommonButtonOutline(
                     text: "Lihat detail",
                     style: txtCaption.copyWith(color: primaryColor),
-                    onPressed: onPressed,
+                    onPressed: onTap,
                     color: primaryColor,
                   ),
 
@@ -209,11 +213,4 @@ class ItemPickupVertical extends StatelessWidget {
               ),
             ]));
   }
-}
-
-enum PickupStatus {
-  onGoing,
-  done,
-  cancel,
-  waiting,
 }

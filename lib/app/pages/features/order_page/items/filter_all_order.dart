@@ -4,17 +4,28 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-List<String> filterStatus =[
+List<String> filterStatus = [
   "Semua",
-  "Menunggu persetujuan",
   "Dalam proses",
-  "Dibatalkan"
+  "Selesai",
+  "Telah Diterima",
+  "Dibatalkan",
 ];
 
-List<String> typeOrder =[
-  "onDelivery",
-  "pickup"
+List<String> post = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
 ];
+
+List<String> typeOrder = ["Semua", "OnDelivery", "Pickup"];
 
 final controller = Get.put(OrderPageController());
 
@@ -23,67 +34,72 @@ voidFilterAllOrder(BuildContext context) {
       // isScrollControlled: true,
       context: context,
       builder: (BuildContext context) => Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
-          child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Filter", style: txtHeadline3),
-                  Text("Clear all", style: txtCaption.copyWith(color: primaryColor))
-                ]
-            ),
-
-            SizedBox(height: 15,),
-
-            WidgetFilter(
-                text: 'Status pemesanan',
-                filterAllOrder: filterStatus,
-                updateSelectedValue: controller.updateSelectedValue,
-                selectedValue: controller.selectedValue,
-            ),
-
-            WidgetFilter(
-                text: 'Pos penjemputan',
-                filterAllOrder: filterStatus,
-                updateSelectedValue: controller.updateSelectedValue,
-                selectedValue: controller.selectedValue,
-            ),
-
-            WidgetFilter(
-              text: 'Type order',
-              filterAllOrder: typeOrder,
-              updateSelectedValue: controller.updateSelectedValue,
-              selectedValue: controller.selectedValue,
-            ),
-
-            SizedBox(height: 5,),
-
-            CommonButton(
-              height: 45,
-                text: "Terapkan",
-                onPressed: (){}
-            )
-          ],
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
           ),
-        )
-      )
-  );
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Filter", style: txtHeadline3),
+                      InkWell(
+                          onTap: () {},
+                          child: Text("Clear all",
+                              style: txtCaption.copyWith(color: primaryColor)))
+                    ]),
+                SizedBox(
+                  height: 15,
+                ),
+                WidgetFilter(
+                    text: 'Status pemesanan',
+                    filterAllOrder: filterStatus,
+                    updateSelectedValue: (filterStatus) {
+                      controller.updateSelectedStatus(filterStatus);
+                      controller.applyAllFilters();
+                    },
+                    selectedValue: controller.selectedStatus.toString()),
+                WidgetFilter(
+                  text: 'Pos penjemputan',
+                  filterAllOrder: post,
+                  updateSelectedValue: controller.updateSelectedValue,
+                  selectedValue: controller.selectedValue.toString(),
+                ),
+                WidgetFilter(
+                  text: 'Type order',
+                  filterAllOrder: typeOrder,
+                  updateSelectedValue: (typeOrder) {
+                    controller.selectTypeOrder(typeOrder);
+                    controller.applyAllFilters();
+                  },
+                  selectedValue: controller.selectedFilterTypeOrder.toString(),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                CommonButton(
+                    height: 45,
+                    text: "Terapkan",
+                    onPressed: () async {
+                      await controller.applyAllFilters();
+                      Get.back();
+                    })
+              ],
+            ),
+          )));
 }
 
 class WidgetFilter extends StatelessWidget {
-  const WidgetFilter({
-    super.key,
-    required this.filterAllOrder,
-    required this.updateSelectedValue,
-    required this.selectedValue, required this.text
-  });
+  const WidgetFilter(
+      {super.key,
+      required this.filterAllOrder,
+      required this.updateSelectedValue,
+      required this.selectedValue,
+      required this.text});
   final String text;
   final List<String> filterAllOrder;
   final Function(String) updateSelectedValue;
@@ -96,10 +112,13 @@ class WidgetFilter extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(text, style: txtSecondaryTitle,),
-
-          SizedBox(height: 5,),
-
+          Text(
+            text,
+            style: txtSecondaryTitle,
+          ),
+          SizedBox(
+            height: 5,
+          ),
           Wrap(
             spacing: 10,
             runSpacing: 3,
@@ -139,4 +158,3 @@ class WidgetFilter extends StatelessWidget {
     );
   }
 }
-

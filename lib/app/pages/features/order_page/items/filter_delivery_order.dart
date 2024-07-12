@@ -2,6 +2,7 @@ import 'package:ayamku_admin/app/pages/features/order_page/items/filter_all_orde
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 voidDeliveryOrder(BuildContext context) {
   showModalBottomSheet(
@@ -29,17 +30,17 @@ voidDeliveryOrder(BuildContext context) {
                 SizedBox(height: 15,),
 
                 WidgetFilter(
-                  text: 'Status pemesanan',
-                  filterAllOrder: filterStatus,
-                  updateSelectedValue: controller.updateSelectedValue,
-                  selectedValue: controller.selectedValue,
+                    text: 'Status pemesanan',
+                    filterAllOrder: filterStatus,
+                    updateSelectedValue: controller.updateSelectedStatus,
+                    selectedValue: controller.selectedStatus.toString()
                 ),
 
                 WidgetFilter(
                   text: 'Pos penjemputan',
                   filterAllOrder: filterStatus,
                   updateSelectedValue: controller.updateSelectedValue,
-                  selectedValue: controller.selectedValue,
+                  selectedValue: controller.selectedValue.toString(),
                 ),
 
                 SizedBox(height: 5,),
@@ -47,7 +48,10 @@ voidDeliveryOrder(BuildContext context) {
                 CommonButton(
                     height: 45,
                     text: "Terapkan",
-                    onPressed: (){}
+                    onPressed: (){
+                      // controller.pickupFilters();
+                      // Get.back();
+                    }
                 )
               ],
             ),

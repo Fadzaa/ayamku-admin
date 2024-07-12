@@ -19,14 +19,14 @@ final List <OrderSummary> order_summary_data = [
   ),
   OrderSummary(
       icon: icTotalDelivery,
-      title: "Total Schdule",
+      title: "Total Schedule",
       count: 148
   ),
-  OrderSummary(
-      icon: icCancel,
-      title: "Canceled",
-      count: 3
-  ),
+  // OrderSummary(
+  //     icon: icCancel,
+  //     title: "Canceled",
+  //     count: 3
+  // ),
 
 
 ];

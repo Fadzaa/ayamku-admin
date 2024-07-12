@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
@@ -5,13 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class ItemSalesSummary extends StatelessWidget {
+class ItemSalesSummary extends GetView<HomePageController> {
   const ItemSalesSummary({
     super.key,
-    required this.typeSalesItem
+    required this.typeSalesItem,
+    this.numberOfOrders,
   });
 
   final SalesItem typeSalesItem;
+  final int? numberOfOrders;
 
 
   @override
@@ -129,7 +132,7 @@ class ItemSalesSummary extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("150", style: txtHarga),
+                  Text("$numberOfOrders", style: txtHarga),
                   Container(
                     width: 40,
                     height: 40,

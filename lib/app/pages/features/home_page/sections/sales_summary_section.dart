@@ -1,9 +1,11 @@
+import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/items/item_sales_summary_grid.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class SalesSummarySection extends StatelessWidget {
+class SalesSummarySection extends GetView<HomePageController> {
   const SalesSummarySection({super.key});
 
   @override
@@ -33,11 +35,17 @@ class SalesSummarySection extends StatelessWidget {
 
         Row(
           children: [
-            Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[1])),
+            Obx(() {
+              if (controller.isLoading.value) {
+                return CircularProgressIndicator();
+              } else {
+                return Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[1]));
+              }
+            }),
 
             const SizedBox(width: 15,),
 
-            Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[2])),
+            Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[2],)),
           ],
         )
       ],

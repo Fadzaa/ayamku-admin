@@ -53,22 +53,22 @@ class DeliveryOrderSection extends GetView<OrderPageController> {
           height: 20,
         ),
 
-        // displayTime() == "Selesai"
+        displayTime() == "Selesai"
 
-        // ? Center(
-        //   child: NotFoundPage(
-        //     image: sessionOrderOver,
-        //     title: 'Order Session Overr',
-        //     subtitle: 'Sesi order delivery sudah selesai, silahkan cek untuk pemesanan pickup',
-        //     commonButton: CommonButton(
-        //       onPressed: (){
-        //         // Get.to(PickupSection());
-        //       },
-        //       text: 'Pickup',
-        //     )
-        //   ),)
-        //
-        // :
+        ? Center(
+          child: NotFoundPage(
+            image: sessionOrderOver,
+            title: 'Order Session Over',
+            subtitle: 'Sesi order delivery sudah selesai, silahkan cek untuk pemesanan pickup',
+            commonButton: CommonButton(
+              onPressed: (){
+                controller.selectSectionType('pickup');
+              },
+              text: 'Pickup',
+            )
+          ),)
+
+        :
         Obx(() {
           if(controller.isLoading.value){
             return Center(

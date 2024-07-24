@@ -29,7 +29,6 @@ class ItemTextField extends StatelessWidget {
         TextFormField(
           controller: controller,
           maxLines: maxLines ?? 1,
-          style: txtCaption,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: txtFormTitle.copyWith(color: blackColor50),
@@ -88,7 +87,6 @@ class ItemTxtCalender extends StatelessWidget {
           controller: controller,
           minLines: minLines ?? 1,
           maxLines: maxLines ?? 2,
-          style: txtCaption,
           decoration: InputDecoration(
             suffixIcon: InkWell(
               onTap: onTapSuffixIcon,

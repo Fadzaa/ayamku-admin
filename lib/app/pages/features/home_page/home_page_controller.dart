@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
 import 'package:ayamku_admin/app/api/store/model/storeResponse.dart';
@@ -14,6 +16,7 @@ class HomePageController extends GetxController {
   final isActive = false.obs;
 
   RxInt numberOfOrders = 0.obs;
+  RxInt processingOrdersCount = 0.obs;
 
   late StoreService storeService;
   late Store storeResponse;
@@ -80,6 +83,9 @@ class HomePageController extends GetxController {
       numberOfOrders.value = orders.length;
 
       print('Number of orders: ${numberOfOrders.value}');
+
+      processingOrdersCount.value = orders.where((order) => order.status == "processing").length;
+      print('Number of processing orders: ${processingOrdersCount.value}');
 
       orderResponse = OrderResponse.fromJson(response.data);
       listOrder = orderResponse.data!.obs;

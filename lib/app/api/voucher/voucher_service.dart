@@ -19,12 +19,18 @@ class VoucherService {
     }
   }
 
-  Future<dio.Response> updateVoucher(String id, Map<String, String> formData) async {
+  Future<dio.Response> updateVoucher(String id, String code, int discount,
+      String description, int qty, String startDate, String endDate) async {
     try {
-      final response = await _dioInstance.putRequest(
-        endpoint: ApiEndPoint.updateVoucher(id),
-        data: formData,
-      );
+      final response = await _dioInstance
+          .putRequest(endpoint: ApiEndPoint.updateVoucher(id), isAuthorize: true, data: {
+        'code': code,
+        'discount': discount,
+        'description': description,
+        'qty': qty,
+        'start_date': startDate,
+        'end_date': endDate
+      });
 
       return response;
     } catch (e) {
@@ -32,11 +38,12 @@ class VoucherService {
     }
   }
 
-  Future<dio.Response> addVoucher( formData) async {
+  Future<dio.Response> addVoucher(formData) async {
     try {
       final response = await _dioInstance.postRequest(
         endpoint: ApiEndPoint.voucher,
         data: formData,
+        isAuthorize: true,
       );
 
       return response;

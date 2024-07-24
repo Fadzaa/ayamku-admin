@@ -23,24 +23,30 @@ voidDeliveryOrder(BuildContext context) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Filter", style: txtHeadline3),
-                      Text("Clear all", style: txtCaption.copyWith(color: primaryColor))
+                      InkWell(
+                          onTap: () {
+                            controller.clearFilters();
+                          },
+                          child: Text("Clear all", style: txtCaption.copyWith(color: primaryColor)))
                     ]
                 ),
 
                 SizedBox(height: 15,),
 
                 WidgetFilter(
-                    text: 'Status pemesanan',
-                    filterAllOrder: filterStatus,
-                    updateSelectedValue: controller.updateSelectedStatus,
-                    selectedValue: controller.selectedStatus.toString()
+                  text: 'Status pemesanan',
+                  filterAllOrder: filterStatus,
+                  updateSelectedValue: (filterStatus) {
+                    controller.updateSelectedStatus(filterStatus);
+                  },
+                  selectedValue: controller.selectedStatusDisplay,
                 ),
 
                 WidgetFilter(
                   text: 'Pos penjemputan',
                   filterAllOrder: filterStatus,
                   updateSelectedValue: controller.updateSelectedValue,
-                  selectedValue: controller.selectedValue.toString(),
+                  selectedValue: controller.selectedValue,
                 ),
 
                 SizedBox(height: 5,),
@@ -48,9 +54,9 @@ voidDeliveryOrder(BuildContext context) {
                 CommonButton(
                     height: 45,
                     text: "Terapkan",
-                    onPressed: (){
-                      // controller.pickupFilters();
-                      // Get.back();
+                    onPressed: () async {
+                      controller.deliveryFilters();
+                      Navigator.pop(context);
                     }
                 )
               ],

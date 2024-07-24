@@ -1,6 +1,7 @@
 import 'package:ayamku_admin/app/pages/features/edit_voucher_page/edit_voucher_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_bottom.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -59,8 +60,9 @@ class EditVoucherPageView extends GetView<EditVoucherPageController> {
         onPressed1: () {
           Get.back();
         },
-        onPressed2: () {
+        onPressed2: () async {
           controller.updateVoucher();
+          Get.offAndToNamed(Routes.MANAGEMENT_VOUCHER);
         },
         bgColor1: red,
         bgColor2: primaryColor,

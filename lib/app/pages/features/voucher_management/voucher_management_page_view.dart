@@ -31,7 +31,7 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
 
                   InkWell(
                     onTap: (){
-                      Get.back();
+                      Get.toNamed(Routes.HOME_PAGE);
                     },
                     child: SvgPicture.asset(
                       icBack,

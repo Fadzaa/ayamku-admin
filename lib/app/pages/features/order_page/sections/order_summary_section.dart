@@ -42,20 +42,20 @@ class OrderSummarySection extends GetView<OrderPageController> {
               onTap: () {
                 switch (order_summary_data[index].title) {
                   case "Total Order":
-                    controller.updateSelectedType('Semua');
+                    controller.selectSectionType('Semua');
                     break;
                   case "Total Delivery":
-                    controller.updateSelectedType('on_delivery');
+                    controller.selectSectionType('on_delivery');
                     break;
                   case "Total Pickup":
-                    controller.updateSelectedType('pickup');
+                    controller.selectSectionType('pickup');
                     break;
                 }
               },
               child: ItemOrderSummary(
                 title: order_summary_data[index].title,
                 icon: order_summary_data[index].icon,
-                count: order_summary_data[index].count,
+                count: int.parse(order_summary_data[index].count),
               ),
             );
           },

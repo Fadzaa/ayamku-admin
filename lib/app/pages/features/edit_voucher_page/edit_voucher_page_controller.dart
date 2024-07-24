@@ -1,6 +1,7 @@
 import 'package:ayamku_admin/app/api/voucher/model/voucher_response.dart';
 import 'package:ayamku_admin/app/api/voucher/voucher_service.dart';
 import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +14,7 @@ class EditVoucherPageController extends GetxController {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
+  RxBool isLoading = false.obs;
 
   final Voucher voucher = Get.arguments;
   RxList<Voucher> voucherList = <Voucher>[].obs;
@@ -20,7 +22,8 @@ class EditVoucherPageController extends GetxController {
   VoucherResponse voucherResponse = VoucherResponse();
 
 
-  Future<void> selectDate(BuildContext context, TextEditingController controller) async {
+  void selectDate (
+      BuildContext context, TextEditingController controller) async {
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -47,41 +50,41 @@ class EditVoucherPageController extends GetxController {
     endDateController.text = voucher.endDate!;
   }
 
-  void updateVoucher() async {
+
+  Future <void> updateVoucher() async {
     try {
-      final formData = {
-        "code": codeController.text,
-        "discount": discountController.text,
-        "qty": qtyController.text,
-        "description": descriptionController.text,
-        "start_date": startDateController.text,
-        "end_date": endDateController.text,
-      };
-
-      final response = await voucherService.updateVoucher(voucher.id.toString(), formData);
-      voucherResponse = VoucherResponse.fromJson(response.data);
-
-      if (voucherResponse.data != null) {
-        Get.snackbar(
-          "Success",
-          "Voucher updated successfully",
-        );
-
-        print('Updated voucher data: ${voucherResponse.data}');
-        controller.getAllVoucher();
-      } else {
-        Get.snackbar(
-          "Failed",
-          "Failed to update voucher",
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        "Error",
-        e.toString(),
+      isLoading(true);
+      final response = await voucherService.updateVoucher(
+          voucher.id.toString(),
+          codeController.text,
+          int.parse(discountController.text.toString(),),
+          descriptionController.text,
+          int.parse(qtyController.text.toString(),),
+          startDateController.text,
+          endDateController.text
       );
+      VoucherResponse voucherResponse = VoucherResponse.fromJson(response.data);
+      voucherList.addAll(voucherResponse.data!);
+
+      Get.snackbar(
+        "Success",
+        "Voucher updated successfully",
+      );
+
+      print("Update voucher");
+      print('Updated voucher data: ${voucherResponse.data}');
+      print(voucher);
+
+
+    } catch (e) {
+      // Get.snackbar(
+      //   "Error",
+      //   e.toString(),
+      // );
+
+
+    } finally {
+      isLoading.value = false;
     }
   }
-
-
 }

@@ -25,7 +25,7 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: onPressed ?? null,
+        onPressed: onPressed ,
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryColor,
           fixedSize: Size(width ?? double.maxFinite, height ?? 0),

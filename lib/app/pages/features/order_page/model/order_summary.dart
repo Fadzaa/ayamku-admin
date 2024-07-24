@@ -1,6 +1,6 @@
 class OrderSummary {
   final String icon, title;
-  final int count;
+  final String count;
   final String? routes;
 
 

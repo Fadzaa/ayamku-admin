@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,7 @@ class SplashPageView extends GetView<SplashPageController> {
     return Scaffold(
       body: Center(
         child: Image.asset(
-          "logoPrimary",
+          logo,
           width: 200,
           height: 200,
         )

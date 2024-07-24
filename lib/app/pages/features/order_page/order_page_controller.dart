@@ -11,8 +11,11 @@ class OrderPageController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isOrderAccepted = false.obs;
   RxInt numberOfOrders = 0.obs;
+  RxInt numberOfDeliveryOrders = 0.obs;
+  RxInt numberOfPickupOrders = 0.obs;
   RxString selectedValue = 'all'.obs;
   RxString selectedFilterTypeOrder = 'Semua'.obs;
+  RxString selectedStatusDisplay = 'Semua'.obs;
   RxString selectedStatus = 'Semua'.obs;
 
   // fetch order
@@ -21,9 +24,17 @@ class OrderPageController extends GetxController {
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
-
   void updateSelectedValue(String valueOrder) {
     selectedValue.value = valueOrder;
+  }
+
+  void selectSectionType(String method) {
+    selectedFilterTypeOrder.value = method;
+    if (method == 'Semua') {
+      getAllOrder();
+    } else {
+      getOrderMethod(method);
+    }
   }
 
   @override
@@ -40,7 +51,7 @@ class OrderPageController extends GetxController {
     pageController.dispose();
   }
 
-  void getAllOrder() async {
+  Future<void> getAllOrder() async {
     try {
       isLoading.value = true;
 
@@ -49,14 +60,12 @@ class OrderPageController extends GetxController {
       print("Fetch Semua Order");
       print(response.data);
 
-      // List<Order> orders = (response.data['data'] as List)
-      //     .map((orderData) => Order.fromJson(orderData))
-      //     .toList();
-
-      listAllOrder.addAll(OrderResponse.fromJson(response.data).data!);
+      listAllOrder.assignAll(OrderResponse.fromJson(response.data).data!);
+      listOrder.assignAll(listAllOrder);
       numberOfOrders.value = listAllOrder.length;
 
       print('Number of orders: ${numberOfOrders.value}');
+
 
       print(listOrder);
 
@@ -69,39 +78,31 @@ class OrderPageController extends GetxController {
     }
   }
 
-  Future getOrderMethod(String method) async {
+  Future<void> getOrderMethod(String method) async {
     try {
       print('value method = ' + method);
       isLoading.value = true;
 
       final response = await orderService.getOrderMethodType(method: method);
       listOrder.clear();
-
       print("CHECK RESPONSE METHOD");
       print(response.data);
 
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.where((order) => order.methodType == method).toList().obs;
+      listOrder.assignAll(orderResponse.data!
+          .where((order) => order.methodType == method)
+          .toList());
+
+      numberOfDeliveryOrders.value = orderResponse.data!
+          .where((order) => order.methodType == 'on_delivery')
+          .length;
+      numberOfPickupOrders.value = orderResponse.data!
+          .where((order) => order.methodType == 'pickup')
+          .length;
+
+      print('Number of delivery orders: ${numberOfDeliveryOrders.value}');
+      print('Number of pickup orders: ${numberOfPickupOrders.value}');
       print(listOrder);
-
-    } catch (e) {
-      print('Error ecured: $e');
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  void filterByStatus(String status) {
-    listOrder.assignAll(listOrder.where((order) => order.status == status).toList());
-  }
-
-  Future applyAllFilters() async {
-    listOrder.clear();
-    isLoading.value = true;
-
-    try {
-      selectTypeOrder(selectedFilterTypeOrder.value);
-      updateSelectedStatus(selectedStatus.value);
     } catch (e) {
       print('Error occurred: $e');
     } finally {
@@ -109,63 +110,109 @@ class OrderPageController extends GetxController {
     }
   }
 
-  void selectTypeOrder(String type) {
-    selectedFilterTypeOrder.value = type;
-    if (type == 'Semua') {
-      getAllOrder();
-    } else if (type ==  'OnDelivery'){
-      getOrderMethod('on_delivery');
-    } else if (type ==  'Pickup'){
-      getOrderMethod('pickup');
+  static final Map<String, String> statusMapping = {
+    "Dalam proses": "processing",
+    "Selesai": "completed",
+    "Telah Diterima": "accept",
+    "Dibatalkan": "cancelled",
+  };
+
+  void updateSelectedStatus(String statusText) {
+    selectedStatusDisplay.value = statusText;
+    if (statusText == "Semua") {
+      selectedStatus.value = ["processing", "completed", "accept", "cancelled"].join(',');
     } else {
-      getAllOrder();
+      selectedStatus.value = statusMapping[statusText] ?? "";
+    }
+
+    applyAllFilters();
+  }
+
+  void filterByStatus(String status, String type) {
+    listOrder.assignAll(listAllOrder.where((order) => order.status == status && order.methodType == type).toList());
+  }
+
+  Future<void> applyAllFilters() async {
+    isLoading.value = true;
+    listOrder.clear();
+
+    try {
+      await getAllOrder();
+
+      print("Selected status: ${selectedStatus.value}");
+      print("Selected filter type: ${selectedFilterTypeOrder.value}");
+
+      if (selectedStatus.value == 'Semua' && selectedFilterTypeOrder.value == 'Semua') {
+        listOrder.assignAll(listAllOrder);
+      } else {
+        listOrder.assignAll(listAllOrder.where((order) {
+          bool statusMatch = selectedStatus.value == 'Semua' || order.status == selectedStatus.value;
+          bool typeMatch = selectedFilterTypeOrder.value == 'Semua' ||
+              (selectedFilterTypeOrder.value == 'OnDelivery' && order.methodType == 'on_delivery') ||
+              (selectedFilterTypeOrder.value == 'Pickup' && order.methodType == 'pickup');
+
+          print("Order: ${order.status}, ${order.methodType}");
+          print("Status match: $statusMatch, Type match: $typeMatch");
+
+          return statusMatch && typeMatch;
+        }).toList());
+      }
+
+      print("Filtered orders count: ${listOrder.length}");
+
+    } catch (e) {
+      print('Error occurred: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
+  Future<void> selectTypeOrder(String type) async {
+    selectedFilterTypeOrder.value = type;
+    switch (type) {
+      case 'Semua':
+        await getAllOrder();
+        break;
+      case 'OnDelivery':
+        await getOrderMethod('on_delivery');
+        break;
+      case 'Pickup':
+        await getOrderMethod('pickup');
+        break;
+      default:
+        await getAllOrder();
+        break;
     }
 
     print(type);
   }
 
-  void updateSelectedStatus(String status) {
-    selectedStatus.value = status;
-    if (status == 'Dalam proses') {
-      filterByStatus('processing');
-    } else if (status == 'Selesai') {
-      filterByStatus('completed');
-    } else if (status == 'Telah Diterima') {
-      filterByStatus('accept');
-    } else if (status == 'Dibatalkan') {
-      filterByStatus('cancelled');
-    }
-    print(status);
-  }
-
-  void pickupFilters() async {
+  Future<void> pickupFilters() async {
     isLoading.value = true;
 
-    if (selectedStatus.value != 'Semua') {
-      getAllOrder();
-    } else if (selectedStatus.value == 'Dalam proses') {
-      filterByStatus('processing');
-    } else if (selectedStatus.value == 'Selesai') {
-      filterByStatus('completed');
-    } else if (selectedStatus.value == 'Telah Diterima') {
-      filterByStatus('accept');
-    } else if (selectedStatus.value == 'Dibatalkan') {
-      filterByStatus('cancelled');
-    } else {
-      getAllOrder();
-    }
+    await getOrderMethod('pickup');
+
+    filterByStatus(selectedStatus.value, 'pickup');
 
     isLoading.value = false;
   }
 
-  void updateSelectedType(String method) {
-    selectedFilterTypeOrder.value = method;
-    if (method == 'Semua') {
-      getAllOrder();
-    } else {
-      getOrderMethod(method);
-    }
+  Future<void> deliveryFilters() async {
+    isLoading.value = true;
+
+    await getOrderMethod('on_delivery');
+
+    filterByStatus(selectedStatus.value, 'on_delivery');
+
+    isLoading.value = false;
   }
 
+  void clearFilters() {
+    selectedStatus.value = 'Semua';
+    selectedStatusDisplay.value = 'Semua';
+    selectedFilterTypeOrder.value = 'Semua';
+    getAllOrder();
+  }
 
 }

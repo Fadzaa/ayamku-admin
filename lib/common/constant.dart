@@ -3,6 +3,7 @@ String svgImages = 'assets/svg/';
 
 
 //CONSTANT IMAGE
+String logo = '${images}ayamku_logo.png';
 String logoPrimary = '${images}logo_primary.png';
 String icHistory = '${images}ic_history.png';
 String icProduct = '${images}ic_product.png';

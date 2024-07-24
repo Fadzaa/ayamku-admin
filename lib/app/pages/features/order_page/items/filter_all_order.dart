@@ -1,5 +1,6 @@
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,7 +49,9 @@ voidFilterAllOrder(BuildContext context) {
                     children: [
                       Text("Filter", style: txtHeadline3),
                       InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.clearFilters();
+                          },
                           child: Text("Clear all",
                               style: txtCaption.copyWith(color: primaryColor)))
                     ]),
@@ -56,54 +59,58 @@ voidFilterAllOrder(BuildContext context) {
                   height: 15,
                 ),
                 WidgetFilter(
-                    text: 'Status pemesanan',
-                    filterAllOrder: filterStatus,
-                    updateSelectedValue: (filterStatus) {
-                      controller.updateSelectedStatus(filterStatus);
-                      controller.applyAllFilters();
-                    },
-                    selectedValue: controller.selectedStatus.toString()),
+                  text: 'Status pemesanan',
+                  filterAllOrder: filterStatus,
+                  updateSelectedValue: (filterStatus) {
+                    controller.updateSelectedStatus(filterStatus);
+                  },
+                  selectedValue: controller.selectedStatusDisplay,
+                ),
                 WidgetFilter(
                   text: 'Pos penjemputan',
                   filterAllOrder: post,
                   updateSelectedValue: controller.updateSelectedValue,
-                  selectedValue: controller.selectedValue.toString(),
+                  selectedValue: controller.selectedValue,
                 ),
                 WidgetFilter(
                   text: 'Type order',
                   filterAllOrder: typeOrder,
                   updateSelectedValue: (typeOrder) {
-                    controller.selectTypeOrder(typeOrder);
+                    controller.selectedFilterTypeOrder.value = typeOrder;
                     controller.applyAllFilters();
                   },
-                  selectedValue: controller.selectedFilterTypeOrder.toString(),
+                  selectedValue: controller.selectedFilterTypeOrder,
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 CommonButton(
-                    height: 45,
-                    text: "Terapkan",
-                    onPressed: () async {
-                      await controller.applyAllFilters();
-                      Get.back();
-                    })
+                  height: 45,
+                  text: "Terapkan",
+                  onPressed: () async {
+                    await controller.applyAllFilters();
+                    Navigator.pop(context);
+                  },
+                )
+
               ],
             ),
           )));
 }
 
 class WidgetFilter extends StatelessWidget {
-  const WidgetFilter(
-      {super.key,
-      required this.filterAllOrder,
-      required this.updateSelectedValue,
-      required this.selectedValue,
-      required this.text});
+  const WidgetFilter({
+    Key? key,
+    required this.filterAllOrder,
+    required this.updateSelectedValue,
+    required this.selectedValue,
+    required this.text
+  }) : super(key: key);
+
   final String text;
   final List<String> filterAllOrder;
   final Function(String) updateSelectedValue;
-  final String selectedValue;
+  final RxString selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -123,14 +130,14 @@ class WidgetFilter extends StatelessWidget {
             spacing: 10,
             runSpacing: 3,
             children: List.generate(filterAllOrder.length, (index) {
-              return InkWell(
+              return Obx(() => InkWell(
                 onTap: () {
                   updateSelectedValue(filterAllOrder[index]);
                 },
                 child: ChipTheme(
                   data: ChipTheme.of(context).copyWith(
                     side: BorderSide(
-                      color: selectedValue == filterAllOrder[index]
+                      color: selectedValue.value == filterAllOrder[index]
                           ? primaryColor
                           : blackColor50,
                     ),
@@ -139,7 +146,7 @@ class WidgetFilter extends StatelessWidget {
                     label: Text(
                       filterAllOrder[index],
                       style: txtCaption.copyWith(
-                        color: selectedValue == filterAllOrder[index]
+                        color: selectedValue.value == filterAllOrder[index]
                             ? primaryColor
                             : blackColor,
                       ),
@@ -150,7 +157,7 @@ class WidgetFilter extends StatelessWidget {
                     ),
                   ),
                 ),
-              );
+              ));
             }),
           ),
         ],

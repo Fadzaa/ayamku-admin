@@ -10,8 +10,6 @@ import 'package:intl/intl.dart';
 
 class AddVoucherPageController extends GetxController {
 
-  final controller = Get.put(VoucherPageController());
-
   final TextEditingController codeController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
   final TextEditingController qtyController = TextEditingController();
@@ -35,7 +33,7 @@ class AddVoucherPageController extends GetxController {
     );
 
     if (picked != null) {
-      String formattedDate = DateFormat('dd MMMM yyyy').format(picked);
+      String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
       controller.text = formattedDate;
     }
 
@@ -43,51 +41,42 @@ class AddVoucherPageController extends GetxController {
   }
 
 
-  Future addVoucher() async{
+  Future <void> addVoucher() async{
     try {
       isLoading.value = true;
+
+      DateTime? startDate;
+      DateTime? endDate;
+      try {
+        startDate = DateTime.parse(startDateController.text);
+        endDate = DateTime.parse(endDateController.text);
+      } catch (e) {
+        throw FormatException("Invalid date format. Please use YYYY-MM-DD format.");
+      }
+
+      if (endDate.isBefore(startDate)) {
+        throw Exception("End date must be after start date");
+      }
+
       dio.FormData formData = dio.FormData.fromMap({
         "code" : codeController.text,
         "discount" : int.parse(discountController.text),
         "qty" : int.parse(qtyController.text),
         "description" : descriptionController.text,
-        "start_date" : startDateController.text,
-        "end_date" : endDateController.text
+        "start_date" : startDate.toString(),
+        "end_date" : endDate.toString()
       });
 
       final response = await voucherService.addVoucher(formData);
       voucherResponse = VoucherResponse.fromJson(response.data);
 
-      Voucher voucher = Voucher(
-          code: codeController.text,
-          discount: int.parse(discountController.text),
-          qty: int.parse(qtyController.text),
-          description: descriptionController.text,
-          startDate: startDateController.text,
-          endDate: endDateController.text
-      );
-
-      controller.voucherList.add(voucher);
-
       update();
 
-      Get.toNamed(Routes.MANAGEMENT_VOUCHER);
       Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
+      print('Add voucher data: ${voucherResponse.data}');
 
-      if (voucherResponse.data != null) {
-        Get.snackbar(
-          "Success",
-          "Voucher added successfully",
-        );
 
-        print('Add voucher data: ${voucherResponse.data}');
-        controller.getAllVoucher();
-      } else {
-        Get.snackbar(
-          "Failed",
-          "Failed to add voucher",
-        );
-      }
+
     }
     catch(e){
       Get.snackbar(

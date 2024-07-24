@@ -35,6 +35,8 @@ import 'package:ayamku_admin/app/pages/features/product_page/product_page_bindin
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_view.dart';
+import 'package:ayamku_admin/app/pages/initial_pages/splash_screen/splash_page_binding.dart';
+import 'package:ayamku_admin/app/pages/initial_pages/splash_screen/splash_page_view.dart';
 import 'package:get/get.dart';
 import '../pages/features/add_voucher/add_voucher_binding.dart';
 import '../pages/features/add_voucher/add_voucher_page_view.dart';
@@ -49,9 +51,16 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.HOME_PAGE;
+  static const INITIAL = Routes.SPLASH_PAGE;
 
   static final routes = [
+    GetPage(
+      name: _Paths.SPLASH_PAGE,
+      page: () => const SplashPageView(),
+      binding: SplashPageBinding(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
     GetPage(
       name: _Paths.HOME_PAGE,
       page: () => const HomePageView(),

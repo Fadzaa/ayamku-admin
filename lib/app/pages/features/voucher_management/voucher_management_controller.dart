@@ -54,10 +54,12 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
     tabController!.dispose();
   }
 
-  void getAllVoucher() async {
+  Future <void> getAllVoucher() async {
     try {
       isLoading.value = true;
+      voucherList.clear();
       final response = await voucherService.getAllVoucher();
+
       voucherResponse = VoucherResponse.fromJson(response.data);
       var vouchers = voucherResponse.data!;
 
@@ -71,7 +73,8 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
         }).toList();
       }
 
-      voucherList.assignAll(vouchers);
+      print(response.data);
+      voucherList.assignAll(VoucherResponse.fromJson(response.data).data!);
       // voucherList = vouchers.obs;
     } catch (e) {
       isLoading.value = true;

@@ -2,6 +2,7 @@ import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_pag
 import 'package:ayamku_admin/app/pages/features/add_product_page/section/product_page.dart';
 import 'package:ayamku_admin/app/pages/features/add_voucher/add_voucher_controller.dart';
 import 'package:ayamku_admin/app/pages/features/add_voucher/section/add_voucher_page.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,7 @@ class AddVoucherPageView extends GetView<AddVoucherPageController> {
         },
         onPressed2: () {
           controller.addVoucher();
+          Get.offAndToNamed(Routes.MANAGEMENT_VOUCHER);
         },
         bgColor1: red,
         bgColor2: primaryColor,

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 voidFilterPickupOrder(BuildContext context) {
   showModalBottomSheet(
-    // isScrollControlled: true,
+      // isScrollControlled: true,
       context: context,
       builder: (BuildContext context) => Container(
           decoration: BoxDecoration(
@@ -15,7 +15,7 @@ voidFilterPickupOrder(BuildContext context) {
           ),
           child: Container(
             height: 270,
-            padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -23,32 +23,37 @@ voidFilterPickupOrder(BuildContext context) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Filter", style: txtHeadline3),
-                      Text("Clear all", style: txtCaption.copyWith(color: primaryColor))
-                    ]
+                      InkWell(
+                        onTap: () {
+                          controller.clearFilters();
+                        },
+                        child: Text("Clear all",
+                            style: txtCaption.copyWith(color: primaryColor)),
+                      )
+                    ]),
+                SizedBox(
+                  height: 15,
                 ),
-
-                SizedBox(height: 15,),
-
                 WidgetFilter(
-                    text: 'Status pemesanan',
-                    filterAllOrder: filterStatus,
-                    updateSelectedValue: controller.updateSelectedStatus,
-                    selectedValue: controller.updateSelectedValue.toString()
+                  text: 'Status pemesanan',
+                  filterAllOrder: filterStatus,
+                  updateSelectedValue: (filterStatus) {
+                    controller.updateSelectedStatus(filterStatus);
+                  },
+                  selectedValue: controller.selectedStatusDisplay,
                 ),
-
-                SizedBox(height: 5,),
-
+                SizedBox(
+                  height: 5,
+                ),
                 CommonButton(
-                    height: 45,
-                    text: "Terapkan",
-                    onPressed: (){
-                      // controller.pickupFilters();
-                      // Get.back();
-                    }
+                  height: 45,
+                  text: "Terapkan",
+                  onPressed: () async {
+                     await controller.pickupFilters();
+                    Navigator.pop(context);
+                  },
                 )
               ],
             ),
-          )
-      )
-  );
+          )));
 }

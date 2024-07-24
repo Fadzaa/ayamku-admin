@@ -1,26 +1,30 @@
+import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
 import 'package:ayamku_admin/common/constant.dart';
+import 'package:get/get.dart';
 import 'order_summary.dart';
 
+final controller = Get.put(OrderPageController());
 final List <OrderSummary> order_summary_data = [
+
   OrderSummary(
       icon: icTotalOrder,
       title: "Total Order",
-      count: 150
+      count: "${controller.numberOfOrders.value}"
   ),
   OrderSummary(
       icon: icTotalPickup,
       title: "Total Pickup",
-      count: 2,
+      count: "${controller.numberOfPickupOrders.value}",
   ),
   OrderSummary(
       icon: icTotalDelivery,
       title: "Total Delivery",
-      count: 148
+      count: "${controller.numberOfDeliveryOrders.value}"
   ),
   OrderSummary(
       icon: icTotalDelivery,
       title: "Total Schedule",
-      count: 148
+      count: "148"
   ),
   // OrderSummary(
   //     icon: icCancel,

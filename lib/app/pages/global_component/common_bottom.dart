@@ -21,7 +21,7 @@ class CommonBottom extends StatelessWidget {
     required this.txt2
   });
 
-  final VoidCallback onPressed1, onPressed2;
+  final void Function() onPressed1, onPressed2;
   final Color bgColor1, bgColor2, txtColor1, txtColor2;
   final String ic1, ic2, txt1, txt2;
 

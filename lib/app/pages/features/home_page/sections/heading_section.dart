@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/items/item_manage_horizontal.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../../../common/theme.dart';
 
-class HeadingSection extends StatelessWidget {
+class HeadingSection extends GetView<HomePageController> {
   const HeadingSection({super.key});
 
   @override
@@ -39,7 +40,7 @@ class HeadingSection extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5)
                       ),
                       child: Center(
-                        child: Text("25", style: txtListItemTitle.copyWith(color: Colors.white),),
+                        child:Obx(() => Text("${controller.processingOrdersCount.value}", style: txtListItemTitle.copyWith(color: Colors.white),))
                       ),
                     ),
 

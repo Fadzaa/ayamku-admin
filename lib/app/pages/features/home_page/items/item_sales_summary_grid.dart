@@ -132,7 +132,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("$numberOfOrders", style: txtHarga),
+                  Text("${controller.numberOfOrders.value}", style: txtHarga),
                   Container(
                     width: 40,
                     height: 40,

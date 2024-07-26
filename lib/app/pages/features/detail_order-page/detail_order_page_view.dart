@@ -47,6 +47,7 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
         children: [
           if(controller.orderStatus.value == "accept")HeaderStatusSection(),
           DeliverySection(
+            status: controller.orderStatus.value,
             idOrder: controller.orderId.value.toString(),
             userName: controller.userName.value,
             posName: controller.methodType.value == 'pickup' ? "ambil di outlet" : controller.postName.value,
@@ -61,7 +62,7 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       OrderSummarySection(
-                        quantity: detailOrder.quantity,
+                        quantity: detailOrder.quantity.toString(),
                         menuName: detailOrder.menuName,
                         price: detailOrder.price,
                       ),

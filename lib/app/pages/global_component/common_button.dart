@@ -160,7 +160,7 @@ class LittleBtn extends StatelessWidget {
         child: Text(
           text,
           style: style ?? txtButtonTab.copyWith(
-            color: txtColor ?? blackColor,
+            color: txtColor ?? Colors.white,
           ),
         ),
       ),

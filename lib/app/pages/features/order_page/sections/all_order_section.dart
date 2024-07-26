@@ -50,6 +50,7 @@ class AllOrderSection extends GetView<OrderPageController> {
               itemBuilder: (context, index){
                 final order = controller.listOrder[index];
                 return ItemAllOrderVertical(
+                     status: order.status.toString(),
                     cartItems: order.cart!.cartItems!,
                     namePos: order.post!.id!.toString(),
                     orderName: order.id.toString(),

@@ -37,6 +37,18 @@ class OrderPageController extends GetxController {
     }
   }
 
+  void completeOrder() {
+    listOrder.forEach((order) {
+      if (order.status == 'processing') {
+        order.status = 'completed';
+      }
+    });
+  }
+
+  void acceptOrder() {
+    // isOrderAccepted.value = true;
+  }
+
   @override
   void onInit() {
     super.onInit();

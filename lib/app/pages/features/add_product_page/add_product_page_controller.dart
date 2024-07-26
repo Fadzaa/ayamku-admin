@@ -42,9 +42,8 @@ class AddProductPageController extends GetxController {
         "name" : nameController.text,
         "description" : descriptionController.text,
         "price" : int.parse(priceController.text),
-        "category" : categories.join(", "),
-        "stock" : int.parse(qtyController.text),
-        'image': await dio.MultipartFile.fromFile(filePathImage.value),
+        "category" : selectedCategory.value.toLowerCase(),
+        "image": await dio.MultipartFile.fromFile(filePathImage.value),
       });
 
       await productService.addProduct(

@@ -16,10 +16,10 @@ class AddProductPage extends GetView<AddProductPageController> {
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          PickImg(
+          Obx(() => PickImg(
             onTap: () => controller.pickImage(controller.filePathImage),
             imagePath: controller.filePathImage.value,
-          ),
+          ),),
 
           DropdownCategory(
             color: blackColor50,

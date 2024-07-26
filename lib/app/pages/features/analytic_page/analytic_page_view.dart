@@ -55,7 +55,7 @@ class AnalyticPageView extends GetView<AnalyticPageController>{
 
                 SizedBox(height: 30,),
 
-                SalesStatisitc()
+                // SalesStatisitc()
 
               ],
             ),

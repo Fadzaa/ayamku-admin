@@ -24,6 +24,9 @@ class ProductService {
           endpoint: ApiEndPoint.product,
           data: formData,
           isAuthorize: true
+          endpoint: 'https://ayamku-api.rplrus.com/api/products',
+          data: formData,
+        isAuthorize: true
       );
 
 

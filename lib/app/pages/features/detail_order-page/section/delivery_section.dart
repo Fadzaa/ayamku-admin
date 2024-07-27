@@ -3,6 +3,7 @@ import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get/get.dart';
@@ -12,11 +13,12 @@ class DeliverySection extends StatelessWidget {
     super.key,
     required this.idOrder,
     required this.userName,
+    required this.status,
     this.posName,
     this.posDesc,
   });
 
-  final String idOrder, userName;
+  final String idOrder, userName, status;
   final String? posName, posDesc;
 
   @override
@@ -58,6 +60,18 @@ class DeliverySection extends StatelessWidget {
                 userName,
                 style: txtListItemTitle,
               ),
+              Spacer(),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  border: Border.all(color: primaryColor, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  status,
+                  style: txtCaption.copyWith(color: primaryColor),
+                ),
+              )
             ],
           ),
           SizedBox(
@@ -89,9 +103,9 @@ class DeliverySection extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
+          // SizedBox(
+          //   height: 10,
+          // ),
           Row(
             children: [
               SvgPicture.asset(icCalender),

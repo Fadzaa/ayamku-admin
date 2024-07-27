@@ -37,7 +37,7 @@ dependencies:
   image_picker: ^1.1.1
   intl: ^0.17.0
   flutter_charts: ^0.5.2
-  charts_flutter:
+#  charts_flutter:
   flutter_switch:
   auto_size_text: ^3.0.0
   dotted_line: ^3.2.2

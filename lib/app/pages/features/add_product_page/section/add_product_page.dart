@@ -20,7 +20,6 @@ class AddProductPage extends GetView<AddProductPageController> {
             onTap: () => controller.pickImage(controller.filePathImage),
             imagePath: controller.filePathImage.value,
           ),),
-          
           DropdownCategory(
             color: blackColor50,
             categories: controller.categories,

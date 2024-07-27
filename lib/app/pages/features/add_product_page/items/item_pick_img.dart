@@ -42,6 +42,10 @@ class PickImg extends StatelessWidget {
           fit: BoxFit.cover,
         );
       }
+      return Image.file(
+        File(imagePath),
+        fit: BoxFit.cover,
+      );
     }
   }
 

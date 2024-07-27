@@ -41,7 +41,7 @@ class ListProductSection extends GetView<ProductPageController> {
                 category: product.category.toString(),
                 name: product.name.toString(),
                 price: product.price!,
-                stock: product.stock!,
+                stock: product.stock ?? 0,
                 onPressed: () {
                   Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: product);
                 },

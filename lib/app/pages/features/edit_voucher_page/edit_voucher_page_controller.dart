@@ -77,11 +77,10 @@ class EditVoucherPageController extends GetxController {
 
 
     } catch (e) {
-      // Get.snackbar(
-      //   "Error",
-      //   e.toString(),
-      // );
-
+      Get.snackbar(
+        "Error",
+        e.toString(),
+      );
 
     } finally {
       isLoading.value = false;

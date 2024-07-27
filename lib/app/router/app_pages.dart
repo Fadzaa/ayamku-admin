@@ -51,7 +51,7 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.SPLASH_PAGE;
+  static const INITIAL = Routes.HOME_PAGE;
 
   static final routes = [
     GetPage(

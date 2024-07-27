@@ -75,8 +75,6 @@ class AddVoucherPageController extends GetxController {
       Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
       print('Add voucher data: ${voucherResponse.data}');
 
-
-
     }
     catch(e){
       Get.snackbar(

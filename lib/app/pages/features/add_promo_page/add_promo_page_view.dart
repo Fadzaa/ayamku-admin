@@ -2,6 +2,7 @@ import 'package:ayamku_admin/app/pages/features/add_promo_page/add_promo_page_co
 import 'package:ayamku_admin/app/pages/features/add_promo_page/section/add_promo_page.dart';
 import 'package:ayamku_admin/app/pages/features/add_promo_page/section/promo_page.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_bottom.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,7 @@ class AddPromoPageView extends GetView<AddPromoPageController>{
         },
         onPressed2: () {
           controller.addPromo();
+          Get.offAndToNamed(Routes.PROMO_PAGE);
         },
         bgColor1: red,
         bgColor2: primaryColor,

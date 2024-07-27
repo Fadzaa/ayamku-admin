@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_controller.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
@@ -10,7 +12,11 @@ import '../../../api/promo/promo_service.dart';
 
 class AddPromoPageController extends GetxController{
 
-  final PromoPageController promoPageController = Get.put(PromoPageController());
+  final PromoPageController promoPageController = Get.find();
+
+  String startDateFormatted = '';
+  String endDateFormatted = '';
+
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController eventController = TextEditingController();
@@ -18,9 +24,10 @@ class AddPromoPageController extends GetxController{
   final TextEditingController endDateController = TextEditingController();
   final TextEditingController imageController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController discountController = TextEditingController();
+
 
   final ImagePicker _picker = ImagePicker();
-
 
   RxString selectedImagePath = ''.obs;
   RxString filePathImage = ''.obs;
@@ -32,63 +39,92 @@ class AddPromoPageController extends GetxController{
 
   Future<void> pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    
-    if (pickedFile != null) {
-      selectedImagePath.value = pickedFile.path;
-    }
+
+   if (pickedFile != null) {
+    selectedImagePath.value = pickedFile.path;
+    filePathImage.value = pickedFile.path;
+  }
     print("Image Selected");
     print(pickedFile?.path);
     print(selectedImagePath.value);
   }
 
   Future<void> selectDate(BuildContext context, TextEditingController controller) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
+  DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+  );
 
-    if (picked != null) {
-      String formattedDate = DateFormat('dd MMMM yyyy').format(picked);
+  if (picked != null) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
       controller.text = formattedDate;
     }
 
     print(picked);
-  }
+}
+
+
 
   Future<void> addPromo() async {
     try {
       isLoading.value = true;
+
+      DateTime? startDate;
+      DateTime? endDate;
+      try {
+        startDate = DateTime.parse(startDateController.text);
+        endDate = DateTime.parse(endDateController.text);
+      } catch (e) {
+        throw FormatException("Invalid date format. Please use YYYY-MM-DD format.");
+      }
+
+      if (endDate.isBefore(startDate)) {
+        throw Exception("End date must be after start date");
+      }
+
+
+
       dio.FormData formData = dio.FormData.fromMap({
         "name" : nameController.text,
         "description" : descriptionController.text,
-        "start_date" : startDateController.text,
-        "end_date" : endDateController.text,
+        "discount" : int.parse(discountController.text),
+        "start_date" : startDate.toString(),
+        "end_date" : endDate.toString(),
         'image': await dio.MultipartFile.fromFile(filePathImage.value),
       });
 
-      await promoService.addPromo(
-          formData
-      );
-
-      Promo promo = Promo(
-          name: nameController.text,
-          description: descriptionController.text,
-          startDate: startDateController.text,
-          endDate: endDateController.text,
-          image: filePathImage.value
-      );
-
-      promoPageController.promosList.add(promo);
+      final response = await promoService.addPromo(formData);
+      promoResponse = PromoResponse.fromJson(response.data);
 
       update();
 
+      Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
+      print('Add voucher data: ${promoResponse.data}');
+
     } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+      );
       print(e);
-    } finally {
-      isLoading.value = false;
-    }
+    } 
+  }
+  void clearForm() {
+    nameController.clear();
+    descriptionController.clear();
+  }
+
+  @override
+  void onClose() {
+    nameController.clear();
+    descriptionController.clear();
+    super.onClose();
+  }
+
+  void onInit() {
+    super.onInit();
   }
 
 }

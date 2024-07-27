@@ -22,8 +22,9 @@ class VoucherService {
   Future<dio.Response> updateVoucher(String id, String code, int discount,
       String description, int qty, String startDate, String endDate) async {
     try {
-      final response = await _dioInstance
-          .putRequest(endpoint: ApiEndPoint.updateVoucher(id), isAuthorize: true, data: {
+      final response = await _dioInstance.putRequest(
+        endpoint: ApiEndPoint.updateVoucher(id),
+         isAuthorize: true, data: {
         'code': code,
         'discount': discount,
         'description': description,

@@ -64,10 +64,11 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
 
                   nameController: controller.nameController,
                   eventController: controller.eventController,
+                  discountController: controller.discountController,
                   startDateController: controller.startDateController,
                   endDateController: controller.endDateController,
                   onTapStartDate: () => controller.selectDate(context, controller.startDateController),
-                  onTapEndDate: () => controller.selectDate(context, controller.endDateController),
+                  onTapEndDate: () => controller.selectDate(context, controller.endDateController), 
                 )),
               ],
             ),

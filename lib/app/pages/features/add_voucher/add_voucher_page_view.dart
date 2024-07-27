@@ -15,8 +15,6 @@ import '../voucher_management/voucher_management_controller.dart';
 class AddVoucherPageView extends GetView<AddVoucherPageController> {
   const AddVoucherPageView({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

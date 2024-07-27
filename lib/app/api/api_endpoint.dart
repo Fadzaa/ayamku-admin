@@ -18,6 +18,8 @@ class ApiEndPoint {
   //Voucher
    static String voucher = '$baseUrl/vouchers';
    static String updateVoucher (String id) => '$baseUrl/vouchers/$id';
+   static String updatePromo (String id) => '$baseUrl/promo/$id';
+
 
    //Order
    static String order = '$baseUrl/orders';

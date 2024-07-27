@@ -31,6 +31,17 @@ class PickImg extends StatelessWidget {
         ],
       );
     } else {
+      if (imagePath.startsWith('https')) {
+        return Image.network(
+          imagePath,
+          fit: BoxFit.cover,
+        );
+      } else {
+        return Image.file(
+          File(imagePath),
+          fit: BoxFit.cover,
+        );
+      }
       return Image.file(
         File(imagePath),
         fit: BoxFit.cover,

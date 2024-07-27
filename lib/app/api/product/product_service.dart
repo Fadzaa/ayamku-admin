@@ -21,6 +21,9 @@ class ProductService {
   Future<Response> addProduct(FormData formData) async {
     try {
       final response = await _dioInstance.postImageRequest(
+          endpoint: ApiEndPoint.product,
+          data: formData,
+          isAuthorize: true
           endpoint: 'https://ayamku-api.rplrus.com/api/products',
           data: formData,
         isAuthorize: true
@@ -36,7 +39,7 @@ class ProductService {
   Future<Response> updateProduct(FormData formData, String id) async {
         try {
           final response = await _dioInstance.putRequest(
-              endpoint: 'http://ayamku-api.rplrus.com/api/products/$id',
+              endpoint: 'https://ayamku-api.rplrus.com/api/products/$id',
               data: formData,
           );
 
@@ -49,7 +52,7 @@ class ProductService {
   Future<Response> deleteProduct(String id) async {
         try {
           final response = await _dioInstance.deleteRequest(
-              endpoint: 'http://ayamku-api.rplrus.com/api/products/$id',
+              endpoint: 'https://ayamku-api.rplrus.com/api/products/$id',
           );
 
           return response;

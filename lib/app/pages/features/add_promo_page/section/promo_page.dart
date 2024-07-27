@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class PromoPage extends StatelessWidget {
   final VoidCallback imageController;
   final String selectedImagePath;
-  final TextEditingController nameController, eventController, startDateController, endDateController;
+  final TextEditingController nameController, eventController, startDateController, endDateController,discountController;
   final Color? borderColor;
   final Color? color;
   final String? hintTxtName;
@@ -16,6 +16,7 @@ class PromoPage extends StatelessWidget {
     required this.imageController,
     required this.selectedImagePath,
     required this.nameController,
+    required this.discountController,
     this.borderColor,
     this.color,
     this.hintTxtName,
@@ -50,6 +51,12 @@ class PromoPage extends StatelessWidget {
           hintText: hintTxtName ?? "Selama Natal",
           controller: eventController,
         ),
+
+        ItemTextField(
+              text: "Discount",
+              hintText: "Discount",
+              controller: discountController,
+            ),
 
         SizedBox(height: 15),
 

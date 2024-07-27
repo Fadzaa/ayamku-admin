@@ -9,7 +9,7 @@ class PromoService {
   Future<Response> getAllPromo() async {
     try {
       final response = await _dioInstance.getRequest(
-          endpoint: 'http://ayamku-api.rplrus.com/api/promos',
+          endpoint: ApiEndPoint.promo,
       );
 
       return response;
@@ -18,11 +18,12 @@ class PromoService {
     }
   }
 
-  Future<Response> addPromo(FormData formData) async {
+  Future<Response> addPromo(formData) async {
     try {
       final response = await _dioInstance.postImageRequest(
-          endpoint: 'http://ayamku-api.rplrus.com/api/promos',
+          endpoint: ApiEndPoint.promo,
           data: formData,
+          isAuthorize: true,
       );
 
 
@@ -35,7 +36,8 @@ class PromoService {
   Future<Response> updatePromo(String name,String description,String id, String discount, String start_date, String end_date, String image) async {
         try {
           final response = await _dioInstance.putRequest(
-              endpoint: 'http://ayamku-api.rplrus.com/api/promos/$id',
+              endpoint: ApiEndPoint.updatePromo(id),
+              isAuthorize: true,
               data: {
                 "name" : name,
                 "description" : description,
@@ -55,7 +57,7 @@ class PromoService {
   Future<Response> deletePromo(String name,String description,String price,String category,String stock,String image,String id) async {
         try {
           final response = await _dioInstance.deleteRequest(
-              endpoint: 'http://ayamku-api.rplrus.com/api/promos/$id',
+              endpoint: 'https://ayamku-api.rplrus.com/api/promos/$id',
           );
 
           return response;
@@ -67,7 +69,7 @@ class PromoService {
   Future<Response> activePromo(String name,String description,String price,String category,String stock,String image) async {
         try {
           final response = await _dioInstance.getRequest(
-              endpoint: 'http://ayamku-api.rplrus.com/api/promos/terlaris',
+              endpoint: 'https://ayamku-api.rplrus.com/api/promos/terlaris',
           );
 
           return response;

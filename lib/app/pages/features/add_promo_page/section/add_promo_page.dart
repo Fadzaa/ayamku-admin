@@ -14,10 +14,10 @@ class AddPromoPage extends GetView<AddPromoPageController> {
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
-            PickImg(
+            Obx(() => PickImg(
               onTap: () => controller.pickImage(),
-              imagePath:controller.selectedImagePath.value,
-            ),
+              imagePath: controller.selectedImagePath.value,
+            )),
 
             SizedBox(height: 15,),
 
@@ -29,8 +29,14 @@ class AddPromoPage extends GetView<AddPromoPageController> {
 
             ItemTextField(
               text: "Nama event",
-              hintText: "Selamat ganteng",
+              hintText: "Selamat hari hari",
               controller: controller.descriptionController,
+            ),
+
+            ItemTextField(
+              text: "Discount",
+              hintText: "Discount",
+              controller: controller.discountController,
             ),
 
             SizedBox(height: 15,),

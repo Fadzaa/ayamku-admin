@@ -1,4 +1,4 @@
-import 'package:ayamku_admin/app/pages/features/order_page/sections/all_order_section.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/sections/order_section.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/sections/order_summary_section.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
 import 'package:ayamku_admin/common/constant.dart';
@@ -57,7 +57,7 @@ class OrderPageView extends GetView<OrderPageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                OrderSummarySection(),
+                OrderSummarySection(context: context,),
               ],
             ),
           ),

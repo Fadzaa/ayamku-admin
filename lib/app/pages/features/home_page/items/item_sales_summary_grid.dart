@@ -118,8 +118,8 @@ class ItemSalesSummary extends GetView<HomePageController> {
                   Row(
                     children: [
                       Text("Total Sales", style: txtCaption),
-                      const SizedBox(width: 3,),
-                      Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
+                      // const SizedBox(width: 3,),
+                      // Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
                     ],
                   ),
                   Text("+10%", style: txtCaption.copyWith(color: greenLight))

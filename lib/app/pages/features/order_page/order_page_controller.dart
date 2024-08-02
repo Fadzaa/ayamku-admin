@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/sections/all_order_section.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/sections/order_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +11,6 @@ class OrderPageController extends GetxController {
   RxInt pageIndex = 0.obs;
   RxInt currentIndex = 0.obs;
   RxBool isLoading = false.obs;
-  RxBool isOrderAccepted = false.obs;
   RxInt numberOfOrders = 0.obs;
   RxInt numberOfDeliveryOrders = 0.obs;
   RxInt numberOfPickupOrders = 0.obs;
@@ -24,6 +25,12 @@ class OrderPageController extends GetxController {
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
+  RxList<String> acceptedOrders = <String>[].obs;
+
+  bool isOrderAccepted(String orderId) {
+    return acceptedOrders.contains(orderId);
+  }
+
   void updateSelectedValue(String valueOrder) {
     selectedValue.value = valueOrder;
   }
@@ -37,16 +44,24 @@ class OrderPageController extends GetxController {
     }
   }
 
-  void completeOrder() {
-    listOrder.forEach((order) {
-      if (order.status == 'processing') {
-        order.status = 'completed';
-      }
-    });
+  void completeOrder(String orderId) {
+    updateOrderStatus(orderId, 'completed');
   }
 
-  void acceptOrder() {
-    // isOrderAccepted.value = true;
+  void acceptOrder(String orderId) {
+    updateOrderStatus(orderId, 'accept');
+    acceptedOrders.add(orderId);
+  }
+
+  RxList<String> cancelledOrders = <String>[].obs;
+
+  bool isOrderCancelled(String orderId) {
+    return cancelledOrders.contains(orderId);
+  }
+
+  void cancelOrder(String orderId) {
+    updateOrderStatus(orderId, 'cancelled');
+    cancelledOrders.add(orderId);
   }
 
   @override
@@ -115,6 +130,23 @@ class OrderPageController extends GetxController {
       print('Number of delivery orders: ${numberOfDeliveryOrders.value}');
       print('Number of pickup orders: ${numberOfPickupOrders.value}');
       print(listOrder);
+    } catch (e) {
+      print('Error occurred: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> updateOrderStatus(String id, String status) async {
+    try {
+      isLoading.value = true;
+
+      final response = await orderService.updateOrderStatus(id, status);
+
+      print("Update order status");
+      print(response.data);
+
+
     } catch (e) {
       print('Error occurred: $e');
     } finally {

@@ -21,6 +21,7 @@ class ApiEndPoint {
 
    //Order
    static String order = '$baseUrl/orders';
+   static String orderStatus = '$baseUrl/orders/update-status';
 
 
 }

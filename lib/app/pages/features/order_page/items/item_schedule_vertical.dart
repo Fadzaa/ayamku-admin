@@ -19,6 +19,7 @@ class ItemScheduleVertical extends GetView<OrderPageController> {
   final DateTime orderTime;
   final int orderPrice;
   final ScheduleStatus orderStatus;
+  final String orderId = "1";
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +142,7 @@ class ItemScheduleVertical extends GetView<OrderPageController> {
                   ),
 
                   Obx(() {
-                    if (controller.isOrderAccepted.value) {
+                    if (controller.isOrderAccepted(orderId)) {
                       return LittleBtn(
                         text: "Sedang diproses",
                         style: txtCaption.copyWith(color: Colors.white),

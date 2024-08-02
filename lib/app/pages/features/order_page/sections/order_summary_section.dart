@@ -1,28 +1,109 @@
-import 'package:ayamku_admin/app/pages/features/detail_order-page/section/delivery_section.dart';
-import 'package:ayamku_admin/app/pages/features/home_page/items/item_sales_summary_grid.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/items/filter_all_order.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/items/filter_delivery_order.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/items/filter_pickup_order.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_order_summary_grid.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/model/order_summary_data.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/sections/all_order_section.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/sections/cancel_order_section.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/sections/delivery_order_section.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/sections/pickup_section.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/sections/order_section.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
+import 'package:ayamku_admin/app/pages/global_component/not_found_page/not_found_page.dart';
+import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'schedule_order_section.dart';
 
 class OrderSummarySection extends GetView<OrderPageController> {
-  final Map<String, Widget> orderSections = {
-    'Semua': AllOrderSection(),
-    'on_delivery': DeliveryOrderSection(),
-    'pickup': PickupSection(),
-  };
+  String displayTime() {
+    int currentHour = DateTime.now().hour;
+    if (currentHour >= 10 && currentHour < 12) {
+      return "12.00";
+    } else if (currentHour >= 7 && currentHour < 9) {
+      return "09.40";
+    } else {
+      return "Selesai";
+    }
+  }
+
+  late final Map<String, Widget> orderSections;
+
+  OrderSummarySection({Key? key, required this.context}) : super(key: key) {
+    orderSections = {
+      'Semua': OrderSection(
+        methodType: 'Semua',
+        header: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("List Order", style: txtHeadline3),
+            InkWell(
+              onTap: () => voidFilterAllOrder(context),
+              child: SvgPicture.asset(icFilter),
+            ),
+          ],
+        ),
+      ),
+      'on_delivery': displayTime() == "Selesai"
+          ? Center(
+              child: NotFoundPage(
+                  image: sessionOrderOver,
+                  title: 'Order Session Over',
+                  subtitle:
+                      'Sesi order delivery sudah selesai, silahkan cek untuk pemesanan pickup',
+                  commonButton: CommonButton(
+                    onPressed: () {
+                      this.controller.selectSectionType('pickup');
+                    },
+                    text: 'Pickup',
+                  )),
+            )
+          : OrderSection(
+              methodType: 'on_delivery',
+              header: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Text(displayTime(), style: txtCaption),
+                  ),
+                  const SizedBox(width: 10),
+                  Text("List Delivery Order", style: txtHeadline3),
+                  Spacer(),
+                  InkWell(
+                    onTap: () => voidDeliveryOrder(context),
+                    child: SvgPicture.asset(icFilter),
+                  ),
+                ],
+              ),
+            ),
+      'pickup': OrderSection(
+        methodType: 'pickup',
+        header: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("List Order Pickup", style: txtHeadline3),
+            InkWell(
+              onTap: () => voidFilterPickupOrder(context),
+              child: SvgPicture.asset(icFilter),
+            ),
+          ],
+        ),
+      ),
+    };
+  }
+
+  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Order Summary", style: txtHeadline3),
@@ -42,13 +123,13 @@ class OrderSummarySection extends GetView<OrderPageController> {
               onTap: () {
                 switch (order_summary_data[index].title) {
                   case "Total Order":
-                    controller.selectSectionType('Semua');
+                    this.controller.selectSectionType('Semua');
                     break;
                   case "Total Delivery":
-                    controller.selectSectionType('on_delivery');
+                    this.controller.selectSectionType('on_delivery');
                     break;
                   case "Total Pickup":
-                    controller.selectSectionType('pickup');
+                    this.controller.selectSectionType('pickup');
                     break;
                 }
               },
@@ -62,15 +143,15 @@ class OrderSummarySection extends GetView<OrderPageController> {
         ),
         const SizedBox(height: 20),
         Obx(() {
-          return orderSections[controller.selectedFilterTypeOrder.value] ?? AllOrderSection();
+          return orderSections[this.controller.selectedFilterTypeOrder.value] ??
+              OrderSection(methodType: 'Semua', header: SizedBox.shrink());
         }),
       ],
     );
   }
 }
 
-
-enum OrderSection {
+enum OrderType {
   ListOrder,
   Pickup,
   Delivery,

@@ -1,5 +1,6 @@
 
 import 'package:ayamku_admin/app/api/auth/authentication_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,9 +33,13 @@ class LoginPageController extends GetxController {
   Future<void> login() async {
     try {
       isLoading(true);
+
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+
       final response = await authenticationService.login(
           emailController.text,
-          passwordController.text
+          passwordController.text,
+          fcmToken!
       );
 
       SharedPreferences prefs = await SharedPreferences.getInstance();

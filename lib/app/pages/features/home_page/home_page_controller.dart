@@ -5,6 +5,7 @@ import 'package:ayamku_admin/app/api/order/order_service.dart';
 import 'package:ayamku_admin/app/api/store/model/storeResponse.dart';
 import 'package:ayamku_admin/app/api/store/store_service.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,6 +37,8 @@ class HomePageController extends GetxController {
   void onInit() {
     super.onInit();
     pageController = PageController(initialPage: 0);
+
+
 
     storeService = StoreService();
     updateStore();
@@ -70,6 +73,10 @@ class HomePageController extends GetxController {
   void getAllOrder() async {
     try {
       isLoading.value = true;
+
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      print('FCM TOKEN');
+      print(fcmToken);
 
       final response = await orderService.getOrder();
 

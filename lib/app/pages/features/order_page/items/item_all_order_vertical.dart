@@ -11,18 +11,20 @@ import 'package:get/get.dart';
 class ItemAllOrderVertical extends GetView<OrderPageController> {
   const ItemAllOrderVertical(
       {super.key,
-      required this.username,
-      required this.id,
-      required this.orderName,
-      required this.namePos,
-      required this.orderTime,
-      required this.cartItems,
-      required this.onTap,
-      required this.method,
-      required this.status});
+        required this.username,
+        required this.id,
+        this.sessionOrder,
+        required this.orderName,
+        required this.namePos,
+        required this.orderTime,
+        required this.cartItems,
+        required this.onTap,
+        required this.method,
+        required this.status});
 
   final String username, orderName, namePos, method, status, id;
-  final DateTime orderTime;
+  final String? sessionOrder;
+  final String orderTime;
   final List<CartItems> cartItems;
   final VoidCallback onTap;
 
@@ -32,8 +34,12 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
         return TerimaPesanan(orderId: orderId);
       case 'completed':
         return PesananSelesai();
-      case 'accept':
+      case 'confirm_order':
         return PesananDikonfirmasi();
+      case 'accept':
+        return CompleteOrder(
+          orderId: orderId,
+        );
       case 'cancelled':
         return PesananDibatalkan();
       default:
@@ -60,7 +66,8 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
               ),
             ],
           ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +89,8 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                 ),
                 if (method != 'pickup')
                   Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                       decoration: BoxDecoration(
                         color: primaryColor40,
                         borderRadius: BorderRadius.circular(15),
@@ -104,15 +112,13 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(cartItem.quantity!.toString(),
-                        style: txtSecondaryTitle.copyWith(color: blackColor50)),
+                        style: txtSecondaryTitle),
                     SizedBox(width: 10),
                     Text(cartItem.productName.toString(),
-                        style: txtListItemTitle),
-                    Divider(
-                      height: 0.5,
-                      color: blackColor70,
-                    ),
-                    Text(cartItem.price.toString(), style: txtListItemTitle),
+                        style: txtSecondaryTitle),
+                    Spacer(),
+                    Text(controller.formatPrice(cartItem.totalPrice ?? 0),
+                        style: txtSecondaryTitle),
                   ],
                 );
               }).toList(),
@@ -149,7 +155,7 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    "09.40",
+                    sessionOrder ?? "09.40",
                     style: txtCaption.copyWith(),
                   ),
                 )
@@ -158,16 +164,13 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
             SizedBox(
               height: 15,
             ),
-
             Align(
               alignment: Alignment.centerRight,
-              child: getStatusWidget(status,id ),
+              child: getStatusWidget(status, id),
             ),
-
             SizedBox(
               height: 5,
             ),
-
           ])),
     );
   }

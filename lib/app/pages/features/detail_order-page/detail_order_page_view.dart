@@ -1,7 +1,7 @@
 import 'package:ayamku_admin/app/pages/features/detail_order-page/detail_order_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/detail_order-page/section/header_status_section.dart';
 import 'package:ayamku_admin/app/pages/features/detail_order-page/section/delivery_section.dart';
-import 'package:ayamku_admin/app/pages/features/detail_order-page/section/order_summary_section.dart';
+import 'package:ayamku_admin/app/pages/features/detail_order-page/section/detail_order_summary.dart';
 import 'package:ayamku_admin/app/pages/features/detail_order-page/section/penilaian_section.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +18,7 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
 
   @override
   Widget build(BuildContext context) {
+    final argument = Get.arguments;
     return Scaffold(
       backgroundColor: baseColor,
       appBar: AppBar(
@@ -43,36 +44,30 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
             ],
           )),
       body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
-        children: [
-          if(controller.orderStatus.value == "accept")HeaderStatusSection(),
-          DeliverySection(
-            status: controller.orderStatus.value,
-            idOrder: controller.orderId.value.toString(),
-            userName: controller.userName.value,
-            posName: controller.methodType.value == 'pickup' ? "ambil di outlet" : controller.postName.value,
-            posDesc: controller.methodType.value == 'pickup' ? null : controller.postDesc.value,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (controller.orderStatus.value == "confirm_order") HeaderStatusSection(),
+              DeliverySection(
+                date: controller.date.value,
+                status: controller.orderStatus.value,
+                idOrder: controller.orderId.value,
+                userName: controller.userName.value,
+                posName: controller.methodType.value == 'pickup'
+                    ? "ambil di outlet"
+                    : controller.postName.value,
+                posDesc: controller.methodType.value == 'pickup'
+                    ? null
+                    : controller.postDesc.value,
+              ),
+          
+              DetailOrderSummary(),
+              if (controller.orderStatus.value == "confirm_order") PenilaianSection(),
+            ],
           ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: controller.cartItems.length,
-                itemBuilder: (context, index) {
-                  final detailOrder = controller.cartItems[index];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      OrderSummarySection(
-                        quantity: detailOrder.quantity.toString(),
-                        menuName: detailOrder.menuName,
-                        price: detailOrder.price,
-                      ),
-                    ],
-                  );
-                }),
-          ),
-          if(controller.orderStatus.value == "accept")PenilaianSection(),
-        ],
-      )),
+        ),
+      ),
     );
   }
 }

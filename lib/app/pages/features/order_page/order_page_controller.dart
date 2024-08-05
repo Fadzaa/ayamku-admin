@@ -5,6 +5,7 @@ import 'package:ayamku_admin/app/api/order/order_service.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/sections/order_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class OrderPageController extends GetxController {
   late PageController pageController;
@@ -25,10 +26,21 @@ class OrderPageController extends GetxController {
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
+  // status
   RxList<String> acceptedOrders = <String>[].obs;
+  RxList<String> completedOrders = <String>[].obs;
+  RxList<String> cancelledOrders = <String>[].obs;
 
   bool isOrderAccepted(String orderId) {
     return acceptedOrders.contains(orderId);
+  }
+
+  bool isOrderCancelled(String orderId) {
+    return cancelledOrders.contains(orderId);
+  }
+
+  bool isOrderCompleted(String orderId) {
+    return completedOrders.contains(orderId);
   }
 
   void updateSelectedValue(String valueOrder) {
@@ -46,17 +58,12 @@ class OrderPageController extends GetxController {
 
   void completeOrder(String orderId) {
     updateOrderStatus(orderId, 'completed');
+    completedOrders.add(orderId);
   }
 
   void acceptOrder(String orderId) {
     updateOrderStatus(orderId, 'accept');
     acceptedOrders.add(orderId);
-  }
-
-  RxList<String> cancelledOrders = <String>[].obs;
-
-  bool isOrderCancelled(String orderId) {
-    return cancelledOrders.contains(orderId);
   }
 
   void cancelOrder(String orderId) {
@@ -257,6 +264,11 @@ class OrderPageController extends GetxController {
     selectedStatusDisplay.value = 'Semua';
     selectedFilterTypeOrder.value = 'Semua';
     getAllOrder();
+  }
+
+  String formatPrice(int price) {
+    var formattedPrice = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ').format(price);
+    return formattedPrice.replaceAll(",00", "");
   }
 
 }

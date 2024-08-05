@@ -4,10 +4,14 @@ import 'package:ayamku_admin/app/pages/features/order_page/items/item_pickup_ver
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_schedule_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
+import 'package:ayamku_admin/app/pages/global_component/not_found_page/not_found_page.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
+import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class LatestOrderSection extends GetView<HomePageController> {
   LatestOrderSection({super.key});
@@ -43,7 +47,7 @@ class LatestOrderSection extends GetView<HomePageController> {
               itemBuilder: (context, index) =>
                   Obx(() => ChipOrder(
                       text: listMethod[index],
-                      totalOrder: 2,
+                      totalOrder: index == 0 ? controller.numberOfDeliveryOrders.value : controller.numberOfPickupOrders.value,
                       index: index,
                       isSelected: controller.currentIndex.value == index
                   ))
@@ -58,6 +62,14 @@ class LatestOrderSection extends GetView<HomePageController> {
               child: CircularProgressIndicator(),
             );
           }
+          else if (controller.listOrder.isEmpty){
+            return Center(
+              child: NotFoundPage(
+                image: notFound,
+                title: 'Data tidak ditemukan',
+                subtitle: 'Silahkan cari data lainnya',
+              ));
+          }
           else if (controller.currentIndex.value == 0) {
             return ListView.builder(
                 itemCount: controller.listOrder.length,
@@ -69,23 +81,28 @@ class LatestOrderSection extends GetView<HomePageController> {
                     onTap: () {
                       Get.toNamed(
                         Routes.DETAIL_ORDER_PAGE,
-                        arguments: {
-                          'cartItems': order!.cart!.cartItems,
-                          'orderId': order.id,
-                          'userName': order.user!.name,
-                          'postName': order.post!.name,
-                          'postDesc': order.post!.description,
-                          'orderStatus': order.status,
-                          'methodType' : order.methodType
-                        },
+                          arguments: {
+                            'cartItems': order.cart?.cartItems,
+                            'orderId': order.id.toString(),
+                            'userName': order.user!.name,
+                            'postName': order.post!.name,
+                            'postDesc': order.post!.description,
+                            'orderStatus': order.status,
+                            'methodType': order.methodType,
+                            'totalPrice': order.finalAmount,
+                            'discountAmount': order.discountAmount,
+                            'voucher': order.voucher,
+                            'date': order.createdAt,
+                          },
                       );
                     },
                     cartItems: order.cart!.cartItems!,
-                    namePos: order.post!.id!.toString(),
+                    namePos: order.post!.name!.toString(),
                     orderName: order.id.toString(),
                     orderStatus: OrderStatus.done,
-                    orderTime: DateTime.now(),
+                    orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
+                    orderId: order.id.toString(),
                   );
                 }
             );
@@ -101,35 +118,29 @@ class LatestOrderSection extends GetView<HomePageController> {
                     Get.toNamed(
                       Routes.DETAIL_ORDER_PAGE,
                       arguments: {
-                        'cartItems': order!.cart!.cartItems,
-                        'orderId': order.id,
+                        'cartItems': order.cart?.cartItems,
+                        'orderId': order.id.toString(),
                         'userName': order.user!.name,
+                        'postName': order.post!.name,
+                        'postDesc': order.post!.description,
                         'orderStatus': order.status,
-                        'methodType' : order.methodType
+                        'methodType': order.methodType,
+                        'totalPrice': order.finalAmount,
+                        'discountAmount': order.discountAmount,
+                        'voucher': order.voucher,
+                        'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                       },
                     );
                   },
                   cartItems: order.cart!.cartItems!,
                   orderName: order.id.toString(),
                   orderStatus: PickupStatus.done,
-                  orderTime: DateTime.now(),
+                  orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                   username: order.user!.name!,
+                  orderId: order.id.toString(),
                 );
               }
             );
-          // } else if (controller.currentIndex.value == 2) {
-          //   return ListView.builder(
-          //     itemCount: 2,
-          //     shrinkWrap: true,
-          //     physics: const NeverScrollableScrollPhysics(),
-          //     itemBuilder: (context, index) => ItemScheduleVertical(
-          //       orderName: "PAHE GEPREK",
-          //       orderPrice: 20000,
-          //       orderStatus: ScheduleStatus.done,
-          //       orderTime: DateTime.now(),
-          //       username: "Fattah Anggit",
-          //     ),
-          //   );
           } else {
             return Container();
           }

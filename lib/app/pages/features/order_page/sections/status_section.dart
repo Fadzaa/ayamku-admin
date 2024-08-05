@@ -10,113 +10,108 @@ class TerimaPesanan extends GetView<OrderPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // CommonButtonOutline(
-        //   text: "Lihat detail",
-        //   style: txtCaption.copyWith(color: primaryColor),
-        //   onPressed: (){},
-        //   color: primaryColor,
-        // ),
+    return SafeArea(
+      child: Obx(() {
+        if (controller.isOrderCancelled(orderId)) {
+          return PesananDibatalkan();
+        } else if (controller.isOrderAccepted(orderId)) {
+          return Align(
+              alignment: Alignment.centerRight,
+              child: CompleteOrder(orderId: orderId,)
+          );
+        } else {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonButtonOutline(
+                text: "Lihat detail",
+                style: txtCaption.copyWith(color: primaryColor),
+                onPressed: () {},
+                color: primaryColor,
+              ),
 
-        Obx(() {
-          if (controller.isOrderCancelled(orderId)) {
-            return PesananDibatalkan();
-          } else if (controller.isOrderAccepted(orderId)) {
-            return Align(
-                alignment: Alignment.centerRight,
-                child: CompleteOrder(orderId: orderId,)
-            );
-          } else {
-            return Row(
-              children: [
-                CommonButtonOutline(
-                  text: "Lihat detail",
-                  style: txtCaption.copyWith(color: primaryColor),
-                  onPressed: () {},
-                  color: primaryColor,
-                ),
+              Row(
+                children: [
+                  LittleBtn(
+                        text: "Tolak",
+                        style: txtCaption.copyWith(color: Colors.white),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Confirm'),
+                                content: Text(
+                                    'Are you sure you want to cancel the order?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () {
 
-                SizedBox(width: 10,),
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('Yes'),
+                                    onPressed: () {
+                                      controller.cancelOrder(orderId);
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        txtColor: Colors.white,
+                        color: red,
+                      ),
 
-                LittleBtn(
-                      text: "Tolak pesananan",
-                      style: txtCaption.copyWith(color: Colors.white),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Confirm'),
-                              content: Text(
-                                  'Are you sure you want to cancel the order?'),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text('Cancel'),
-                                  onPressed: () {
+                  SizedBox(
+                    width: 10,
+                  ),
+                  LittleBtn(
+                    text: "Terima",
+                    style: txtCaption.copyWith(color: Colors.white),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Confirm'),
+                            content: Text(
+                                'Are you sure you want to accept the order?'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('Cancel'),
+                                onPressed: () {
 
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text('Yes'),
-                                  onPressed: () {
-                                    controller.cancelOrder(orderId);
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      txtColor: Colors.white,
-                      color: red,
-                    ),
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                child: Text('Yes'),
+                                onPressed: () {
+                                  controller.acceptOrder(orderId);
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    txtColor: Colors.white,
+                    color: greenMedium,
+                  ),
+                ],
+              ),
 
-                SizedBox(
-                  width: 10,
-                ),
-                LittleBtn(
-                  text: "Terima",
-                  style: txtCaption.copyWith(color: Colors.white),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Confirm'),
-                          content: Text(
-                              'Are you sure you want to accept the order?'),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text('Cancel'),
-                              onPressed: () {
 
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: Text('Yes'),
-                              onPressed: () {
-                                controller.acceptOrder(orderId);
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  txtColor: Colors.white,
-                  color: greenMedium,
-                ),
-              ],
-            );
-          }
-        }),
-      ],
+            ],
+          );
+        }
+      }),
     );
   }
 }
@@ -127,29 +122,35 @@ class CompleteOrder extends GetView<OrderPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        LittleBtn(
-          text: "Pesanan diproses",
-          style: txtCaption.copyWith(color: Colors.white),
-          onPressed: () {},
-          color: primaryColor,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        LittleBtn(
-          text: "Selesaikan pesanan",
-          style: txtCaption.copyWith(color: Colors.white),
-          onPressed: () {
-            controller.completeOrder(orderId);
-          },
-          color: greenMedium,
-        ),
-      ],
-    );
+    return Obx(() {
+      if (controller.isOrderCompleted(orderId)) {
+        return PesananSelesai();
+      } else {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            LittleBtn(
+              text: "Pesanan diproses",
+              style: txtCaption.copyWith(color: Colors.white),
+              onPressed: () {},
+              color: primaryColor,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            LittleBtn(
+              text: "Selesaikan pesanan",
+              style: txtCaption.copyWith(color: Colors.white),
+              onPressed: () {
+                controller.completeOrder(orderId);
+              },
+              color: greenMedium,
+            ),
+          ],
+        );
+      }
+    });
   }
 }
 

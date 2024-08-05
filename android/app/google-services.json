@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "367063525323",
+    "project_id": "ayamku-api",
+    "storage_bucket": "ayamku-api.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367063525323:android:9e234490ea78e112f5384e",
+        "android_client_info": {
+          "package_name": "com.example.ayamku_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAs2S1Bw_qQXU4rF19tpbTSjMSDR4MdMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367063525323:android:5ae3b9f9f42df764f5384e",
+        "android_client_info": {
+          "package_name": "com.example.ayamku_delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAs2S1Bw_qQXU4rF19tpbTSjMSDR4MdMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

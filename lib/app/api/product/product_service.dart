@@ -23,7 +23,7 @@ class ProductService {
       final response = await _dioInstance.postImageRequest(
           endpoint: ApiEndPoint.product,
           data: formData,
-          isAuthorize: true
+          isAuthorize: true,
       );
 
 

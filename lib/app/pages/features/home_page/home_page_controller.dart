@@ -14,6 +14,8 @@ class HomePageController extends GetxController {
   late PageController pageController;
   RxInt pageIndex = 0.obs;
   RxInt currentIndex = 0.obs;
+  RxInt numberOfDeliveryOrders = 0.obs;
+  RxInt numberOfPickupOrders = 0.obs;
   final isActive = false.obs;
 
   RxInt numberOfOrders = 0.obs;
@@ -108,7 +110,7 @@ class HomePageController extends GetxController {
     }
   }
 
-  Future getOrderMethod(String method) async {
+  Future getOrderMethod(String method, String status) async {
     try {
       print('value method = ' + method);
       isLoading.value = true;
@@ -119,8 +121,13 @@ class HomePageController extends GetxController {
       print("CHECK RESPONSE METHOD");
       print(response.data);
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.where((order) => order.methodType == method).toList().obs;
+      listOrder = orderResponse.data!.where((order) => order.methodType == method && order.status == status).toList().obs;
 
+      if (method == 'on_delivery') {
+        numberOfDeliveryOrders.value = listOrder.length;
+      } else if (method == 'pickup') {
+        numberOfPickupOrders.value = listOrder.length;
+      }
     } catch (e) {
       print(e);
     } finally {
@@ -139,10 +146,10 @@ class HomePageController extends GetxController {
     currentIndex.value = index;
     switch (index) {
       case 0:
-        await getOrderMethod('on_delivery');
+        await getOrderMethod('on_delivery', 'processing');
         break;
       case 1:
-        await getOrderMethod('pickup');
+        await getOrderMethod('pickup', 'processing');
         break;
     }
   }

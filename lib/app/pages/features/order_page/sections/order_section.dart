@@ -6,6 +6,7 @@ import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class OrderSection extends GetView<OrderPageController> {
   final String methodType;
@@ -39,41 +40,55 @@ class OrderSection extends GetView<OrderPageController> {
             children: [
               Flexible(
                 fit: FlexFit.loose,
-                child: ListView.builder(
-                  itemCount: controller.listOrder.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final order = controller.listOrder[index];
-                    if (methodType == 'Semua' || order.methodType == methodType) {
-                      return ItemAllOrderVertical(
-                        id: order.id.toString(),
-                        status: order.status.toString(),
-                        cartItems: order.cart!.cartItems!,
-                        namePos: order.post!.id!.toString(),
-                        orderName: order.id.toString(),
-                        orderTime: DateTime.now(),
-                        username: order.user!.name!,
-                        onTap: () {
-                          Get.toNamed(
-                            Routes.DETAIL_ORDER_PAGE,
-                            arguments: {
-                              'cartItems': order!.cart!.cartItems,
-                              'orderId': order.id.toString(),
-                              'userName': order.user!.name,
-                              'postName': order.post!.name,
-                              'postDesc': order.post!.description,
-                              'orderStatus': order.status,
-                              'methodType': order.methodType,
-                            },
-                          );
-                        },
-                        method: order.methodType!,
-                      );
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    if (methodType == 'Semua') {
+                      controller.getAllOrder();
                     } else {
-                      return Container();
+                      controller.getOrderMethod(methodType);
                     }
                   },
+                  child: ListView.builder(
+                    itemCount: controller.listOrder.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final order = controller.listOrder[index];
+                      if (methodType == 'Semua' || order.methodType == methodType) {
+                        return ItemAllOrderVertical(
+                          id: order.id.toString(),
+                          status: order.status.toString(),
+                          cartItems: order.cart!.cartItems!,
+                          namePos: order.post!.name!.toString(),
+                          orderName: order.id.toString(),
+                          orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                          username: order.user!.name!,
+                          sessionOrder: order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.DETAIL_ORDER_PAGE,
+                              arguments: {
+                                'cartItems': order.cart?.cartItems,
+                                'orderId': order.id.toString(),
+                                'userName': order.user!.name,
+                                'postName': order.post!.name,
+                                'postDesc': order.post!.description,
+                                'orderStatus': order.status,
+                                'methodType': order.methodType,
+                                'totalPrice': order.finalAmount,
+                                'discountAmount': order.discountAmount,
+                                'voucher': order.voucher,
+                                'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
+                              },
+                            );
+                          },
+                          method: order.methodType!,
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
                 ),
               ),
             ],

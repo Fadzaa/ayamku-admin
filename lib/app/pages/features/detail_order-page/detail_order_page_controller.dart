@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class DetailOrderPageController extends GetxController {
   var cartItems = [].obs;
@@ -8,6 +9,7 @@ class DetailOrderPageController extends GetxController {
   var postDesc = ''.obs;
   var orderStatus = ''.obs;
   var methodType = ''.obs;
+  var date = ''.obs;
 
   @override
   void onInit() {
@@ -21,6 +23,12 @@ class DetailOrderPageController extends GetxController {
       postDesc.value = args['postDesc'].toString();
       orderStatus.value = args['orderStatus'];
       methodType.value = args['methodType'];
+      date.value = args['date'];
     }
+  }
+
+  String formatPrice(int price) {
+    var formattedPrice = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ').format(price);
+    return formattedPrice.replaceAll(",00", "");
   }
 }

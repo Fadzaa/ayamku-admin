@@ -56,7 +56,7 @@ voidFilterAllOrder(BuildContext context) {
                               style: txtCaption.copyWith(color: primaryColor)))
                     ]),
                 SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
                 WidgetFilter(
                   text: 'Status pemesanan',
@@ -82,10 +82,10 @@ voidFilterAllOrder(BuildContext context) {
                   selectedValue: controller.selectedFilterTypeOrder,
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 CommonButton(
-                  height: 45,
+                  height: 30,
                   text: "Terapkan",
                   onPressed: () async {
                     await controller.applyAllFilters();

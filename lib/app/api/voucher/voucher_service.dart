@@ -20,15 +20,14 @@ class VoucherService {
   }
 
   Future<dio.Response> updateVoucher(String id, String code, int discount,
-      String description, int qty, String startDate, String endDate) async {
+      String description, String startDate, String endDate) async {
     try {
-      final response = await _dioInstance.putRequest(
+      final response = await _dioInstance.postRequest(
         endpoint: ApiEndPoint.updateVoucher(id),
          isAuthorize: true, data: {
         'code': code,
         'discount': discount,
         'description': description,
-        'qty': qty,
         'start_date': startDate,
         'end_date': endDate
       });
@@ -44,6 +43,19 @@ class VoucherService {
       final response = await _dioInstance.postRequest(
         endpoint: ApiEndPoint.voucher,
         data: formData,
+        isAuthorize: true,
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<dio.Response> deleteVoucher(String id) async {
+    try {
+      final response = await _dioInstance.deleteRequest(
+        endpoint: "https://ayamku-api.rplrus.com/api/vouchers/$id",
         isAuthorize: true,
       );
 

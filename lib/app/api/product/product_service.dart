@@ -50,6 +50,7 @@ class ProductService {
         try {
           final response = await _dioInstance.deleteRequest(
               endpoint: 'https://ayamku-api.rplrus.com/api/products/$id',
+            isAuthorize: true
           );
 
           return response;

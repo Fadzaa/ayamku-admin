@@ -18,12 +18,18 @@ class ApiEndPoint {
   //Voucher
    static String voucher = '$baseUrl/vouchers';
    static String updateVoucher (String id) => '$baseUrl/vouchers/$id';
-   static String updatePromo (String id) => '$baseUrl/promo/$id';
+   static String updatePromo (String id) => '$baseUrl/promos/$id';
 
 
    //Order
    static String order = '$baseUrl/orders';
+   static String orderHistories = '$baseUrl/order-histories';
    static String orderStatus = '$baseUrl/orders/update-status';
+
+
+
+   static String salesSummary = '$baseUrl/sales-summary';
+
 
 
 }

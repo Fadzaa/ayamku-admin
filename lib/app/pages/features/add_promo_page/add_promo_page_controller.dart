@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../api/promo/model/promo_response.dart';
 import '../../../api/promo/promo_service.dart';
+import '../../../router/app_pages.dart';
 
 
 class AddPromoPageController extends GetxController{
@@ -95,13 +96,11 @@ class AddPromoPageController extends GetxController{
         'image': await dio.MultipartFile.fromFile(filePathImage.value),
       });
 
-      final response = await promoService.addPromo(formData);
-      promoResponse = PromoResponse.fromJson(response.data);
-
-      update();
+      await promoService.addPromo(formData);
 
       Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
-      print('Add voucher data: ${promoResponse.data}');
+
+      Get.offNamedUntil(Routes.PROMO_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
 
     } catch (e) {
       Get.snackbar(

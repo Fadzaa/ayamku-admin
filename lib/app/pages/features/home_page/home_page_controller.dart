@@ -2,6 +2,8 @@ import 'dart:ffi';
 
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
+import 'package:ayamku_admin/app/api/sales-summary/sales_model.dart';
+import 'package:ayamku_admin/app/api/sales-summary/sales_service.dart';
 import 'package:ayamku_admin/app/api/store/model/storeResponse.dart';
 import 'package:ayamku_admin/app/api/store/store_service.dart';
 import 'package:dio/dio.dart' as dio;
@@ -24,12 +26,16 @@ class HomePageController extends GetxController {
   late StoreService storeService;
   late Store storeResponse;
   RxBool isLoading = false.obs;
+  RxBool isLoadingSales = false.obs;
 
   RxList<Order> listOrder = <Order>[].obs;
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
-  RxString selectedFilterTypeOrder = 'default'.obs;
+  SalesResponse salesResponse = SalesResponse();
+  SalesService salesService = SalesService();
+
+  RxString selectedFilterTypeOrder = 'today'.obs;
 
   void updateSelectedType(String type) {
     selectedFilterTypeOrder.value = type;
@@ -45,6 +51,7 @@ class HomePageController extends GetxController {
     storeService = StoreService();
     updateStore();
     getAllOrder();
+    getSalesSummary();
   }
 
 
@@ -109,6 +116,26 @@ class HomePageController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> getSalesSummary() async {
+    try {
+      isLoadingSales.value = true;
+
+      final response = await salesService.getSaleSummary(selectedFilterTypeOrder.value);
+      salesResponse = SalesResponse.fromJson(response.data);
+
+      print("SALES RESPONSE:");
+      print(salesResponse.totalProduct);
+
+
+    } catch (e) {
+      isLoadingSales.value = true;
+      print(e);
+    } finally {
+      isLoadingSales.value = false;
+    }
+  }
+
 
   Future getOrderMethod(String method, String status) async {
     try {

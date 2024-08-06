@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../router/app_pages.dart';
+
 class EditProductPageController extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -40,8 +42,8 @@ class EditProductPageController extends GetxController {
   void onInit() {
     super.onInit();
     nameController.text = product.name!;
-    priceController.text = product.price!;
-    qtyController.text = product.stock.toString();
+    priceController.text = product.price.toString();
+    qtyController.text = '0';
     descriptionController.text = product.description!;
     selectedCategory.value = product.category!;
     selectedImagePath.value = product.image!;
@@ -85,8 +87,8 @@ class EditProductPageController extends GetxController {
   Future deleteProduct() async {
     try {
       await productService.deleteProduct(product.id.toString());
-    
-      Get.back();
+
+      Get.offNamedUntil(Routes.PRODUCT_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
     } catch (e) {
       print(e);
     }

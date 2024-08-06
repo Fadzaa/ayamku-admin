@@ -1,30 +1,29 @@
-import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_controller.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:dio/dio.dart' as dio;
 
 import '../../../api/promo/model/promo_response.dart';
 import '../../../api/promo/promo_service.dart';
 
 class EditPromoPageControlller extends GetxController{
-  final PromoPageController promoPageController = Get.find();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController eventController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
   final TextEditingController imageController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  // final TextEditingController descriptionController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
-  late int promoIndex;
 
   RxBool isLoading = false.obs;
 
-  final Promo promo = Get.arguments;
-  RxList<Promo> promoList = <Promo>[].obs;
+  final promo = Get.arguments;
+  // RxList<Promo> promoList = <Promo>[].obs;
 
   RxString imagePath = RxString("");
   RxString selectedImagePath = ''.obs;
@@ -62,37 +61,52 @@ class EditPromoPageControlller extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    nameController.text = promo.name!;
-    discountController.text = promo.discount.toString();
-    descriptionController.text = promo.description!;
-    startDateController.text = promo.startDate!;
-    endDateController.text = promo.endDate!;
+
+    DateFormat format = DateFormat("dd MMMM yyyy");
+    DateTime startDate = format.parse(promo['startDate']);
+    DateTime endDate = format.parse(promo['endDate']);
+
+    // Format the dates
+    String formattedStartDate = DateFormat('yyyy-MM-dd').format(startDate);
+    String formattedEndDate = DateFormat('yyyy-MM-dd').format(endDate);
+
+    // Set the text of the controllers
+
+
+    nameController.text = promo['name'];
+    discountController.text = promo['discount'].toString();
+    eventController.text = promo['event'];
+    startDateController.text = formattedStartDate;
+    endDateController.text = formattedEndDate;
+    imageController.text = promo['image'];
+
   }
 
   Future <void> updatePromo() async {
     try {
       isLoading(true);
+
+      dio.FormData formData = dio.FormData.fromMap({
+        'name': "Static Test Name",
+        'discount': int.parse(discountController.text),
+        'description': eventController.text,
+        'start_date': startDateController.text,
+        'end_date': endDateController.text,
+        'image': await dio.MultipartFile.fromFile(selectedImagePath.value),
+      });
+
       final response = await promoService.updatePromo(
-          promo.id.toString(),
-          nameController.text,
-          descriptionController.text,
-          discountController.text,
-          startDateController.text,
-          endDateController.text,
-          imageController.text,
+          formData,
+          3.toString()
         );
-      PromoResponse voucherResponse = PromoResponse.fromJson(response.data);
-      promoList.addAll(voucherResponse.data!);
+
+      print("Check resopnse put");
+      print(response.data);
 
       Get.snackbar(
         "Success",
-        "Voucher updated successfully",
+        "Promo updated successfully",
       );
-
-      print("Update voucher");
-      print('Updated voucher data: ${voucherResponse.data}');
-      print(promo);
-
 
     } catch (e) {
       Get.snackbar(
@@ -104,6 +118,32 @@ class EditPromoPageControlller extends GetxController{
       isLoading.value = false;
     }
   }
+
+  Future<void> deletePromo() async {
+    try {
+      isLoading(true);
+      
+      await promoService.deletePromo(promo['id']);
+
+      Get.snackbar(
+        "Success",
+        "Promo deleted successfully",
+      );
+
+      Get.offNamedUntil(Routes.PROMO_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
+
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+      );
+
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
   
 
 }

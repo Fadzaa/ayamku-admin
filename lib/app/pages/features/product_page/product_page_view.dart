@@ -57,11 +57,11 @@ class ProductPageView extends GetView<ProductPageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                InventorySection(),
-
-                SizedBox(height: 20,),
-
-                ProdukTerlarisSection(),
+                // InventorySection(),
+                //
+                // SizedBox(height: 20,),
+                //
+                // ProdukTerlarisSection(),
 
                 SizedBox(height: 20,),
 

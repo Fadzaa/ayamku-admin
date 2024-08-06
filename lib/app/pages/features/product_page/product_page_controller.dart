@@ -66,6 +66,7 @@ class ProductPageController extends GetxController{
       productResponse = ProductResponse.fromJson(response.data);
       listProduct = productResponse.data!.obs;
 
+      print("CHECK LIST ALL PRODUCT DATA");
       print(listProduct);
 
 

@@ -5,16 +5,21 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ItemSalesSummary extends GetView<HomePageController> {
   const ItemSalesSummary({
     super.key,
     required this.typeSalesItem,
     this.numberOfOrders,
+    this.analyticSales,
+    this.productSales
   });
 
   final SalesItem typeSalesItem;
   final int? numberOfOrders;
+  final int? analyticSales;
+  final int? productSales;
 
 
   @override
@@ -52,7 +57,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("Rp. 1.120.000", style: txtHeadline2,),
+                    Text(NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ').format(analyticSales), style: txtHeadline2,),
 
                     Container(
                       width: 40,
@@ -122,7 +127,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                       // Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
                     ],
                   ),
-                  Text("+10%", style: txtCaption.copyWith(color: greenLight))
+                  // Text("+10%", style: txtCaption.copyWith(color: greenLight))
                 ]
               ),
 
@@ -169,7 +174,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("150", style: txtHarga),
+                  Text(productSales.toString(), style: txtHarga),
                   Container(
                     width: 40,
                     height: 40,

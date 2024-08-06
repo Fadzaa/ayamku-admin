@@ -53,9 +53,8 @@ class AddProductPageController extends GetxController {
       Product product = Product(
           name: nameController.text,
           description: descriptionController.text,
-          price: (int.tryParse(priceController.text) ?? 0).toString(),
+          price: (int.tryParse(priceController.text) ?? 0),
           category: categories.join(", "),
-          stock: int.parse(qtyController.text),
           image: filePathImage.value
       );
 

@@ -68,7 +68,7 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
                   startDateController: controller.startDateController,
                   endDateController: controller.endDateController,
                   onTapStartDate: () => controller.selectDate(context, controller.startDateController),
-                  onTapEndDate: () => controller.selectDate(context, controller.endDateController), 
+                  onTapEndDate: () => controller.selectDate(context, controller.endDateController),
                 )),
               ],
             ),
@@ -76,12 +76,8 @@ class EditPromoPageView extends GetView<EditPromoPageControlller>{
         ),
       ),
       bottomNavigationBar: CommonBottom(
-        onPressed1: () {
-          Get.back();
-        },
-        onPressed2: () {
-
-        },
+        onPressed1: () => controller.deletePromo() ,
+        onPressed2: () => controller.updatePromo(),
         bgColor1: red,
         bgColor2: primaryColor,
         ic1: icCancel,

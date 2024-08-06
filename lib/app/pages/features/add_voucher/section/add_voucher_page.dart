@@ -14,7 +14,7 @@ class AddVoucherPage extends GetView<AddVoucherPageController> {
         children :[
           ItemTextField(
             text: "Kode Voucher",
-            hintText: "ugugugug",
+            hintText: "VOUCHERTAHUNBARU",
             controller: controller.codeController,
           ),
 

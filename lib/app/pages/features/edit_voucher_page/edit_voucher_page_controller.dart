@@ -16,7 +16,7 @@ class EditVoucherPageController extends GetxController {
   final TextEditingController endDateController = TextEditingController();
   RxBool isLoading = false.obs;
 
-  final Voucher voucher = Get.arguments;
+  final voucher = Get.arguments;
   RxList<Voucher> voucherList = <Voucher>[].obs;
   VoucherService voucherService = VoucherService();
   VoucherResponse voucherResponse = VoucherResponse();
@@ -54,26 +54,24 @@ class EditVoucherPageController extends GetxController {
   Future <void> updateVoucher() async {
     try {
       isLoading(true);
-      final response = await voucherService.updateVoucher(
+
+      await voucherService.updateVoucher(
           voucher.id.toString(),
           codeController.text,
           int.parse(discountController.text.toString(),),
           descriptionController.text,
-          int.parse(qtyController.text.toString(),),
           startDateController.text,
           endDateController.text
       );
-      VoucherResponse voucherResponse = VoucherResponse.fromJson(response.data);
-      voucherList.addAll(voucherResponse.data!);
+
 
       Get.snackbar(
         "Success",
         "Voucher updated successfully",
       );
 
-      print("Update voucher");
-      print('Updated voucher data: ${voucherResponse.data}');
-      print(voucher);
+      Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER, (routes) => routes.settings.name == Routes.HOME_PAGE);
+
 
 
     } catch (e) {
@@ -86,4 +84,26 @@ class EditVoucherPageController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  void deleteVoucher() async {
+    try {
+      isLoading(true);
+
+      await voucherService.deleteVoucher(voucher.id.toString());
+
+      Get.snackbar(
+        "Success",
+        "Voucher deleted successfully",
+      );
+
+      Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER, (routes) => routes.settings.name == Routes.HOME_PAGE);
+    }catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+      );
+    } finally {
+      isLoading.value = false;
+    }
+}
 }

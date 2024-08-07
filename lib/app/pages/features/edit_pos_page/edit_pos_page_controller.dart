@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ class EditPosPageController extends GetxController{
 
   PosResponse posResponse = PosResponse();
   PosService posService = PosService();
-  final Pos pos = Get.arguments;
+  final pos = Get.arguments;
   final ImagePicker _picker = ImagePicker();
   RxString selectedImagePath = ''.obs;
   RxBool isLoading = false.obs;
@@ -45,9 +46,16 @@ class EditPosPageController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    titleController.text = pos.name!;
-    descriptionController.text = pos.description!;
-    selectedImagePath.value = pos.image!;
+     print("test run program");
+
+    titleController.text = pos['name'];
+    descriptionController.text = pos["description"];
+    selectedImagePath.value = pos["image"];
+
+    print("CHECK DATA KIRIMAN");
+    print(pos);
+
+
   }
 
   Future<void> pickImage() async {
@@ -65,32 +73,32 @@ class EditPosPageController extends GetxController{
     descriptionController.dispose();
     super.onClose();
   }
+
   Future<void> updatePos() async {
     try {
       isLoading(true);
-      final response = await posService.updatePos(
-        pos.id.toString(),
+       await posService.updatePos(
+        pos["id"].toString(),
         titleController.text,
         descriptionController.text,
         selectedImagePath.value,
       );
-      PosResponse productResponse = PosResponse.fromJson(response.data);
-      posList.addAll(productResponse.data!);
-
+  
       Get.snackbar(
         "Success",
         "Voucher updated successfully",
       );
 
-      print("Update voucher");
-      print('Updated voucher data: ${productResponse.data}');
-      print(pos);
+
 
     } catch (e) {
       Get.snackbar(
         "Error",
         e.toString(),
       );
+
+      print("CHECK ERROR");
+      print(e);
 
     } finally {
       isLoading.value = false;
@@ -99,9 +107,14 @@ class EditPosPageController extends GetxController{
 
   Future deletePos() async {
     try {
-      await posService.deletePos(pos.id.toString(),);
+      await posService.deletePos(pos['id'].toString());
+
+      Get.snackbar(
+        "Success",
+        "Pos deleted successfully",
+      );
     
-      Get.back();
+      Get.offNamedUntil(Routes.POS_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
     } catch (e) {
       print(e);
     }

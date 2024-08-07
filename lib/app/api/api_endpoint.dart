@@ -26,7 +26,7 @@ class ApiEndPoint {
 
    //pos
    static String pos = '$baseUrl/posts';
-   static String updatePos (String id) => '$baseUrl/pos/$id';
+   static String updatePos (String id) => '$baseUrl/posts/$id';
 
 
    //Order

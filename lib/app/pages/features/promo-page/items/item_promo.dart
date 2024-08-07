@@ -41,7 +41,9 @@ class ItemPromoSection extends GetView<PromoPageController> {
                 image: promo.image.toString(),
                 startDate: startDate,
                 onPressed: () {
-                  Get.toNamed(Routes.EDIT_PROMO_PAGE, arguments: {'index': index, 'startDate': promo.startDate, 'endDate': promo.endDate});
+                  Get.toNamed(Routes.EDIT_PROMO_PAGE, 
+                  arguments: {
+                    'index': index, 'startDate': promo.startDate, 'endDate': promo.endDate});
                 },
               );
             },
@@ -73,9 +75,7 @@ class ItemPromo extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return InkWell(
-      onTap: (){
-        Get.toNamed(Routes.EDIT_PROMO_PAGE);
-      },
+      onTap: onPressed,
       child: Container(
         margin: EdgeInsets.only(bottom: 20),
         decoration: BoxDecoration(

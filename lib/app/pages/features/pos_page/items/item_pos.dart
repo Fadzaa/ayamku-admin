@@ -25,7 +25,15 @@ class ItemPos extends GetView<PosPageController> {
               final pos = controller.listPos[index];
               return InkWell(
                 onTap: () {
-                  Get.toNamed(Routes.EDIT_POS_PAGE);
+                  Get.toNamed(
+                    Routes.EDIT_POS_PAGE,
+                    arguments: {
+                      'id': pos.id,
+                      'image': pos.image,
+                      'name': pos.name,
+                      'description': pos.description,
+                    }
+                    );
                 },
                 child: Container(
                   margin: EdgeInsets.only(bottom: 20),

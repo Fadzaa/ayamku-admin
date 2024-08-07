@@ -66,7 +66,6 @@ class AddPosPageView extends GetView<AddPosPageController> {
               },
               onPressed2: () {
                 controller.addPos();
-                Get.back();
               },
               bgColor1: red,
               bgColor2: primaryColor,

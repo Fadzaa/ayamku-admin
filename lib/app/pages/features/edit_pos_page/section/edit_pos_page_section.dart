@@ -65,7 +65,7 @@ class EditPosPageSection extends GetView<EditPosPageController> {
               hintText:"Ini adalah pos yang berada di gazebo",
               minLines: 5,
               maxLines: 6,
-              controller: controller.titleController,
+              controller: controller.descriptionController,
             ),
           ],
         ),

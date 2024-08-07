@@ -36,7 +36,7 @@ class PosService {
 
  Future<dio.Response> updatePos(String name,String description,String id,String image) async {
         try {
-          final response = await _dioInstance.putRequest(
+          final response = await _dioInstance.postImageRequest(
               endpoint: ApiEndPoint.updatePos(id),
               isAuthorize: true,
               data: {
@@ -55,8 +55,10 @@ class PosService {
   Future<dio.Response> deletePos(String id) async {
         try {
           final response = await _dioInstance.deleteRequest(
-              endpoint: 'https://ayamku-api.rplrus.com/api/promos/$id',
+              endpoint: 'https://ayamku-api.rplrus.com/api/posts/$id',
+              isAuthorize: true,
           );
+          
 
           return response;
         } catch (e) {

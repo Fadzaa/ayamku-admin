@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../api/pos/model/pos_response.dart';
 import '../../../api/pos/pos_service.dart';
+import '../../../router/app_pages.dart';
 
 class AddPosPageController extends GetxController{
   TextEditingController titleController = TextEditingController();
@@ -57,10 +58,10 @@ class AddPosPageController extends GetxController{
         "image": await dio.MultipartFile.fromFile(filePathImage.value),
       });
       
-      final response = await posService.addPos(formData);
-      posResponse = PosResponse.fromJson(response.data);
-      
-      update();
+      await posService.addPos(formData);
+
+      Get.offNamedUntil(Routes.POS_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
+
     } catch (e) {
       if (e is dio.DioError) {
         // Log the response data to check for any server error messages

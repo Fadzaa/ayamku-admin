@@ -55,11 +55,9 @@ class EditPosPageView extends GetView<EditPosPageController> {
       bottomNavigationBar: CommonBottom(
         onPressed1: () {
           controller.deletePos();
-          Get.back();
         },
         onPressed2: () {
           controller.updatePos();
-          Get.back();
         },
         bgColor1: red,
         bgColor2: primaryColor,

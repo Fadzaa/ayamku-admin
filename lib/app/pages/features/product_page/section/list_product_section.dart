@@ -28,26 +28,25 @@ class ListProductSection extends GetView<ProductPageController> {
 
         SizedBox(height: 10,),
 
-        Obx(() => controller.isLoading.value
-            ? Center(child: CircularProgressIndicator(),)
-            : ListView.builder(
-            itemCount: controller.listProduct.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final product = controller.listProduct[index];
-              return ItemListProductSection(
-                image: product.image.toString(),
-                category: product.category.toString(),
-                name: product.name.toString(),
-                price: product.price!,
-                stock: product.stock ?? 0,
-                onPressed: () {
-                  Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: product);
-                },
-              );
-            }
-        )),
+          Obx(() => controller.isLoading.value
+              ? Center(child: CircularProgressIndicator(),)
+              : ListView.builder(
+              itemCount: controller.listProduct.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final product = controller.listProduct[index];
+                return ItemListProductSection(
+                  image: product.image.toString(),
+                  category: product.category.toString(),
+                  name: product.name.toString(),
+                  price: product.price!,
+                  onPressed: () {
+                    Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: product);
+                  },
+                );
+              }
+          )),
       ],
     );
   }
@@ -61,12 +60,10 @@ class ItemListProductSection extends StatelessWidget {
     required this.name,
     required this.onPressed,
     required this.price,
-    required this.stock,
   });
 
   final String image, category, name, price;
   final VoidCallback onPressed;
-  final int stock;
 
   @override
   Widget build(BuildContext context) {
@@ -127,10 +124,6 @@ class ItemListProductSection extends StatelessWidget {
 
                           SizedBox(width: 10,),
 
-                          Text(
-                            stock.toString(),
-                            style: txtCaption,
-                          ),
                         ],
                       ),
                     ],

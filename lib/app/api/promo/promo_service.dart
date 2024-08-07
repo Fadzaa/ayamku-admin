@@ -33,7 +33,7 @@ class PromoService {
     }
   }
 
-  Future<Response> updatePromo(String name,String description,String id, String discount, String start_date, String end_date, String image) async {
+ Future<Response> updatePromo(String name,String description,String id, String discount, String start_date, String end_date, String image) async {
         try {
           final response = await _dioInstance.putRequest(
               endpoint: ApiEndPoint.updatePromo(id),

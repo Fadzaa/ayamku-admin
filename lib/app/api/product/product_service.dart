@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart'as dio;
 
 import '../api_endpoint.dart';
 import '../dio_instance.dart';
@@ -6,7 +6,7 @@ import '../dio_instance.dart';
 class ProductService {
   final DioInstance _dioInstance = DioInstance();
 
-  Future<Response> getAllProduct() async {
+  Future<dio.Response> getAllProduct() async {
     try {
       final response = await _dioInstance.getRequest(
           endpoint: ApiEndPoint.product,
@@ -18,15 +18,12 @@ class ProductService {
     }
   }
 
-  Future<Response> addProduct(FormData formData) async {
+  Future<dio.Response> addProduct(formData) async {
     try {
       final response = await _dioInstance.postImageRequest(
           endpoint: ApiEndPoint.product,
           data: formData,
           isAuthorize: true
-          endpoint: 'https://ayamku-api.rplrus.com/api/products',
-          data: formData,
-        isAuthorize: true
       );
 
 
@@ -36,20 +33,28 @@ class ProductService {
     }
   }
 
-  Future<Response> updateProduct(FormData formData, String id) async {
-        try {
-          final response = await _dioInstance.putRequest(
-              endpoint: 'https://ayamku-api.rplrus.com/api/products/$id',
-              data: formData,
-          );
+  Future<dio.Response> updateProduct(String id,String name,String description,int price,String image,String category) async {
+  try {
+    final response = await _dioInstance.putRequest(
+      endpoint: ApiEndPoint.updatePromo(id),
+      isAuthorize: true,
+      data: {
+        "image": image,
+        "name": name,
+        "description": description,
+        "price": price,
+        "category": category,
+      },
+    );
 
-          return response;
-        } catch (e) {
-          throw Exception(e);
-        }
-      }
+    return response;
 
-  Future<Response> deleteProduct(String id) async {
+  } catch (e) {
+    throw Exception(e);
+  }
+}
+
+  Future<dio.Response> deleteProduct(String id) async {
         try {
           final response = await _dioInstance.deleteRequest(
               endpoint: 'https://ayamku-api.rplrus.com/api/products/$id',
@@ -61,7 +66,7 @@ class ProductService {
         }
       }
       
-  Future<Response> getProductCategory({required String category}) async {
+  Future<dio.Response> getProductCategory({required String category}) async {
     try {
       final response = await _dioInstance.getRequest(
           endpoint: ApiEndPoint.product,
@@ -77,7 +82,7 @@ class ProductService {
     }
   }
 
-  Future<Response> getProductSearch({required String search}) async {
+  Future<dio.Response> getProductSearch({required String search}) async {
     try {
       final response = await _dioInstance.getRequest(
           endpoint: ApiEndPoint.product,

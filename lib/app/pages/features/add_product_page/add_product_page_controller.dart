@@ -14,17 +14,19 @@ class AddProductPageController extends GetxController {
   final ProductPageController controller = Get.put(ProductPageController());
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController qtyController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController imageController = TextEditingController();
 
   RxString selectedCategory = "Geprek".obs;
   RxList<String> categories = ["Geprek", "Snack", "Minuman"].obs;
+  RxString selectedImagePath = ''.obs;
+  
+  ProductService productService = ProductService();
+  ProductResponse productResponse = ProductResponse();
 
   RxString filePathImage = ''.obs;
   RxBool isLoading = false.obs;
 
-  ProductService productService = ProductService();
 
 
   Future<void> pickImage(RxString imagePath) async {
@@ -35,46 +37,42 @@ class AddProductPageController extends GetxController {
       }
   }
 
-  Future addProduct() async{
+  Future<void> addProduct() async {
     try {
       isLoading.value = true;
+      
       dio.FormData formData = dio.FormData.fromMap({
-        "name" : nameController.text,
-        "description" : descriptionController.text,
-        "price" : int.parse(priceController.text),
-        "category" : selectedCategory.value.toLowerCase(),
+        "name": nameController.text,
+        "description": descriptionController.text,
+        "price": int.parse(priceController.text),
+        "category": selectedCategory.value.toLowerCase(),
         "image": await dio.MultipartFile.fromFile(filePathImage.value),
       });
-
-      await productService.addProduct(
-          formData
-      );
-
-      Product product = Product(
-          name: nameController.text,
-          description: descriptionController.text,
-          price: (int.tryParse(priceController.text) ?? 0).toString(),
-          category: categories.join(", "),
-          stock: int.parse(qtyController.text),
-          image: filePathImage.value
-      );
-
-      controller.listProduct.add(product);
-
+      
+      final response = await productService.addProduct(formData);
+      productResponse = ProductResponse.fromJson(response.data);
+      
       update();
-
-      Get.toNamed(Routes.HOME_PAGE);
-      Get.snackbar("Tambah produk Sukses", "Berhasil menambahkan produk!");
-    }
-    catch(e){
-      isLoading.value = true;
+    } catch (e) {
+      if (e is dio.DioError) {
+        // Log the response data to check for any server error messages
+        print("Response data: ${e.response?.data}");
+        
+        Get.snackbar(
+          "Error",
+          e.response?.data['message'] ?? 'An error occurred',
+        );
+      } else {
+        Get.snackbar(
+          "Error",
+          e.toString(),
+        );
+      }
       print(e);
-    }
-    finally{
+    } finally {
       isLoading.value = false;
     }
   }
-
 
   void onChangeCategory(String category) {
     selectedCategory.value = category;
@@ -86,7 +84,6 @@ class AddProductPageController extends GetxController {
   void clearForm() {
     nameController.clear();
     priceController.clear();
-    qtyController.clear();
     descriptionController.clear();
     selectedCategory.value = categories.first;
     imageController.clear();
@@ -96,7 +93,6 @@ class AddProductPageController extends GetxController {
   void onClose() {
     nameController.dispose();
     priceController.dispose();
-    qtyController.dispose();
     descriptionController.dispose();
     imageController.dispose();
     super.onClose();

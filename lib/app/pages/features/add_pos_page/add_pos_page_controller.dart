@@ -1,14 +1,33 @@
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../api/pos/model/pos_response.dart';
+import '../../../api/pos/pos_service.dart';
+
 class AddPosPageController extends GetxController{
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  final ImagePicker _picker = ImagePicker();
   RxString selectedImagePath = ''.obs;
 
+  PosService posService = PosService();
+  PosResponse posResponse = PosResponse();
+  RxList<Pos> posList = <Pos>[].obs;
+
+  RxString filePathImage = ''.obs;
+  RxBool isLoading = false.obs;
+
   // kelas
+
+  Future<void> pickImage(RxString imagePath) async {
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (pickedImage != null) {
+        imagePath.value = pickedImage.path;
+      }
+  }
+  
   RxString selectedKelas= "11".obs;
   RxList<String> kelasList = ["10", "11", "12"].obs;
   void onChangedKelas(String kelas) {
@@ -28,19 +47,45 @@ class AddPosPageController extends GetxController{
 
   }
 
+  Future<void> addPos() async {
+    try {
+      isLoading.value = true;
+      
+      dio.FormData formData = dio.FormData.fromMap({
+        "name": titleController.text,
+        "description": descriptionController.text,
+        "image": await dio.MultipartFile.fromFile(filePathImage.value),
+      });
+      
+      final response = await posService.addPos(formData);
+      posResponse = PosResponse.fromJson(response.data);
+      
+      update();
+    } catch (e) {
+      if (e is dio.DioError) {
+        // Log the response data to check for any server error messages
+        print("Response data: ${e.response?.data}");
+        
+        Get.snackbar(
+          "Error",
+          e.response?.data['message'] ?? 'An error occurred',
+        );
+      } else {
+        Get.snackbar(
+          "Error",
+          e.toString(),
+        );
+      }
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
   @override
   void onInit() {
     super.onInit();
   }
 
-
-  Future<void> pickImage() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      selectedImagePath.value = pickedFile.path;
-    }
-    print("Image Selected");
-    print(pickedFile?.path);
-    print(selectedImagePath.value);
-  }
 }

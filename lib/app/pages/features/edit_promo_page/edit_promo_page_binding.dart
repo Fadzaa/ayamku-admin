@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class EditPromoPageBinding extends Bindings{
   @override
   void dependencies() {
-    Get.lazyPut<EditPromoPageControlller>(() => EditPromoPageControlller());
+    Get.lazyPut<EditPromoPageController>(() => EditPromoPageController());
   }
 
 }

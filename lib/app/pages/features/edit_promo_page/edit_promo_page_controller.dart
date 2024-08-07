@@ -1,4 +1,5 @@
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_controller.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,8 +8,8 @@ import 'package:intl/intl.dart';
 import '../../../api/promo/model/promo_response.dart';
 import '../../../api/promo/promo_service.dart';
 
-class EditPromoPageControlller extends GetxController{
-  final PromoPageController promoPageController = Get.find();
+class EditPromoPageController extends GetxController{
+  final PromoPageController promoPageController = Get.find<PromoPageController>();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController eventController = TextEditingController();
@@ -32,7 +33,7 @@ class EditPromoPageControlller extends GetxController{
   
   PromoService promoService = PromoService();
   PromoResponse promoResponse = PromoResponse();
-
+  
   Future<void> pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -70,40 +71,62 @@ class EditPromoPageControlller extends GetxController{
   }
 
   Future <void> updatePromo() async {
+    Get.back();
+    
+  }
+  
+  @override
+  void onClose() {
+    nameController.dispose();
+    eventController.dispose();
+    discountController.dispose();
+    descriptionController.dispose();
+    super.onClose();
+  }
+
+  Future deleteProduct() async {
     try {
-      isLoading(true);
-      final response = await promoService.updatePromo(
-          promo.id.toString(),
-          nameController.text,
-          descriptionController.text,
-          discountController.text,
-          startDateController.text,
-          endDateController.text,
-          imageController.text,
+      await promoService.deletePromo(
+        promo.id.toString(),
+        promo.name.toString(),
+        promo.description.toString(),
+        promo.discount.toString(),
+        promo.startDate.toString(),
+        promo.endDate.toString(),
+        promo.image.toString(),
         );
-      PromoResponse voucherResponse = PromoResponse.fromJson(response.data);
-      promoList.addAll(voucherResponse.data!);
-
-      Get.snackbar(
-        "Success",
-        "Voucher updated successfully",
-      );
-
-      print("Update voucher");
-      print('Updated voucher data: ${voucherResponse.data}');
-      print(promo);
-
-
+    
+      Get.back();
     } catch (e) {
-      Get.snackbar(
-        "Error",
-        e.toString(),
-      );
-
-    } finally {
-      isLoading.value = false;
+      print(e);
     }
   }
+
+  // Future editProduct() async {
+  //   try {
+  //     isLoading.value = true;
+  //     dio.FormData formData = dio.FormData.fromMap({
+  //       "name" : nameController.text,
+  //       "event" : eventController.text,
+  //       "description" : descriptionController.text,
+  //       "discount" : discountController,
+  //       "startDate" : startDateController.text,
+  //       "endDate" : endDateController.text,
+  //       'image': await dio.MultipartFile.fromFile(selectedImagePath.value),
+  //     });
+
+  //     await promoService.updatePromo(
+  //         formData, promo.id.toString(),
+  //     );
+  //   }
+  //   catch(e){
+  //     isLoading.value = true;
+  //     print(e);
+  //   }
+  //   finally{
+  //     isLoading.value = false;
+  //   }
+  // }
   
 
 }

@@ -9,11 +9,12 @@ import 'package:image_picker/image_picker.dart';
 class EditProductPageController extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController qtyController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
   final Product product = Get.arguments;
 
+
+  RxList<Product> productList = <Product>[].obs;
   RxString selectedCategory = ''.obs;
   RxList<String> categories = ["Geprek", "Snack", "Minuman"].obs;
   ProductResponse productResponse = ProductResponse();
@@ -27,12 +28,12 @@ class EditProductPageController extends GetxController {
 
   //image
   RxString selectedImagePath = ''.obs;
+
   Future<void> pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       selectedImagePath.value = pickedFile.path;
     }
-
   
   }
 
@@ -41,7 +42,6 @@ class EditProductPageController extends GetxController {
     super.onInit();
     nameController.text = product.name!;
     priceController.text = product.price!;
-    qtyController.text = product.stock.toString();
     descriptionController.text = product.description!;
     selectedCategory.value = product.category!;
     selectedImagePath.value = product.image!;
@@ -58,26 +58,44 @@ class EditProductPageController extends GetxController {
     selectedCategory.value = category;
   }
 
-  void updateProduct() {
-    int price = int.parse(priceController.text);
-    int qty = int.parse(qtyController.text);
+  Future<void> updateProduct() async {
+    try {
+      isLoading(true);
+      final response = await productService.updateProduct(
+        product.id.toString(),
+        nameController.text,
+        descriptionController.text,
+        int.parse(priceController.text.toString()), // Changed to double.parse
+        selectedImagePath.value,
+        selectedCategory.value,
+      );
+      ProductResponse productResponse = ProductResponse.fromJson(response.data);
+      productList.addAll(productResponse.data!);
 
-    // productPageController.updateProduct(productIndex, Product(
-    //   name: nameController.text,
-    //   price: price,
-    //   qty: qty,
-    //   description: descriptionController.text,
-    //   category: selectedCategory.value,
-    //   image: selectedImagePath.value,
-    // ));
-    Get.back();
+      Get.snackbar(
+        "Success",
+        "Voucher updated successfully",
+      );
+
+      print("Update voucher");
+      print('Updated voucher data: ${productResponse.data}');
+      print(product);
+
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+      );
+
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   @override
   void onClose() {
     nameController.dispose();
     priceController.dispose();
-    qtyController.dispose();
     descriptionController.dispose();
     super.onClose();
   }
@@ -89,31 +107,6 @@ class EditProductPageController extends GetxController {
       Get.back();
     } catch (e) {
       print(e);
-    }
-  }
-
-  Future editProduct() async {
-    try {
-      isLoading.value = true;
-      dio.FormData formData = dio.FormData.fromMap({
-        "name" : nameController.text,
-        "description" : descriptionController.text,
-        "price" : priceController.text,
-        "category" : categories,
-        "stock" : qtyController.text,
-        'image': await dio.MultipartFile.fromFile(selectedImagePath.value),
-      });
-
-      await productService.updateProduct(
-          formData, product.id.toString(),
-      );
-    }
-    catch(e){
-      isLoading.value = true;
-      print(e);
-    }
-    finally{
-      isLoading.value = false;
     }
   }
   

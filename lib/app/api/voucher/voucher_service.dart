@@ -19,12 +19,13 @@ class VoucherService {
     }
   }
 
-  Future<dio.Response> updateVoucher(String id, String code, int discount,
+  Future<dio.Response>  updateVoucher(String id, String code, int discount,
       String description, int qty, String startDate, String endDate) async {
     try {
       final response = await _dioInstance.putRequest(
         endpoint: ApiEndPoint.updateVoucher(id),
-         isAuthorize: true, data: {
+        isAuthorize: true,
+        data: {
         'code': code,
         'discount': discount,
         'description': description,
@@ -51,5 +52,54 @@ class VoucherService {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  Future<dio.Response> getVoucherFilterdate( String filter, String date) async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.voucher,
+          isAuthorize: true,
+          queryParameters: {
+            'filter': filter,
+            'date': date
+          }
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+    Future<dio.Response> getVoucherFilterLatest( String latest) async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.voucher,
+          isAuthorize: true,
+          queryParameters: {
+            'filter': latest,
+          }
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<dio.Response> getVoucherFilter7days( String days) async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.voucher,
+          isAuthorize: true,
+          queryParameters: {
+            'filter': days,
+          }
+      );
+
+        return response;
+      } catch (e) {
+        throw Exception(e);
+      }
   }
 }

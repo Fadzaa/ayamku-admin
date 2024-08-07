@@ -1,6 +1,4 @@
-import 'package:ayamku_admin/app/pages/features/add_pos_page/section/add_pos_page_section.dart';
 import 'package:ayamku_admin/app/pages/features/edit_pos_page/section/edit_pos_page_section.dart';
-import 'package:ayamku_admin/app/pages/features/pos_page/pos_page_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_bottom.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
@@ -8,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class EditPosPageView extends GetView<PosPageController> {
+import 'edit_pos_page_controller.dart';
+
+class EditPosPageView extends GetView<EditPosPageController> {
   const EditPosPageView({super.key});
 
   @override
@@ -54,10 +54,12 @@ class EditPosPageView extends GetView<PosPageController> {
       ),
       bottomNavigationBar: CommonBottom(
         onPressed1: () {
-
+          controller.deletePos();
+          Get.back();
         },
         onPressed2: () {
-
+          controller.updatePos();
+          Get.back();
         },
         bgColor1: red,
         bgColor2: primaryColor,

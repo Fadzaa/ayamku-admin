@@ -12,13 +12,21 @@ class ApiEndPoint {
 
   //Product
   static String product = '$baseUrl/products';
-  static String promo = '$baseUrl/promos';
+
+  //promo
+   static String updatePromo (String id) => '$baseUrl/promo/$id';
+   static String promo = '$baseUrl/promos';
 
 
   //Voucher
    static String voucher = '$baseUrl/vouchers';
    static String updateVoucher (String id) => '$baseUrl/vouchers/$id';
-   static String updatePromo (String id) => '$baseUrl/promo/$id';
+
+   
+
+   //pos
+   static String pos = '$baseUrl/posts';
+   static String updatePos (String id) => '$baseUrl/pos/$id';
 
 
    //Order

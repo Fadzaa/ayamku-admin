@@ -1,8 +1,6 @@
 class ProductResponse {
   List<Product>? data;
-
   ProductResponse({this.data});
-
   ProductResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = <Product>[];
@@ -11,7 +9,6 @@ class ProductResponse {
       });
     }
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
@@ -25,21 +22,21 @@ class Product {
   int? id;
   String? name;
   String? description;
-  int? price;
+  String? price;
   String? rating;
   String? image;
   String? category;
   int? totalRating;
 
-  Product(
-      {this.id,
-        this.name,
-        this.description,
-        this.price,
-        this.rating,
-        this.image,
-        this.category,
-        this.totalRating});
+Product(
+    {this.id,
+    this.name,
+    this.description,
+    this.price,
+    this.rating,
+    this.image,
+    this.category,
+    this.totalRating});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -14,10 +14,10 @@ class AddPosPageSection extends GetView<AddPosPageController> {
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          PickImg(
-            onTap: controller.pickImage,
-            imagePath: controller.selectedImagePath.value,
-          ),
+          Obx(() => PickImg(
+            onTap: () => controller.pickImage(controller.filePathImage),
+            imagePath: controller.filePathImage.value,
+          ),),
 
           SizedBox(height: 20),
 

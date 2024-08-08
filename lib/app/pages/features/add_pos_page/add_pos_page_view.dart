@@ -62,10 +62,10 @@ class AddPosPageView extends GetView<AddPosPageController> {
             bottom: 0,
             child: CommonBottom(
               onPressed1: () {
-
+                Get.back();
               },
               onPressed2: () {
-
+                controller.addPos();
               },
               bgColor1: red,
               bgColor2: primaryColor,

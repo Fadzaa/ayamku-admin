@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../router/app_pages.dart';
+
 class EditProductPageView extends StatelessWidget{
   EditProductPageView({Key? key}) : super(key: key);
 
@@ -62,7 +64,8 @@ class EditProductPageView extends StatelessWidget{
       bottomNavigationBar: CommonBottom(
         onPressed1: () => controller.deleteProduct(),
         onPressed2: () {
-          // controller.updateVoucher();
+          controller.updateProduct();
+          Get.offAndToNamed(Routes.PRODUCT_PAGE);
         },
         bgColor1: red,
         bgColor2: primaryColor,

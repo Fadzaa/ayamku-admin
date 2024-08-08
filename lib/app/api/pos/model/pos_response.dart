@@ -1,13 +1,13 @@
-class PromoResponse {
-  List<Promo>? data;
+class PosResponse {
+  List<Pos>? data;
 
-  PromoResponse({this.data});
+  PosResponse({this.data});
 
-  PromoResponse.fromJson(Map<String, dynamic> json) {
+  PosResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Promo>[];
+      data = <Pos>[];
       json['data'].forEach((v) {
-        data!.add(new Promo.fromJson(v));
+        data!.add(new Pos.fromJson(v));
       });
     }
   }
@@ -21,31 +21,18 @@ class PromoResponse {
   }
 }
 
-class Promo {
+class Pos {
   int? id;
   String? name;
   String? description;
-  int? discount;
-  String? startDate;
-  String? endDate;
   String? image;
 
-  Promo(
-      {this.id,
-      this.name,
-      this.description,
-      this.discount,
-      this.startDate,
-      this.endDate,
-      this.image});
+  Pos({this.id, this.name, this.description, this.image});
 
-  Promo.fromJson(Map<String, dynamic> json) {
+  Pos.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    discount = json['discount'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
     image = json['image'];
   }
 
@@ -54,9 +41,6 @@ class Promo {
     data['id'] = this.id;
     data['name'] = this.name;
     data['description'] = this.description;
-    data['discount'] = this.discount;
-    data['start_date'] = this.startDate;
-    data['end_date'] = this.endDate;
     data['image'] = this.image;
     return data;
   }

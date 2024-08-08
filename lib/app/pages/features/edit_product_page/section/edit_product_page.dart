@@ -47,14 +47,6 @@ class EditProductPage extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 20,),
-
-              Expanded(
-                child: ItemTextField(
-                  text: "QTY",
-                  hintText: "3",
-                  controller: controller.qtyController,
-                ),
-              ),
             ],
           ),
 

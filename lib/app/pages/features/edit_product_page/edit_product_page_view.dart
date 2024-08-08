@@ -62,9 +62,7 @@ class EditProductPageView extends StatelessWidget{
         ),
       ),
       bottomNavigationBar: CommonBottom(
-        onPressed1: () {
-          Get.back();
-        },
+        onPressed1: () => controller.deleteProduct(),
         onPressed2: () {
           controller.updateProduct();
           Get.offAndToNamed(Routes.PRODUCT_PAGE);

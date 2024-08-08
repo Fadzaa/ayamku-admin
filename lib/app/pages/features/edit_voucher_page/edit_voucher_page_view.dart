@@ -57,12 +57,9 @@ class EditVoucherPageView extends GetView<EditVoucherPageController> {
         ),
       ),
       bottomNavigationBar:CommonBottom(
-        onPressed1: () {
-          Get.back();
-        },
+        onPressed1: () => controller.deleteVoucher(),
         onPressed2: () async {
           controller.updateVoucher();
-          Get.offAndToNamed(Routes.MANAGEMENT_VOUCHER);
         },
         bgColor1: red,
         bgColor2: primaryColor,
@@ -71,7 +68,7 @@ class EditVoucherPageView extends GetView<EditVoucherPageController> {
         txtColor1: Colors.white,
         txtColor2: blackColor,
         txt1: 'Batalkan',
-        txt2: 'Upload Voucher',
+        txt2: 'Upload',
       ) ,
     );
   }

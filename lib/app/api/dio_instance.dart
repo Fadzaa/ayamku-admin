@@ -106,6 +106,7 @@ class DioInstance {
           options: Options(
               headers: {
                 "Accept": "application/json",
+                "Content-Type": "multipart/form-data",
                 if(isAuthorize ?? false) "Authorization": "Bearer $token"
               })
       );

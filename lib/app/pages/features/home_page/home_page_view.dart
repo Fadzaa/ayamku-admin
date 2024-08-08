@@ -1,4 +1,4 @@
-import 'package:ayamku_admin/app/pages/features/home_page/items/item_drawer.dart';
+ import 'package:ayamku_admin/app/pages/features/home_page/items/item_drawer.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/sections/latest_order_section.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/sections/heading_section.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/sections/sales_summary_section.dart';
@@ -41,7 +41,10 @@ class HomePageView extends GetView<HomePageController> {
                         
                 SizedBox(height: 20,),
                         
-                SalesSummarySection(),
+                Obx(
+                        () => controller.isLoadingSales.value ? CircularProgressIndicator() : SalesSummarySection(salesResponse: controller.salesResponse,),
+                ),
+
                         
                 SizedBox(height: 20,),
                         

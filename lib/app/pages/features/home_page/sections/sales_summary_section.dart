@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/app/api/sales-summary/sales_model.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/items/item_sales_summary_grid.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
@@ -6,7 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SalesSummarySection extends GetView<HomePageController> {
-  const SalesSummarySection({super.key});
+  const SalesSummarySection({
+    super.key,
+    required this.salesResponse
+  });
+
+  final SalesResponse salesResponse;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class SalesSummarySection extends GetView<HomePageController> {
 
         const SizedBox(height: 10,),
 
-        ItemSalesSummary(typeSalesItem: salesSummary[0]),
+        ItemSalesSummary(typeSalesItem: salesSummary[0], analyticSales: int.parse(salesResponse.totalSales!),),
 
         const SizedBox(height: 15,),
 
@@ -39,13 +45,13 @@ class SalesSummarySection extends GetView<HomePageController> {
               if (controller.isLoading.value) {
                 return CircularProgressIndicator();
               } else {
-                return Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[1]));
+                return Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[1], numberOfOrders: salesResponse.totalOrder,));
               }
             }),
 
             const SizedBox(width: 15,),
 
-            Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[2],)),
+            Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[2], productSales: salesResponse.totalProduct,)),
           ],
         )
       ],

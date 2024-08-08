@@ -1,6 +1,7 @@
 import 'package:ayamku_admin/app/pages/features/history_page/history_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/items/item_order_today_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/history_page/model/data/history_data.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -152,7 +153,7 @@ class OrderDeliveryView extends StatelessWidget {
   }
 }
 
-class OrderPickupView extends StatelessWidget {
+class OrderPickupView extends GetView<OrderPageController> {
   const OrderPickupView({super.key});
 
   @override

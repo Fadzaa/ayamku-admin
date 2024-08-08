@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart'as dio;
+import 'package:dio/dio.dart';
 
 import '../api_endpoint.dart';
 import '../dio_instance.dart';
@@ -6,7 +6,7 @@ import '../dio_instance.dart';
 class ProductService {
   final DioInstance _dioInstance = DioInstance();
 
-  Future<dio.Response> getAllProduct() async {
+  Future<Response> getAllProduct() async {
     try {
       final response = await _dioInstance.getRequest(
           endpoint: ApiEndPoint.product,
@@ -18,12 +18,12 @@ class ProductService {
     }
   }
 
-  Future<dio.Response> addProduct(formData) async {
+  Future<Response> addProduct(FormData formData) async {
     try {
       final response = await _dioInstance.postImageRequest(
           endpoint: ApiEndPoint.product,
           data: formData,
-          isAuthorize: true
+          isAuthorize: true,
       );
 
 
@@ -33,31 +33,24 @@ class ProductService {
     }
   }
 
-  Future<dio.Response> updateProduct(String id,String name,String description,int price,String image,String category) async {
-  try {
-    final response = await _dioInstance.putRequest(
-      endpoint: ApiEndPoint.updatePromo(id),
-      isAuthorize: true,
-      data: {
-        "image": image,
-        "name": name,
-        "description": description,
-        "price": price,
-        "category": category,
-      },
-    );
+  Future<Response> updateProduct(FormData formData, String id) async {
+        try {
+          final response = await _dioInstance.putRequest(
+              endpoint: 'https://ayamku-api.rplrus.com/api/products/$id',
+              data: formData,
+          );
 
-    return response;
+          return response;
+        } catch (e) {
+          throw Exception(e);
+        }
+      }
 
-  } catch (e) {
-    throw Exception(e);
-  }
-}
-
-  Future<dio.Response> deleteProduct(String id) async {
+  Future<Response> deleteProduct(String id) async {
         try {
           final response = await _dioInstance.deleteRequest(
               endpoint: 'https://ayamku-api.rplrus.com/api/products/$id',
+            isAuthorize: true
           );
 
           return response;
@@ -66,7 +59,7 @@ class ProductService {
         }
       }
       
-  Future<dio.Response> getProductCategory({required String category}) async {
+  Future<Response> getProductCategory({required String category}) async {
     try {
       final response = await _dioInstance.getRequest(
           endpoint: ApiEndPoint.product,
@@ -82,7 +75,7 @@ class ProductService {
     }
   }
 
-  Future<dio.Response> getProductSearch({required String search}) async {
+  Future<Response> getProductSearch({required String search}) async {
     try {
       final response = await _dioInstance.getRequest(
           endpoint: ApiEndPoint.product,

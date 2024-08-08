@@ -8,7 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class EditPromoPageView extends GetView<EditPromoPageController>{
+class EditPromoPageView extends GetView<EditPromoPageControlller>{
   const EditPromoPageView({Key? key}) : super(key: key);
 
   @override
@@ -68,7 +68,7 @@ class EditPromoPageView extends GetView<EditPromoPageController>{
                   startDateController: controller.startDateController,
                   endDateController: controller.endDateController,
                   onTapStartDate: () => controller.selectDate(context, controller.startDateController),
-                  onTapEndDate: () => controller.selectDate(context, controller.endDateController), 
+                  onTapEndDate: () => controller.selectDate(context, controller.endDateController),
                 )),
               ],
             ),
@@ -76,12 +76,8 @@ class EditPromoPageView extends GetView<EditPromoPageController>{
         ),
       ),
       bottomNavigationBar: CommonBottom(
-        onPressed1: () {
-          Get.back();
-        },
-        onPressed2: () {
-
-        },
+        onPressed1: () => controller.deletePromo() ,
+        onPressed2: () => controller.updatePromo(),
         bgColor1: red,
         bgColor2: primaryColor,
         ic1: icCancel,

@@ -25,7 +25,7 @@ class Product {
   int? id;
   String? name;
   String? description;
-  String? price;
+  int? price;
   String? rating;
   String? image;
   String? category;
@@ -33,13 +33,13 @@ class Product {
 
   Product(
       {this.id,
-      this.name,
-      this.description,
-      this.price,
-      this.rating,
-      this.image,
-      this.category,
-      this.totalRating});
+        this.name,
+        this.description,
+        this.price,
+        this.rating,
+        this.image,
+        this.category,
+        this.totalRating});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];

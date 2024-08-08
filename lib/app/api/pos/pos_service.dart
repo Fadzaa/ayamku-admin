@@ -59,7 +59,6 @@ class PosService {
               isAuthorize: true,
           );
           
-
           return response;
         } catch (e) {
           throw Exception(e);

@@ -19,17 +19,15 @@ class VoucherService {
     }
   }
 
-  Future<dio.Response>  updateVoucher(String id, String code, int discount,
-      String description, int qty, String startDate, String endDate) async {
+  Future<dio.Response> updateVoucher(String id, String code, int discount,
+      String description, String startDate, String endDate) async {
     try {
-      final response = await _dioInstance.putRequest(
+      final response = await _dioInstance.postRequest(
         endpoint: ApiEndPoint.updateVoucher(id),
-        isAuthorize: true,
-        data: {
+         isAuthorize: true, data: {
         'code': code,
         'discount': discount,
         'description': description,
-        'qty': qty,
         'start_date': startDate,
         'end_date': endDate
       });
@@ -54,52 +52,16 @@ class VoucherService {
     }
   }
 
-  Future<dio.Response> getVoucherFilterdate( String filter, String date) async {
+  Future<dio.Response> deleteVoucher(String id) async {
     try {
-      final response = await _dioInstance.getRequest(
-          endpoint: ApiEndPoint.voucher,
-          isAuthorize: true,
-          queryParameters: {
-            'filter': filter,
-            'date': date
-          }
+      final response = await _dioInstance.deleteRequest(
+        endpoint: "https://ayamku-api.rplrus.com/api/vouchers/$id",
+        isAuthorize: true,
       );
 
       return response;
     } catch (e) {
       throw Exception(e);
     }
-  }
-
-    Future<dio.Response> getVoucherFilterLatest( String latest) async {
-    try {
-      final response = await _dioInstance.getRequest(
-          endpoint: ApiEndPoint.voucher,
-          isAuthorize: true,
-          queryParameters: {
-            'filter': latest,
-          }
-      );
-
-      return response;
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
-  Future<dio.Response> getVoucherFilter7days( String days) async {
-    try {
-      final response = await _dioInstance.getRequest(
-          endpoint: ApiEndPoint.voucher,
-          isAuthorize: true,
-          queryParameters: {
-            'filter': days,
-          }
-      );
-
-        return response;
-      } catch (e) {
-        throw Exception(e);
-      }
   }
 }

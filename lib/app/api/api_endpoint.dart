@@ -14,14 +14,13 @@ class ApiEndPoint {
   static String product = '$baseUrl/products';
 
   //promo
-   static String updatePromo (String id) => '$baseUrl/promo/$id';
-   static String promo = '$baseUrl/promos';
+  static String updatePromo (String id) => '$baseUrl/promos/$id';
+  static String promo = '$baseUrl/promos';
 
 
   //Voucher
    static String voucher = '$baseUrl/vouchers';
    static String updateVoucher (String id) => '$baseUrl/vouchers/$id';
-
    
 
    //pos
@@ -31,6 +30,13 @@ class ApiEndPoint {
 
    //Order
    static String order = '$baseUrl/orders';
+   static String orderHistories = '$baseUrl/order-histories';
+   static String orderStatus = '$baseUrl/orders/update-status';
+
+
+
+   static String salesSummary = '$baseUrl/sales-summary';
+
 
 
 }

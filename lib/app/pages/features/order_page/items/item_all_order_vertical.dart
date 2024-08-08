@@ -11,190 +11,167 @@ import 'package:get/get.dart';
 class ItemAllOrderVertical extends GetView<OrderPageController> {
   const ItemAllOrderVertical(
       {super.key,
-      required this.username,
-      required this.orderName,
-      required this.namePos,
-      required this.orderTime,
-      required this.cartItems,
-      required this.onTap,
-      required this.method,
-      required this.status});
+        required this.username,
+        required this.id,
+        this.sessionOrder,
+        required this.orderName,
+        required this.namePos,
+        required this.orderTime,
+        required this.cartItems,
+        required this.onTap,
+        required this.method,
+        required this.status});
 
-  final String username, orderName, namePos, method, status;
-  final DateTime orderTime;
+  final String username, orderName, namePos, method, status, id;
+  final String? sessionOrder;
+  final String orderTime;
   final List<CartItems> cartItems;
   final VoidCallback onTap;
 
-  Widget getStatusWidget(String status) {
+  Widget getStatusWidget(String status, String orderId) {
     switch (status) {
       case 'processing':
-        return TerimaPesanan();
+        return TerimaPesanan(orderId: orderId);
       case 'completed':
         return PesananSelesai();
-      case 'accept':
+      case 'confirm_order':
         return PesananDikonfirmasi();
+      case 'accept':
+        return CompleteOrder(
+          orderId: orderId,
+        );
       case 'cancelled':
         return PesananDibatalkan();
       default:
-        return SizedBox.shrink(); // returns an empty widget if status is not matched
+        return SizedBox.shrink();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        margin: EdgeInsets.only(bottom: 20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 0,
-              blurRadius: 2,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage(icPerson),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    username,
-                    style: txtSecondaryTitle,
-                  ),
-                ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          margin: EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 2,
+                offset: Offset(0, 3),
               ),
-              if (method != 'pickup')
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: primaryColor40,
-                      borderRadius: BorderRadius.circular(15),
+            ],
+          ),
+          child:
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage(icPerson),
                     ),
-                    child: Text(namePos, style: txtCaption))
-            ],
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(orderTime.toString(),
-              style: txtSecondaryTitle.copyWith(color: blackColor40)),
-          const SizedBox(
-            height: 15,
-          ),
-          Column(
-            children: cartItems.map((cartItem) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(cartItem.quantity!.toString(),
-                      style: txtSecondaryTitle.copyWith(color: blackColor50)),
-                  SizedBox(width: 10),
-                  Text(cartItem.productName.toString(),
-                      style: txtListItemTitle),
-                  Divider(
-                    height: 0.5,
-                    color: blackColor70,
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      username,
+                      style: txtSecondaryTitle,
+                    ),
+                  ],
+                ),
+                if (method != 'pickup')
+                  Container(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: primaryColor40,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Text(namePos, style: txtCaption))
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(orderTime.toString(),
+                style: txtSecondaryTitle.copyWith(color: blackColor40)),
+            const SizedBox(
+              height: 15,
+            ),
+            Column(
+              children: cartItems.map((cartItem) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(cartItem.quantity!.toString(),
+                        style: txtSecondaryTitle),
+                    SizedBox(width: 10),
+                    Text(cartItem.productName.toString(),
+                        style: txtSecondaryTitle),
+                    Spacer(),
+                    Text(controller.formatPrice(cartItem.totalPrice ?? 0),
+                        style: txtSecondaryTitle),
+                  ],
+                );
+              }).toList(),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Divider(
+              height: 0.5,
+              color: blackColor70,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  icOrder,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  method == 'pickup' ? "Akan dijemput " : "Akan diantarkan ",
+                  style: txtCaption,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: grey,
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  Text(cartItem.price.toString(), style: txtListItemTitle),
-                ],
-              );
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 25,top: 3),
-              //   child: Column(
-              //     children: [
-              //       SizedBox(width: 5,),
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.start,
-              //         children: [
-              //           Text("Level:", style: txtSecondaryTitle.copyWith(color: blackColor50),),
-              //           SizedBox(width: 5,),
-              //           Text("Pedas", style: txtSecondaryTitle),
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // )
-            }).toList(),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Divider(
-            height: 0.5,
-            color: blackColor70,
-          ),
-          // SizedBox(
-          //   height: 15,
-          // ),
-          // Text(
-          //   "Note :",
-          //   style: txtCaption,
-          // ),
-          // SizedBox(
-          //   height: 3,
-          // ),
-          // Text(
-          //   "RAAAAWWRR, KIRIM NY CPT YH, SY LAPAR",
-          //   style: txtCaption.copyWith(color: blackColor50),
-          // ),
-          SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              SvgPicture.asset(
-                icOrder,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                method == 'pickup' ? "Akan dijemput " : "Akan diantarkan ",
-                style: txtCaption,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: grey,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  "09.40",
-                  style: txtCaption.copyWith(),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 15,
-          ),
-
-          Align(
-            alignment: Alignment.centerRight,
-            child: getStatusWidget(status),
-          ),
-
-          SizedBox(
-            height: 5,
-          ),
-
-        ]));
+                  child: Text(
+                    sessionOrder ?? "09.40",
+                    style: txtCaption.copyWith(),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: getStatusWidget(status, id),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+          ])),
+    );
   }
 }

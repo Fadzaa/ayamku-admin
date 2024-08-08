@@ -67,13 +67,12 @@ class AddVoucherPageController extends GetxController {
         "end_date" : endDate.toString()
       });
 
-      final response = await voucherService.addVoucher(formData);
-      voucherResponse = VoucherResponse.fromJson(response.data);
+      await voucherService.addVoucher(formData);
 
-      update();
+      Get.snackbar("Tambah voucher Sukses", "Berhasil menambhkan voucher!");
 
-      Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
-      print('Add voucher data: ${voucherResponse.data}');
+      Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER, (routes) => routes.settings.name == Routes.HOME_PAGE);
+
 
     }
     catch(e){

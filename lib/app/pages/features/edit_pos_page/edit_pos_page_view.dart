@@ -71,4 +71,3 @@ class EditPosPageView extends GetView<EditPosPageController> {
     );
   }
 }
-

@@ -1,13 +1,8 @@
 import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_pick_img.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../../edit_promo_page/edit_promo_page_controller.dart';
 
 class PromoPage extends StatelessWidget {
-
-
   final VoidCallback imageController;
   final String selectedImagePath;
   final TextEditingController nameController, eventController, startDateController, endDateController,discountController;
@@ -34,16 +29,13 @@ class PromoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-  final controller = Get.find<EditPromoPageController>();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
         PickImg(
-          onTap: () => controller.pickImage(),
-          imagePath: controller.selectedImagePath.value,
+          onTap: imageController,
+          imagePath: selectedImagePath,
         ),
         SizedBox(height: 15),
 

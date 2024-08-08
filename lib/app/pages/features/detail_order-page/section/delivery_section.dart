@@ -14,11 +14,12 @@ class DeliverySection extends StatelessWidget {
     required this.idOrder,
     required this.userName,
     required this.status,
+    required this.date,
     this.posName,
     this.posDesc,
   });
 
-  final String idOrder, userName, status;
+  final String idOrder, userName, status,date;
   final String? posName, posDesc;
 
   @override
@@ -111,7 +112,7 @@ class DeliverySection extends StatelessWidget {
               SvgPicture.asset(icCalender),
               SizedBox(width: 10),
               Text(
-                "20 Jan 2024, 1:54 pm",
+                date,
                 style: txtSecondaryTitle,
               ),
             ],

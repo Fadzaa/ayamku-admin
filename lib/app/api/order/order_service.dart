@@ -34,4 +34,21 @@ class OrderService {
       throw Exception(e);
     }
   }
+
+  Future<Response> updateOrderStatus( String id, String status) async {
+    try {
+      final response = await _dioInstance.putRequest(
+        endpoint: ApiEndPoint.orderStatus,
+        isAuthorize: true,
+          data: {
+            'order_id': id,
+            'status': status,
+          }
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

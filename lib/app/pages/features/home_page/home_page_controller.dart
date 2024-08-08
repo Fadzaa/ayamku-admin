@@ -2,9 +2,12 @@ import 'dart:ffi';
 
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
+import 'package:ayamku_admin/app/api/sales-summary/sales_model.dart';
+import 'package:ayamku_admin/app/api/sales-summary/sales_service.dart';
 import 'package:ayamku_admin/app/api/store/model/storeResponse.dart';
 import 'package:ayamku_admin/app/api/store/store_service.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +16,8 @@ class HomePageController extends GetxController {
   late PageController pageController;
   RxInt pageIndex = 0.obs;
   RxInt currentIndex = 0.obs;
+  RxInt numberOfDeliveryOrders = 0.obs;
+  RxInt numberOfPickupOrders = 0.obs;
   final isActive = false.obs;
 
   RxInt numberOfOrders = 0.obs;
@@ -21,12 +26,16 @@ class HomePageController extends GetxController {
   late StoreService storeService;
   late Store storeResponse;
   RxBool isLoading = false.obs;
+  RxBool isLoadingSales = false.obs;
 
   RxList<Order> listOrder = <Order>[].obs;
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
-  RxString selectedFilterTypeOrder = 'default'.obs;
+  SalesResponse salesResponse = SalesResponse();
+  SalesService salesService = SalesService();
+
+  RxString selectedFilterTypeOrder = 'today'.obs;
 
   void updateSelectedType(String type) {
     selectedFilterTypeOrder.value = type;
@@ -37,9 +46,12 @@ class HomePageController extends GetxController {
     super.onInit();
     pageController = PageController(initialPage: 0);
 
+
+
     storeService = StoreService();
     updateStore();
     getAllOrder();
+    getSalesSummary();
   }
 
 
@@ -71,6 +83,10 @@ class HomePageController extends GetxController {
     try {
       isLoading.value = true;
 
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      print('FCM TOKEN');
+      print(fcmToken);
+
       final response = await orderService.getOrder();
 
       print("Fetch Semua Order");
@@ -101,7 +117,27 @@ class HomePageController extends GetxController {
     }
   }
 
-  Future getOrderMethod(String method) async {
+  Future<void> getSalesSummary() async {
+    try {
+      isLoadingSales.value = true;
+
+      final response = await salesService.getSaleSummary(selectedFilterTypeOrder.value);
+      salesResponse = SalesResponse.fromJson(response.data);
+
+      print("SALES RESPONSE:");
+      print(salesResponse.totalProduct);
+
+
+    } catch (e) {
+      isLoadingSales.value = true;
+      print(e);
+    } finally {
+      isLoadingSales.value = false;
+    }
+  }
+
+
+  Future getOrderMethod(String method, String status) async {
     try {
       print('value method = ' + method);
       isLoading.value = true;
@@ -112,8 +148,13 @@ class HomePageController extends GetxController {
       print("CHECK RESPONSE METHOD");
       print(response.data);
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.where((order) => order.methodType == method).toList().obs;
+      listOrder = orderResponse.data!.where((order) => order.methodType == method && order.status == status).toList().obs;
 
+      if (method == 'on_delivery') {
+        numberOfDeliveryOrders.value = listOrder.length;
+      } else if (method == 'pickup') {
+        numberOfPickupOrders.value = listOrder.length;
+      }
     } catch (e) {
       print(e);
     } finally {
@@ -132,10 +173,10 @@ class HomePageController extends GetxController {
     currentIndex.value = index;
     switch (index) {
       case 0:
-        await getOrderMethod('on_delivery');
+        await getOrderMethod('on_delivery', 'processing');
         break;
       case 1:
-        await getOrderMethod('pickup');
+        await getOrderMethod('pickup', 'processing');
         break;
     }
   }

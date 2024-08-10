@@ -10,6 +10,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 
 class HomePageController extends GetxController {
@@ -18,6 +19,7 @@ class HomePageController extends GetxController {
   RxInt currentIndex = 0.obs;
   RxInt numberOfDeliveryOrders = 0.obs;
   RxInt numberOfPickupOrders = 0.obs;
+  RxInt numberOfAllOrders = 0.obs;
   final isActive = false.obs;
 
   RxInt numberOfOrders = 0.obs;
@@ -50,7 +52,6 @@ class HomePageController extends GetxController {
 
     storeService = StoreService();
     updateStore();
-    getAllOrder();
     getSalesSummary();
   }
 
@@ -79,7 +80,7 @@ class HomePageController extends GetxController {
     }
   }
 
-  void getAllOrder() async {
+  Future <void> getAllOrder(String status) async {
     try {
       isLoading.value = true;
 
@@ -104,7 +105,7 @@ class HomePageController extends GetxController {
       print('Number of processing orders: ${processingOrdersCount.value}');
 
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.obs;
+      listOrder = orderResponse.data!.where((order) => order.status == status).toList().obs;
 
       print(listOrder);
 
@@ -173,12 +174,20 @@ class HomePageController extends GetxController {
     currentIndex.value = index;
     switch (index) {
       case 0:
-        await getOrderMethod('on_delivery', 'processing');
+        await getAllOrder('processing ');
         break;
       case 1:
+        await getOrderMethod('on_delivery', 'processing');
+        break;
+      case 2:
         await getOrderMethod('pickup', 'processing');
         break;
     }
+  }
+
+  String formatPrice(int price) {
+    var formattedPrice = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ').format(price);
+    return formattedPrice.replaceAll(",00", "");
   }
 
 }

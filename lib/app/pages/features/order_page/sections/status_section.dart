@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TerimaPesanan extends GetView<OrderPageController> {
-  const TerimaPesanan({super.key, required this.orderId});
-  final String orderId;
+  const TerimaPesanan({super.key, required this.orderId, this.status});
+  final int orderId;
+  final String? status;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Obx(() {
-        if (controller.isOrderCancelled(orderId)) {
+        if (controller.isOrderCancelled(orderId.toString()) && status == "cancelled") {
           return PesananDibatalkan();
-        } else if (controller.isOrderAccepted(orderId)) {
+        } else if (controller.isOrderAccepted(orderId.toString()) && status == "accept") {
           return Align(
               alignment: Alignment.centerRight,
-              child: CompleteOrder(orderId: orderId,)
+              child: AcceptedOrder(orderId: orderId, status : "accept")
           );
         } else {
           return Row(
@@ -42,7 +43,7 @@ class TerimaPesanan extends GetView<OrderPageController> {
                               return AlertDialog(
                                 title: Text('Confirm'),
                                 content: Text(
-                                    'Are you sure you want to cancel the order?'),
+                                    'Apa anda yakin ingin membetalkan pesanan ini?'),
                                 actions: <Widget>[
                                   TextButton(
                                     child: Text('Cancel'),
@@ -54,7 +55,7 @@ class TerimaPesanan extends GetView<OrderPageController> {
                                   TextButton(
                                     child: Text('Yes'),
                                     onPressed: () {
-                                      controller.cancelOrder(orderId);
+                                      controller.cancelOrder(orderId.toString());
                                       Navigator.of(context).pop();
                                     },
                                   ),
@@ -85,14 +86,15 @@ class TerimaPesanan extends GetView<OrderPageController> {
                               TextButton(
                                 child: Text('Cancel'),
                                 onPressed: () {
-
+                                  Get.back();
                                   Navigator.of(context).pop();
                                 },
                               ),
                               TextButton(
                                 child: Text('Yes'),
                                 onPressed: () {
-                                  controller.acceptOrder(orderId);
+                                  print("TEST EVENT");
+                                  controller.acceptOrder(orderId.toString());
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -116,14 +118,15 @@ class TerimaPesanan extends GetView<OrderPageController> {
   }
 }
 
-class CompleteOrder extends GetView<OrderPageController> {
-  CompleteOrder({super.key, required this.orderId});
-  final String orderId;
+class AcceptedOrder extends GetView<OrderPageController> {
+  AcceptedOrder({super.key, required this.orderId, this.status});
+  final int orderId;
+  final String? status;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.isOrderCompleted(orderId)) {
+      if (controller.isOrderCompleted(orderId.toString()) && status == "completed") {
         return PesananSelesai();
       } else {
         return Row(
@@ -131,7 +134,7 @@ class CompleteOrder extends GetView<OrderPageController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             LittleBtn(
-              text: "Pesanan diproses",
+              text: "Pesanan diterima",
               style: txtCaption.copyWith(color: Colors.white),
               onPressed: () {},
               color: primaryColor,
@@ -143,7 +146,7 @@ class CompleteOrder extends GetView<OrderPageController> {
               text: "Selesaikan pesanan",
               style: txtCaption.copyWith(color: Colors.white),
               onPressed: () {
-                controller.completeOrder(orderId);
+                controller.completeOrder(orderId.toString());
               },
               color: greenMedium,
             ),

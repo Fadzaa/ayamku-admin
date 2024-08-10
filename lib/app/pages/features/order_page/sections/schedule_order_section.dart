@@ -38,6 +38,7 @@ class ScheduleOrderSection extends StatelessWidget {
             orderStatus: ScheduleStatus.done,
             orderTime: DateTime.now(),
             username: "Fattah Anggit",
+            orderId: 1,
           ),
 
         )

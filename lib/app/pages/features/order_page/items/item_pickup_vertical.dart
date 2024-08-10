@@ -20,7 +20,8 @@ class ItemPickupVertical extends StatelessWidget {
     required this.orderId,
   });
 
-  final String username, orderName, orderId;
+  final String username, orderName ;
+  final int orderId;
   final String orderTime;
   final List<CartItems> cartItems;
   final PickupStatus orderStatus;
@@ -75,7 +76,7 @@ class ItemPickupVertical extends StatelessWidget {
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(cartItem.quantity!.toString(), style: txtSecondaryTitle),
+                        Text('${cartItem.quantity!.toString()} pcs', style: txtSecondaryTitle),
                         SizedBox(width: 10),
                         Text(cartItem.productName.toString(), style: txtSecondaryTitle),
                         Spacer(),
@@ -93,14 +94,6 @@ class ItemPickupVertical extends StatelessWidget {
                 Divider(height: 0.5, color: blackColor70,),
 
                 SizedBox(height: 15,),
-
-                // Text("Note :",style: txtCaption,),
-                //
-                // SizedBox(height: 3,),
-                //
-                // Text("RAAAAWWRR, KIRIM NY CPT YH, SY LAPAR",style: txtCaption.copyWith(color: blackColor50),),
-                //
-                // SizedBox(height: 15,),
 
                 Row(
                   children: [

@@ -1,4 +1,5 @@
 import 'package:ayamku_admin/app/pages/features/home_page/home_page_controller.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/items/item_all_order_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_delivery_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_pickup_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_schedule_vertical.dart';
@@ -16,12 +17,13 @@ import 'package:intl/intl.dart';
 class LatestOrderSection extends GetView<HomePageController> {
   LatestOrderSection({super.key});
 
+  final orderController = Get.put(OrderPageController());
   @override
   Widget build(BuildContext context) {
     List<String> listMethod = [
+      "Semua",
       "On Delivery",
       "Pickup",
-      // "Terjadwal"
     ];
 
     return Column(
@@ -31,7 +33,6 @@ class LatestOrderSection extends GetView<HomePageController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Latest Order", style: txtHeadline3),
-            // ItemDropdownDay() => ak ga inget ni isinya apa aja, tp better di ilangin gas
           ],
         ),
 
@@ -46,10 +47,11 @@ class LatestOrderSection extends GetView<HomePageController> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) =>
                   Obx(() => ChipOrder(
-                      text: listMethod[index],
-                      totalOrder: index == 0 ? controller.numberOfDeliveryOrders.value : controller.numberOfPickupOrders.value,
-                      index: index,
-                      isSelected: controller.currentIndex.value == index
+                    text: listMethod[index],
+                    totalOrder: index == 0 ? controller.numberOfAllOrders.value : index == 1 ? controller.numberOfDeliveryOrders.value : controller.numberOfPickupOrders.value,
+                    index: index,
+                    isSelected: controller.currentIndex.value == index,
+
                   ))
           ),
         ),
@@ -64,13 +66,51 @@ class LatestOrderSection extends GetView<HomePageController> {
           }
           else if (controller.listOrder.isEmpty){
             return Center(
-              child: NotFoundPage(
-                image: notFound,
-                title: 'Data tidak ditemukan',
-                subtitle: 'Silahkan cari data lainnya',
-              ));
+                child: NotFoundPage(
+                  image: notFound,
+                  title: 'Data tidak ditemukan',
+                  subtitle: 'Silahkan cari data lainnya',
+                ));
           }
           else if (controller.currentIndex.value == 0) {
+            return ListView.builder(
+                itemCount: orderController.listOrder.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final order = orderController.listOrder[index];
+                  return ItemAllOrderVertical(
+                    onTap: () {
+                      Get.toNamed(
+                        Routes.DETAIL_ORDER_PAGE,
+                        arguments: {
+                          'cartItems': order.cart?.cartItems,
+                          'orderId': order.id.toString(),
+                          'userName': order.user!.name,
+                          'postName': order.post!.name,
+                          'postDesc': order.post!.description,
+                          'orderStatus': order.status,
+                          'methodType': order.methodType,
+                          'totalPrice': order.finalAmount,
+                          'discountAmount': order.discountAmount,
+                          'voucher': order.voucher,
+                          'date': order.createdAt,
+                        },
+                      );
+                    },
+                    cartItems: order.cart!.cartItems!,
+                    namePos: order.post!.name!.toString(),
+                    orderName: order.id.toString(),
+                    orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                    username: order.user!.name!,
+                    id: order.id!,
+                    method: order.methodType.toString(),
+                    status: order.status.toString(),
+                  );
+                }
+            );
+          }
+          else if (controller.currentIndex.value == 1){
             return ListView.builder(
                 itemCount: controller.listOrder.length,
                 shrinkWrap: true,
@@ -81,19 +121,19 @@ class LatestOrderSection extends GetView<HomePageController> {
                     onTap: () {
                       Get.toNamed(
                         Routes.DETAIL_ORDER_PAGE,
-                          arguments: {
-                            'cartItems': order.cart?.cartItems,
-                            'orderId': order.id.toString(),
-                            'userName': order.user!.name,
-                            'postName': order.post!.name,
-                            'postDesc': order.post!.description,
-                            'orderStatus': order.status,
-                            'methodType': order.methodType,
-                            'totalPrice': order.finalAmount,
-                            'discountAmount': order.discountAmount,
-                            'voucher': order.voucher,
-                            'date': order.createdAt,
-                          },
+                        arguments: {
+                          'cartItems': order.cart?.cartItems,
+                          'orderId': order.id.toString(),
+                          'userName': order.user!.name,
+                          'postName': order.post!.name,
+                          'postDesc': order.post!.description,
+                          'orderStatus': order.status,
+                          'methodType': order.methodType,
+                          'totalPrice': order.finalAmount,
+                          'discountAmount': order.discountAmount,
+                          'voucher': order.voucher,
+                          'date': order.createdAt,
+                        },
                       );
                     },
                     cartItems: order.cart!.cartItems!,
@@ -102,48 +142,47 @@ class LatestOrderSection extends GetView<HomePageController> {
                     orderStatus: OrderStatus.done,
                     orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
-                    orderId: order.id.toString(),
+                    orderId: order.id!,
                   );
                 }
             );
-          } else if (controller.currentIndex.value == 1){
+          } else if (controller.currentIndex.value == 2){
             return ListView.builder(
-              itemCount: controller.listOrder.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final order = controller.listOrder[index];
-                return ItemPickupVertical(
-                  onPressed: () {
-                    Get.toNamed(
-                      Routes.DETAIL_ORDER_PAGE,
-                      arguments: {
-                        'cartItems': order.cart?.cartItems,
-                        'orderId': order.id.toString(),
-                        'userName': order.user!.name,
-                        'postName': order.post!.name,
-                        'postDesc': order.post!.description,
-                        'orderStatus': order.status,
-                        'methodType': order.methodType,
-                        'totalPrice': order.finalAmount,
-                        'discountAmount': order.discountAmount,
-                        'voucher': order.voucher,
-                        'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
-                      },
-                    );
-                  },
-                  cartItems: order.cart!.cartItems!,
-                  orderName: order.id.toString(),
-                  orderStatus: PickupStatus.done,
-                  orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
-                  username: order.user!.name!,
-                  orderId: order.id.toString(),
-                );
-              }
+                itemCount: controller.listOrder.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final order = controller.listOrder[index];
+                  return ItemPickupVertical(
+                    onPressed: () {
+                      Get.toNamed(
+                        Routes.DETAIL_ORDER_PAGE,
+                        arguments: {
+                          'cartItems': order.cart?.cartItems,
+                          'orderId': order.id.toString(),
+                          'userName': order.user!.name,
+                          'postName': order.post!.name,
+                          'postDesc': order.post!.description,
+                          'orderStatus': order.status,
+                          'methodType': order.methodType,
+                          'totalPrice': order.finalAmount,
+                          'discountAmount': order.discountAmount,
+                          'voucher': order.voucher,
+                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                        },
+                      );
+                    },
+                    cartItems: order.cart!.cartItems!,
+                    orderName: order.id.toString(),
+                    orderStatus: PickupStatus.done,
+                    orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                    username: order.user!.name!,
+                    orderId: order.id!,
+                  );
+                }
             );
-          } else {
-            return Container();
           }
+          return SizedBox.shrink(); // Default return statement
         }),
       ],
     );
@@ -153,10 +192,10 @@ class LatestOrderSection extends GetView<HomePageController> {
 class ChipOrder extends GetView<HomePageController> {
   const ChipOrder(
       {super.key,
-      required this.text,
-      required this.totalOrder,
-      required this.isSelected,
-      required this.index});
+        required this.text,
+        required this.totalOrder,
+        required this.isSelected,
+        required this.index});
 
   final String text;
   final int totalOrder, index;
@@ -189,19 +228,19 @@ class ChipOrder extends GetView<HomePageController> {
               ),
               totalOrder > 0 && isSelected
                   ? Container(
-                      width: 20,
-                      height: 20,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Text(
-                          totalOrder.toString(),
-                          style: txtCaption.copyWith(color: Colors.black),
-                        ),
-                      ),
-                    )
+                width: 20,
+                height: 20,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(
+                    totalOrder.toString(),
+                    style: txtCaption.copyWith(color: Colors.black),
+                  ),
+                ),
+              )
                   : const SizedBox()
             ],
           )),

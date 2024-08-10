@@ -41,9 +41,7 @@ class HomePageView extends GetView<HomePageController> {
                         
                 SizedBox(height: 20,),
                         
-                Obx(
-                        () => controller.isLoadingSales.value ? CircularProgressIndicator() : SalesSummarySection(salesResponse: controller.salesResponse,),
-                ),
+                SalesSummarySection(salesResponse: controller.salesResponse,),
 
                         
                 SizedBox(height: 20,),

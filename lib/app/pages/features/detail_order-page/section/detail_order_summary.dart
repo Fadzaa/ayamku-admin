@@ -50,28 +50,6 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
             height: 20,
           ),
 
-
-          //Metode pembayaran
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Metode pembayaran",
-                style: txtHeadline3,
-              ),
-              SizedBox(height: 10),
-              Text(
-                "Dana",
-                style: txtSecondaryTitle,
-              )
-            ],
-          ),
-
-          SizedBox(
-            height: 20,
-          ),
-
-
           //Pembayaran & total
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +79,83 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                 ],
               )
             ],
-          )
+          ),
+
+          SizedBox(
+            height: 20,
+          ),
+
+          //Metode pembayaran
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Metode pembayaran",
+                style: txtHeadline3,
+              ),
+              SizedBox(height: 10),
+              Text(
+                "Dana",
+                style: txtSecondaryTitle,
+              )
+            ],
+          ),
+
+          SizedBox(height: 20,),
+
+          Text(
+            "Ringkasan pemesanan",
+            style: txtHeadline3,
+          ),
+          SizedBox(height: 10,),
+          // Ringkasan pemesanan
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Metode pemesanan",
+                style: txtSecondaryTitle,
+              ),
+              Text(
+                argument['methodType'],
+                style: txtSecondaryTitle,
+              )
+            ],
+          ),
+
+          SizedBox(height: 10),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Sesi order",
+                style: txtSecondaryTitle,
+              ),
+              Text(
+                argument['session_order'] ?? '',
+                style: txtSecondaryTitle,
+              )
+            ],
+          ),
+
+          SizedBox(height: 10),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Waktu pemesanan",
+                style: txtSecondaryTitle,
+              ),
+              Text(
+                argument['date'.toString()],
+                style: txtSecondaryTitle,
+              )
+            ],
+          ),
+
+
         ],
       ),
     );

@@ -78,33 +78,33 @@ class ItemSalesSummary extends GetView<HomePageController> {
           ),
         );
 
-      // case SalesItem.totalSales:
-      //   return Container(
-      //     padding: const EdgeInsets.all(16.0),
-      //     decoration: BoxDecoration(
-      //         color: const Color(0xFFF8F9FB),
-      //         borderRadius: BorderRadius.circular(16)
-      //     ),
-      //     child: Column(
-      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: [
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             Text("Total Sales", style: txtCaption),
-      //
-      //             const SizedBox(width: 10,),
-      //
-      //             Text("-10%", style: txtCaption.copyWith(color: pinkLight))
-      //           ],
-      //         ),
-      //
-      //         Text("Rp. 1.120.000", style: txtHarga)
-      //
-      //       ],
-      //     ),
-      //   );
+    // case SalesItem.totalSales:
+    //   return Container(
+    //     padding: const EdgeInsets.all(16.0),
+    //     decoration: BoxDecoration(
+    //         color: const Color(0xFFF8F9FB),
+    //         borderRadius: BorderRadius.circular(16)
+    //     ),
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Row(
+    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //           children: [
+    //             Text("Total Sales", style: txtCaption),
+    //
+    //             const SizedBox(width: 10,),
+    //
+    //             Text("-10%", style: txtCaption.copyWith(color: pinkLight))
+    //           ],
+    //         ),
+    //
+    //         Text("Rp. 1.120.000", style: txtHarga)
+    //
+    //       ],
+    //     ),
+    //   );
 
       case SalesItem.totalOrders:
         return Container(
@@ -118,17 +118,17 @@ class ItemSalesSummary extends GetView<HomePageController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text("Total Sales", style: txtCaption),
-                      // const SizedBox(width: 3,),
-                      // Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
-                    ],
-                  ),
-                  // Text("+10%", style: txtCaption.copyWith(color: greenLight))
-                ]
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text("Total Sales", style: txtCaption),
+                        // const SizedBox(width: 3,),
+                        // Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
+                      ],
+                    ),
+                    // Text("+10%", style: txtCaption.copyWith(color: greenLight))
+                  ]
               ),
 
               SizedBox(height: 7,),

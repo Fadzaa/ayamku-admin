@@ -35,15 +35,16 @@ class OrderService {
     }
   }
 
-  Future<Response> updateOrderStatus( String id, String status) async {
+  Future<Response> updateOrderStatus(String id, String status) async {
+
     try {
       final response = await _dioInstance.putRequest(
         endpoint: ApiEndPoint.orderStatus,
         isAuthorize: true,
-          data: {
-            'order_id': id,
-            'status': status,
-          }
+        data: {
+          'order_id': id,
+          'status': status,
+        },
       );
 
       return response;
@@ -51,4 +52,5 @@ class OrderService {
       throw Exception(e);
     }
   }
+
 }

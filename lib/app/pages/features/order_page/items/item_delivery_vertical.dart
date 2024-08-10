@@ -21,7 +21,8 @@ class ItemDeliveryVertical extends StatelessWidget{
     required this.orderId,
   });
 
-  final String username, orderName, namePos, orderId;
+  final String username, orderName, namePos;
+  final int orderId;
   final String orderTime;
   final List<CartItems> cartItems;
   final OrderStatus orderStatus;
@@ -78,7 +79,7 @@ class ItemDeliveryVertical extends StatelessWidget{
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(cartItem.quantity!.toString(), style: txtSecondaryTitle),
+                        Text('${cartItem.quantity!.toString()} pcs', style: txtSecondaryTitle),
                         SizedBox(width: 10),
                         Text(cartItem.productName.toString(), style: txtSecondaryTitle),
                         Spacer(),

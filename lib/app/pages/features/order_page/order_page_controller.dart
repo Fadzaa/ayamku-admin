@@ -28,15 +28,24 @@ class OrderPageController extends GetxController {
 
   // status
   RxList<String> acceptedOrders = <String>[].obs;
-  RxList<String> completedOrders = <String>[].obs;
-  RxList<String> cancelledOrders = <String>[].obs;
-
   bool isOrderAccepted(String orderId) {
     return acceptedOrders.contains(orderId);
   }
+  void acceptOrder(String orderId) {
+    updateStatus(orderId, 'accept');
+    acceptedOrders.add(orderId);
+  }
+
+  RxList<String> completedOrders = <String>[].obs;
+  RxList<String> cancelledOrders = <String>[].obs;
 
   bool isOrderCancelled(String orderId) {
     return cancelledOrders.contains(orderId);
+  }
+
+  void cancelOrder(String orderId) {
+    updateStatus(orderId, 'cancelled');
+    cancelledOrders.add(orderId);
   }
 
   bool isOrderCompleted(String orderId) {
@@ -57,19 +66,10 @@ class OrderPageController extends GetxController {
   }
 
   void completeOrder(String orderId) {
-    updateOrderStatus(orderId, 'completed');
+    updateStatus(orderId, 'completed');
     completedOrders.add(orderId);
   }
 
-  void acceptOrder(String orderId) {
-    updateOrderStatus(orderId, 'accept');
-    acceptedOrders.add(orderId);
-  }
-
-  void cancelOrder(String orderId) {
-    updateOrderStatus(orderId, 'cancelled');
-    cancelledOrders.add(orderId);
-  }
 
   @override
   void onInit() {
@@ -144,18 +144,18 @@ class OrderPageController extends GetxController {
     }
   }
 
-  Future<void> updateOrderStatus(String id, String status) async {
+  Future<void> updateStatus(String id, String status) async {
     try {
       isLoading.value = true;
 
       final response = await orderService.updateOrderStatus(id, status);
 
-      print("Update order status");
-      print(response.data);
+      print("Update order status response: ${response.data}");
 
 
     } catch (e) {
       print('Error occurred: $e');
+      Get.snackbar("Error", e.toString());
     } finally {
       isLoading.value = false;
     }
@@ -166,6 +166,7 @@ class OrderPageController extends GetxController {
     "Selesai": "completed",
     "Telah Diterima": "accept",
     "Dibatalkan": "cancelled",
+    "Dikonfirmasi": "order_confirm",
   };
 
   void updateSelectedStatus(String statusText) {

@@ -40,6 +40,7 @@ voidFilterAllOrder(BuildContext context) {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Container(
+            height:380,
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,12 +67,12 @@ voidFilterAllOrder(BuildContext context) {
                   },
                   selectedValue: controller.selectedStatusDisplay,
                 ),
-                WidgetFilter(
-                  text: 'Pos penjemputan',
-                  filterAllOrder: post,
-                  updateSelectedValue: controller.updateSelectedValue,
-                  selectedValue: controller.selectedValue,
-                ),
+                // WidgetFilter(
+                //   text: 'Pos penjemputan',
+                //   filterAllOrder: post,
+                //   updateSelectedValue: controller.updateSelectedValue,
+                //   selectedValue: controller.selectedValue,
+                // ),
                 WidgetFilter(
                   text: 'Type order',
                   filterAllOrder: typeOrder,

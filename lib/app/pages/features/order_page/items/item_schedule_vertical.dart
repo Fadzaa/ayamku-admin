@@ -12,14 +12,15 @@ class ItemScheduleVertical extends GetView<OrderPageController> {
     required this.orderName,
     required this.orderTime,
     required this.orderPrice,
-    required this.orderStatus
+    required this.orderStatus,
+    required this.orderId,
   });
 
   final String username, orderName;
   final DateTime orderTime;
   final int orderPrice;
   final ScheduleStatus orderStatus;
-  final String orderId = "1";
+  final int orderId;
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +143,7 @@ class ItemScheduleVertical extends GetView<OrderPageController> {
                   ),
 
                   Obx(() {
-                    if (controller.isOrderAccepted(orderId)) {
+                    if (controller.isOrderAccepted(orderId.toString())) {
                       return LittleBtn(
                         text: "Sedang diproses",
                         style: txtCaption.copyWith(color: Colors.white),

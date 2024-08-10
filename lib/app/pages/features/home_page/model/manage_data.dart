@@ -14,9 +14,9 @@ final List <Manage> manage_data = [
       routes: Routes.MANAGEMENT_VOUCHER,
   ),
   Manage(
-      name: "History",
+      name: "Pos",
       image: icHistory,
-      routes: Routes.HISTORY_PAGE,
+      routes: Routes.POS_PAGE,
   ),
   Manage(
       name: "Product",

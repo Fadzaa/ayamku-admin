@@ -22,23 +22,25 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
         required this.method,
         required this.status});
 
-  final String username, orderName, namePos, method, status, id;
+  final String username, orderName, namePos, method, status;
+  final int id;
   final String? sessionOrder;
   final String orderTime;
   final List<CartItems> cartItems;
   final VoidCallback onTap;
 
-  Widget getStatusWidget(String status, String orderId) {
+  Widget getStatusWidget(String status, int orderId) {
     switch (status) {
       case 'processing':
-        return TerimaPesanan(orderId: orderId);
+        return TerimaPesanan(orderId: orderId, status: status);
       case 'completed':
         return PesananSelesai();
       case 'confirm_order':
         return PesananDikonfirmasi();
       case 'accept':
-        return CompleteOrder(
+        return AcceptedOrder(
           orderId: orderId,
+          status: status,
         );
       case 'cancelled':
         return PesananDibatalkan();
@@ -87,15 +89,6 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                     ),
                   ],
                 ),
-                if (method != 'pickup')
-                  Container(
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: primaryColor40,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Text(namePos, style: txtCaption))
               ],
             ),
             SizedBox(
@@ -111,8 +104,7 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(cartItem.quantity!.toString(),
-                        style: txtSecondaryTitle),
+                    Text('${cartItem.quantity!.toString()} pcs', style: txtSecondaryTitle),
                     SizedBox(width: 10),
                     Text(cartItem.productName.toString(),
                         style: txtSecondaryTitle),
@@ -159,6 +151,19 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                     style: txtCaption.copyWith(),
                   ),
                 )
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            if (method != 'pickup')
+             Row(
+              children: [
+                SvgPicture.asset(icLocation,),
+
+                SizedBox(width: 10,),
+
+                Text(namePos, style: txtCaption)
               ],
             ),
             SizedBox(

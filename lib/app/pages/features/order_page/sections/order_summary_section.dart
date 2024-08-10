@@ -12,16 +12,18 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'schedule_order_section.dart';
 
 class OrderSummarySection extends GetView<OrderPageController> {
   String displayTime() {
     int currentHour = DateTime.now().hour;
+    DateTime now = DateTime.now();
     if (currentHour >= 10 && currentHour < 12) {
-      return "12.00";
-    } else if (currentHour >= 7 && currentHour < 9) {
-      return "09.40";
+      return DateFormat('HH:mm').format(DateTime(now.year, now.month, now.day, 12, 0));
+    } else if (currentHour >= 7 && currentHour < 10) {
+      return DateFormat('HH:mm').format(DateTime(now.year, now.month, now.day, 9, 40));
     } else {
       return "Selesai";
     }

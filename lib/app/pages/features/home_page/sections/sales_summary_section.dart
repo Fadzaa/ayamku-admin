@@ -35,19 +35,13 @@ class SalesSummarySection extends GetView<HomePageController> {
 
         const SizedBox(height: 10,),
 
-        ItemSalesSummary(typeSalesItem: salesSummary[0], analyticSales: int.parse(salesResponse.totalSales!),),
+        ItemSalesSummary(typeSalesItem: salesSummary[0], analyticSales: int.parse(salesResponse.totalSales ?? "0"),),
 
         const SizedBox(height: 15,),
 
         Row(
           children: [
-            Obx(() {
-              if (controller.isLoading.value) {
-                return CircularProgressIndicator();
-              } else {
-                return Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[1], numberOfOrders: salesResponse.totalOrder,));
-              }
-            }),
+          Expanded(child: ItemSalesSummary(typeSalesItem: salesSummary[1], numberOfOrders: salesResponse.totalOrder,)),
 
             const SizedBox(width: 15,),
 

@@ -1,4 +1,5 @@
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_controller.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_loading.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
@@ -18,7 +19,7 @@ class ItemPromoSection extends GetView<PromoPageController> {
     return Obx(() {
       if(controller.isLoading.value){
         return Center(
-          child: CircularProgressIndicator(),
+          child: commonLoading(),
         );
         
       }else if(controller.promosList.isEmpty){

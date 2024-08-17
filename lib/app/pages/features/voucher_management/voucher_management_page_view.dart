@@ -2,6 +2,7 @@ import 'package:ayamku_admin/app/pages/features/voucher_management/items/filter_
 import 'package:ayamku_admin/app/pages/features/voucher_management/items/item_voucher_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_loading.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_search.dart';
 import 'package:ayamku_admin/app/pages/global_component/not_found_page/not_found_page.dart';
 import 'package:ayamku_admin/common/constant.dart';
@@ -80,7 +81,7 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
 
                   Obx(() {
                     if (controller.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(child: commonLoading());
                     } else if (controller.voucherList.isEmpty) {
                       return NotFoundPage(
                           image: notFound,

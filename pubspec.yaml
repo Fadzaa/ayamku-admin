@@ -44,6 +44,7 @@ dependencies:
   table_calendar: ^3.0.0
   firebase_core: ^3.3.0
   firebase_messaging: ^15.0.4
+  flutter_rating_bar:
   flutter:
     sdk: flutter
 

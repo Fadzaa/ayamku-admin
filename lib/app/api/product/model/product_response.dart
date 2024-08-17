@@ -26,7 +26,7 @@ class Product {
   String? name;
   String? description;
   int? price;
-  String? rating;
+  int? rating_avg;
   String? image;
   String? category;
   int? totalRating;
@@ -36,7 +36,7 @@ class Product {
         this.name,
         this.description,
         this.price,
-        this.rating,
+        this.rating_avg,
         this.image,
         this.category,
         this.totalRating});
@@ -46,7 +46,7 @@ class Product {
     name = json['name'];
     description = json['description'];
     price = json['price'];
-    rating = json['rating'];
+    rating_avg = json['rating_avg'];
     image = json['image'];
     category = json['category'];
     totalRating = json['total_rating'];
@@ -58,7 +58,7 @@ class Product {
     data['name'] = this.name;
     data['description'] = this.description;
     data['price'] = this.price;
-    data['rating'] = this.rating;
+    data['rating_avg'] = this.rating_avg;
     data['image'] = this.image;
     data['category'] = this.category;
     data['total_rating'] = this.totalRating;

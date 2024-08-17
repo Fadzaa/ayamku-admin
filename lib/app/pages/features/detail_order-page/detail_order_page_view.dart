@@ -48,7 +48,7 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (controller.orderStatus.value == "confirm_order") HeaderStatusSection(),
+              if (controller.orderStatus.value == "confirmed_order") HeaderStatusSection(),
               DeliverySection(
                 date: controller.date.value,
                 status: controller.orderStatus.value,
@@ -63,7 +63,7 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
               ),
           
               DetailOrderSummary(),
-              if (controller.orderStatus.value == "confirm_order") PenilaianSection(),
+              // if (controller.orderStatus.value == "confirm_order") PenilaianSection(),
             ],
           ),
         ),

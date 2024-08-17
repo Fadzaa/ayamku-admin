@@ -22,6 +22,8 @@ class HomePageController extends GetxController {
   RxInt numberOfAllOrders = 0.obs;
   final isActive = false.obs;
 
+  RxString dropdownValue = "Hari ini".obs;
+
   RxInt numberOfOrders = 0.obs;
   RxInt processingOrdersCount = 0.obs;
 
@@ -52,7 +54,7 @@ class HomePageController extends GetxController {
 
     storeService = StoreService();
     updateStore();
-    getSalesSummary();
+    // getSalesSummary();
   }
 
 
@@ -118,11 +120,11 @@ class HomePageController extends GetxController {
     }
   }
 
-  Future<void> getSalesSummary() async {
+  Future<void> getSalesSummary(String filter) async {
     try {
       isLoadingSales.value = true;
 
-      final response = await salesService.getSaleSummary(selectedFilterTypeOrder.value);
+      final response = await salesService.getSaleSummary(filter);
       salesResponse = SalesResponse.fromJson(response.data);
 
       print("SALES RESPONSE:");
@@ -137,6 +139,29 @@ class HomePageController extends GetxController {
     }
   }
 
+  void onChangeValue(String selectDay, List<String> items) {
+    dropdownValue.value = selectDay;
+    items.remove(selectDay);
+    items.insert(0, selectDay);
+
+    String filter;
+    switch (selectDay) {
+      case "Hari ini":
+        filter = "today";
+        break;
+      case "7 Hari yang lalu":
+        filter = "week";
+        break;
+      case "1 Bulan yang lalu":
+        filter = "month";
+        break;
+      default:
+        filter = "today";
+        break;
+    }
+
+    getSalesSummary(filter);
+  }
 
   Future getOrderMethod(String method, String status) async {
     try {

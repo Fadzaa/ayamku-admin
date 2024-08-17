@@ -35,6 +35,8 @@ import 'package:ayamku_admin/app/pages/features/product_page/product_page_bindin
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_view.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_binding.dart';
 import 'package:ayamku_admin/app/pages/features/promo-page/promo_page_view.dart';
+import 'package:ayamku_admin/app/pages/features/review_product/review_product_page_binding.dart';
+import 'package:ayamku_admin/app/pages/features/review_product/review_product_page_view.dart';
 import 'package:ayamku_admin/app/pages/initial_pages/splash_screen/splash_page_binding.dart';
 import 'package:ayamku_admin/app/pages/initial_pages/splash_screen/splash_page_view.dart';
 import 'package:get/get.dart';
@@ -51,7 +53,7 @@ class AppPages {
   // static var routes;
 
   AppPages._();
-  static const INITIAL = Routes.LOGIN_PAGE;
+  static const INITIAL = Routes.SPLASH_PAGE;
 
   static final routes = [
     GetPage(
@@ -198,6 +200,12 @@ class AppPages {
       name: _Paths.OPTION_USER,
       page: () => const OptionUserView(),
       binding: OptionUserBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.REVIEW_PAGE,
+      page: () => const ReviewProductPageView(),
+      binding: ReviewProductPageBinding(),
       transition: Transition.noTransition,
     ),
   ];

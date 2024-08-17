@@ -12,6 +12,11 @@ final List <OrderSummary> order_summary_data = [
       count: "${controller.numberOfOrders.value}"
   ),
   OrderSummary(
+      icon: icHistory,
+      title: "History Order",
+      count: "148"
+  ),
+  OrderSummary(
       icon: icTotalPickup,
       title: "Total Pickup",
       count: "${controller.numberOfPickupOrders.value}",
@@ -20,11 +25,6 @@ final List <OrderSummary> order_summary_data = [
       icon: icTotalDelivery,
       title: "Total Delivery",
       count: "${controller.numberOfDeliveryOrders.value}"
-  ),
-  OrderSummary(
-      icon: icTotalDelivery,
-      title: "Total Schedule",
-      count: "148"
   ),
   // OrderSummary(
   //     icon: icCancel,

@@ -4,8 +4,9 @@ import 'package:ayamku_admin/app/pages/features/order_page/items/item_delivery_v
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_pickup_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_schedule_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
-import 'package:ayamku_admin/app/pages/features/product_page/items/item_dropdown_day.dart';
+import 'package:ayamku_admin/app/pages/features/home_page/items/item_dropdown_day.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_loading.dart';
 import 'package:ayamku_admin/app/pages/global_component/not_found_page/not_found_page.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
@@ -61,7 +62,7 @@ class LatestOrderSection extends GetView<HomePageController> {
         Obx(() {
           if (controller.isLoading.value){
             return Center(
-              child: CircularProgressIndicator(),
+              child: commonLoading(),
             );
           }
           else if (controller.listOrder.isEmpty){

@@ -1,4 +1,5 @@
 import 'package:ayamku_admin/app/pages/features/pos_page/pos_page_controller.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_loading.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class ItemPos extends GetView<PosPageController> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Obx(() => controller.isLoading.value
-        ? Center(child: CircularProgressIndicator())
+        ? Center(child: commonLoading())
         : ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),

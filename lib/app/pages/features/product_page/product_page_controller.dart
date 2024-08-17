@@ -10,7 +10,7 @@ class ProductPageController extends GetxController{
   TextEditingController searchController = TextEditingController();
 
   RxString selectedValue = 'All'.obs;
-  RxString dropdownValue = "Today".obs;
+
 
   var arguments = Get.arguments;
 
@@ -41,12 +41,6 @@ class ProductPageController extends GetxController{
         }
       });
     });
-  }
-
-  void onChangeValue(String selectDay, List<String> items) {
-    dropdownValue.value = selectDay;
-    items.remove(selectDay);
-    items.insert(0, selectDay);
   }
 
   void updateSelectedValue(String value) {

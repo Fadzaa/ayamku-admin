@@ -35,8 +35,7 @@ void onInit() {
     });
   }
 
-void getAllPromo () async {
-
+Future <void> getAllPromo() async {
     try {
       isLoading.value = true;
 

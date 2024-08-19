@@ -30,9 +30,9 @@ class ItemPos extends GetView<PosPageController> {
                     Routes.EDIT_POS_PAGE,
                     arguments: {
                       'id': pos.id,
-                      'image': pos.image,
-                      'name': pos.name,
-                      'description': pos.description,
+                      'image': pos.image.toString(),
+                      'name': pos.name.toString(),
+                      'description': pos.description.toString(),
                     }
                     );
                 },
@@ -62,8 +62,12 @@ class ItemPos extends GetView<PosPageController> {
                                 topLeft: Radius.circular(15),
                                 topRight: Radius.circular(15),
                               ),
-                              child: Image.network(
+                              child: 
+                              Image.network(
                                 pos.image.toString(),
+                                fit: BoxFit.cover,
+                                height: MediaQuery.of(context).size.height * 0.2,
+                                width: screenWidth,
                               ),
                             ),
                           ],

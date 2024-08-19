@@ -24,7 +24,7 @@ class AddPromoPageController extends GetxController{
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
   final TextEditingController imageController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  // final TextEditingController descriptionController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
 
 
@@ -89,7 +89,7 @@ class AddPromoPageController extends GetxController{
 
       dio.FormData formData = dio.FormData.fromMap({
         "name" : nameController.text,
-        "description" : descriptionController.text,
+        "description" : eventController.text,
         "discount" : int.parse(discountController.text),
         "start_date" : startDate.toString(),
         "end_date" : endDate.toString(),
@@ -108,17 +108,19 @@ class AddPromoPageController extends GetxController{
         e.toString(),
       );
       print(e);
-    } 
+    } finally {
+      isLoading.value = false;
+    }
   }
   void clearForm() {
     nameController.clear();
-    descriptionController.clear();
+    eventController.clear();
   }
 
   @override
   void onClose() {
     nameController.clear();
-    descriptionController.clear();
+    eventController.clear();
     super.onClose();
   }
 

@@ -30,7 +30,7 @@ class AddPromoPage extends GetView<AddPromoPageController> {
             ItemTextField(
               text: "Nama event",
               hintText: "Selamat hari hari",
-              controller: controller.descriptionController,
+              controller: controller.eventController,
             ),
 
             ItemTextField(

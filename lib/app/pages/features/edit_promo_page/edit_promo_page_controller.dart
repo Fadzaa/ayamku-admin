@@ -27,6 +27,8 @@ class EditPromoPageControlller extends GetxController{
 
   RxString imagePath = RxString("");
   RxString selectedImagePath = ''.obs;
+  RxString filePathImage = ''.obs;
+
 
   
   PromoService promoService = PromoService();
@@ -34,7 +36,9 @@ class EditPromoPageControlller extends GetxController{
 
   Future<void> pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
     if (pickedFile != null) {
+      selectedImagePath.value = pickedFile.path;
       selectedImagePath.value = pickedFile.path;
     }
     print("Image Selected");
@@ -78,42 +82,48 @@ class EditPromoPageControlller extends GetxController{
     eventController.text = promo['event'];
     startDateController.text = formattedStartDate;
     endDateController.text = formattedEndDate;
-    imageController.text = promo['image'];
+    selectedImagePath.value = promo['image'];
 
   }
 
   Future <void> updatePromo() async {
     try {
-      isLoading(true);
+      isLoading.value = true;
+
+      DateTime? startDate;
+      DateTime? endDate;
+      try {
+        startDate = DateTime.parse(startDateController.text);
+        endDate = DateTime.parse(endDateController.text);
+      } catch (e) {
+        throw FormatException("Invalid date format. Please use YYYY-MM-DD format.");
+      }
+
+      if (endDate.isBefore(startDate)) {
+        throw Exception("End date must be after start date");
+      }
 
       dio.FormData formData = dio.FormData.fromMap({
-        'name': "Static Test Name",
-        'discount': int.parse(discountController.text),
-        'description': eventController.text,
-        'start_date': startDateController.text,
-        'end_date': endDateController.text,
+        "name" : nameController.text,
+        "description" : eventController.text,
+        "discount" : int.parse(discountController.text),
+        "start_date" : startDate.toString(),
+        "end_date" : endDate.toString(),
         'image': await dio.MultipartFile.fromFile(selectedImagePath.value),
       });
 
-      final response = await promoService.updatePromo(
-          formData,
-          3.toString()
-        );
+      await promoService.updatePromo(formData, promo['id']);
 
-      print("Check resopnse put");
-      print(response.data);
+      Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
 
-      Get.snackbar(
-        "Success",
-        "Promo updated successfully",
-      );
+      Get.offNamedUntil(Routes.PROMO_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
 
     } catch (e) {
       Get.snackbar(
         "Error",
         e.toString(),
       );
-
+      print(e);
     } finally {
       isLoading.value = false;
     }
@@ -142,8 +152,5 @@ class EditPromoPageControlller extends GetxController{
       isLoading.value = false;
     }
   }
-
-
-  
 
 }

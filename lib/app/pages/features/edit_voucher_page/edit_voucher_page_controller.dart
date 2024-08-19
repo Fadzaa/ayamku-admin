@@ -2,6 +2,7 @@ import 'package:ayamku_admin/app/api/voucher/model/voucher_response.dart';
 import 'package:ayamku_admin/app/api/voucher/voucher_service.dart';
 import 'package:ayamku_admin/app/pages/features/voucher_management/voucher_management_controller.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -22,8 +23,8 @@ class EditVoucherPageController extends GetxController {
   VoucherResponse voucherResponse = VoucherResponse();
 
 
-  void selectDate (
-      BuildContext context, TextEditingController controller) async {
+Future<void> selectDate(BuildContext context, TextEditingController controller) async {
+
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -32,7 +33,7 @@ class EditVoucherPageController extends GetxController {
     );
 
     if (picked != null) {
-      String formattedDate = DateFormat('dd MMMM yyyy').format(picked);
+      String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
       controller.text = formattedDate;
     }
 
@@ -53,35 +54,44 @@ class EditVoucherPageController extends GetxController {
 
   Future <void> updateVoucher() async {
     try {
-      isLoading(true);
+      isLoading.value = true;
 
-      await voucherService.updateVoucher(
-          voucher.id.toString(),
-          codeController.text,
-          int.parse(discountController.text.toString(),),
-          descriptionController.text,
-          startDateController.text,
-          endDateController.text
-      );
+      DateTime? startDate;
+      DateTime? endDate;
+      try {
+        startDate = DateTime.parse(startDateController.text);
+        endDate = DateTime.parse(endDateController.text);
+      } catch (e) {
+        throw FormatException("Invalid date format. Please use YYYY-MM-DD format.");
+      }
 
+      if (endDate.isBefore(startDate)) {
+        throw Exception("End date must be after start date");
+      }
 
-      Get.snackbar(
-        "Success",
-        "Voucher updated successfully",
-      );
+      dio.FormData formData = dio.FormData.fromMap({
+        "code" : codeController.text,
+        "discount" : int.parse(discountController.text),
+        "qty" : int.parse(qtyController.text),
+        "description" : descriptionController.text,
+        "start_date" : startDate.toString(),
+        "end_date" : endDate.toString()
+      });
+
+      await voucherService.addVoucher(formData);
+
+      Get.snackbar("Tambah voucher Sukses", "Berhasil menambhkan voucher!");
 
       Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER, (routes) => routes.settings.name == Routes.HOME_PAGE);
 
 
-
-    } catch (e) {
+    }
+    catch(e){
       Get.snackbar(
         "Error",
         e.toString(),
       );
-
-    } finally {
-      isLoading.value = false;
+        print(e);
     }
   }
 

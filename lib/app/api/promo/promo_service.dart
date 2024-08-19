@@ -54,12 +54,12 @@ class PromoService {
   //       }
   //     }
 
-  Future<Response> updatePromo(FormData formData, String id) async {
+  Future<Response> updatePromo(formData, id) async {
     try {
       final response = await _dioInstance.postImageRequest(
-          endpoint: 'https://ayamku-api.rplrus.com/api/promos/$id',
+          endpoint: ApiEndPoint.promo + '/$id',
+          data: formData,
           isAuthorize: true,
-          data: formData
       );
 
       return response;

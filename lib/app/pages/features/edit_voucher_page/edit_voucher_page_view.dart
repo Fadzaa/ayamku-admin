@@ -67,7 +67,7 @@ class EditVoucherPageView extends GetView<EditVoucherPageController> {
         ic2: icUpload,
         txtColor1: Colors.white,
         txtColor2: blackColor,
-        txt1: 'Batalkan',
+        txt1: 'Hapus',
         txt2: 'Upload',
       ) ,
     );

@@ -86,7 +86,7 @@ class EditPosPageController extends GetxController{
   
       Get.snackbar(
         "Success",
-        "Voucher updated successfully",
+        "POS updated successfully",
       );
 
 

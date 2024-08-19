@@ -22,15 +22,17 @@ class VoucherService {
   Future<dio.Response> updateVoucher(String id, String code, int discount,
       String description, String startDate, String endDate) async {
     try {
-      final response = await _dioInstance.postRequest(
+      final response = await _dioInstance.postImageRequest(
         endpoint: ApiEndPoint.updateVoucher(id),
-         isAuthorize: true, data: {
-        'code': code,
-        'discount': discount,
-        'description': description,
-        'start_date': startDate,
-        'end_date': endDate
-      });
+         isAuthorize: true, 
+         data: {
+          'code': code,
+          'discount': discount,
+          'description': description,
+          'start_date': startDate,
+          'end_date': endDate
+        }
+      );
 
       return response;
     } catch (e) {

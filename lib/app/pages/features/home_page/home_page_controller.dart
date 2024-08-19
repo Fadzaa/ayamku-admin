@@ -54,7 +54,8 @@ class HomePageController extends GetxController {
 
     storeService = StoreService();
     updateStore();
-    // getSalesSummary();
+    getAllOrder();
+    getSalesSummary(toString());
   }
 
 
@@ -82,7 +83,7 @@ class HomePageController extends GetxController {
     }
   }
 
-  Future <void> getAllOrder(String status) async {
+  Future <void> getAllOrder() async {
     try {
       isLoading.value = true;
 
@@ -99,15 +100,13 @@ class HomePageController extends GetxController {
           .map((orderData) => Order.fromJson(orderData))
           .toList();
 
-      numberOfOrders.value = orders.length;
-
       print('Number of orders: ${numberOfOrders.value}');
 
       processingOrdersCount.value = orders.where((order) => order.status == "processing").length;
       print('Number of processing orders: ${processingOrdersCount.value}');
 
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.where((order) => order.status == status).toList().obs;
+      listOrder = orderResponse.data!.obs;
 
       print(listOrder);
 
@@ -199,7 +198,7 @@ class HomePageController extends GetxController {
     currentIndex.value = index;
     switch (index) {
       case 0:
-        await getAllOrder('processing ');
+        await getAllOrder();
         break;
       case 1:
         await getOrderMethod('on_delivery', 'processing');

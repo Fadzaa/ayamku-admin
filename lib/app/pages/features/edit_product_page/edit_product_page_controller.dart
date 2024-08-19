@@ -34,8 +34,9 @@ class EditProductPageController extends GetxController {
     if (pickedFile != null) {
       selectedImagePath.value = pickedFile.path;
     }
-
-  
+    print("Image Selected");
+    print(pickedFile?.path);
+    print(selectedImagePath.value);
   }
 
   @override

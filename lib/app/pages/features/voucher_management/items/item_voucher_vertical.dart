@@ -19,12 +19,11 @@ class ItemVoucherVertical extends GetView<VoucherPageController> {
     required this.name,
     required this.startDate,
     required this.endDate,
-    required this.stock,
     required this.discount,
     required this.onPressed,
   });
 
-  final String name, startDate, endDate, stock, discount;
+  final String name, startDate, endDate, discount;
   final VoidCallback onPressed;
 
   @override
@@ -108,7 +107,6 @@ class ItemVoucherVertical extends GetView<VoucherPageController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("qty : $stock",style: txtBody.copyWith(color: blackColor50),),
 
                 CommonButtonOutline(
                   text: 'Gift voucher',

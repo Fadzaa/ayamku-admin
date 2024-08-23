@@ -84,6 +84,23 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
     }
   }
 
+  Future<void> getSearchVoucher(String search) async {
+    try {
+
+
+      isLoading.value = true;
+
+      final response = await voucherService.searchVoucher(search);
+      voucherList.clear();
+      voucherList.value = VoucherResponse.fromJson(response.data).data!;
+
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   void optionGift() {
     if (optionType.value == "user") {
       Get.toNamed(Routes.OPTION_USER);

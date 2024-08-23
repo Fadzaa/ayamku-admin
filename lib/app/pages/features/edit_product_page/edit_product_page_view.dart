@@ -65,7 +65,6 @@ class EditProductPageView extends StatelessWidget{
         onPressed1: () => controller.deleteProduct(),
         onPressed2: () {
           controller.updateProduct();
-          Get.offAndToNamed(Routes.PRODUCT_PAGE);
         },
         bgColor1: red,
         bgColor2: primaryColor,

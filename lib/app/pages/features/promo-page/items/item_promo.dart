@@ -28,42 +28,47 @@ class ItemPromoSection extends GetView<PromoPageController> {
         );
 
         }else{
-          return ListView.builder(
-            itemCount: controller.promosList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final promo = controller.promosList[index];
-
-              print("TEST LIST PROMO");
-              print(promo.name.toString());
-              final startDate = DateFormat('dd MMMM yyyy')
-                  .format(DateTime.parse(promo.startDate ?? ''));
-
-              final endDate = DateFormat('dd MMMM yyyy')
-                  .format(DateTime.parse(promo.endDate ?? ''));
-              return ItemPromo(
-                name: promo.name.toString(),
-                event: promo.description.toString(),
-                image: promo.image.toString(),
-                startDate: startDate,
-                onPressed: () {
-                  Get.toNamed(
-                      Routes.EDIT_PROMO_PAGE,
-                      arguments:
-                      {
-                        'id': promo.id.toString(),
-                        'name':  promo.name.toString(),
-                        'event':  promo.description.toString(),
-                        'image': promo.image.toString(),
-                        'discount': promo.discount,
-                        'startDate': startDate,
-                        'endDate': endDate
-                      }
-                      );
-                },
-              );
+          return RefreshIndicator(
+            onRefresh: () async {
+              controller.getAllPromo();
             },
+            child: ListView.builder(
+              itemCount: controller.promosList.length,
+              shrinkWrap: true,
+              physics:  const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final promo = controller.promosList[index];
+
+                print("TEST LIST PROMO");
+                print(promo.name.toString());
+                final startDate = DateFormat('dd MMMM yyyy')
+                    .format(DateTime.parse(promo.startDate ?? ''));
+
+                final endDate = DateFormat('dd MMMM yyyy')
+                    .format(DateTime.parse(promo.endDate ?? ''));
+                return ItemPromo(
+                  name: promo.name.toString(),
+                  event: promo.description.toString(),
+                  image: promo.image.toString(),
+                  startDate: startDate,
+                  onPressed: () {
+                    Get.toNamed(
+                        Routes.EDIT_PROMO_PAGE,
+                        arguments:
+                        {
+                          'id': promo.id.toString(),
+                          'name':  promo.name.toString(),
+                          'event':  promo.description.toString(),
+                          'image': promo.image.toString(),
+                          'discount': promo.discount,
+                          'startDate': startDate,
+                          'endDate': endDate
+                        }
+                        );
+                  },
+                );
+              },
+            ),
           );
       }
     });

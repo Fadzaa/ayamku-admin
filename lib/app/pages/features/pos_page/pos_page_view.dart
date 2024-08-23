@@ -66,6 +66,9 @@ class PosPageView extends GetView<PosPageController> {
 
                     CommonSearch(
                         text: "Search pos",
+                        onChanged: (newText) {
+                          controller.searchPos(newText);
+                        }
                     ),
 
                     SizedBox(height: 15,),

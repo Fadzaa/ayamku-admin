@@ -19,14 +19,14 @@ class OrderService {
     }
   }
 
-  Future<Response> getOrderMethodType( {required String method}) async {
+  Future<Response> getOrderLatest(String? methodType) async {
     try {
       final response = await _dioInstance.getRequest(
-        endpoint: ApiEndPoint.order,
+        endpoint: ApiEndPoint.orderLatest,
         isAuthorize: true,
-          queryParameters: {
-            'method_type': method
-          }
+        queryParameters: {
+          'method_type': methodType
+        }
       );
 
       return response;
@@ -35,10 +35,10 @@ class OrderService {
     }
   }
 
-  Future<Response> updateOrderStatus(String id, String status) async {
+  Future<Response> updateOrderStatus(int id, String status) async {
 
     try {
-      final response = await _dioInstance.putRequest(
+      final response = await _dioInstance.postRequest(
         endpoint: ApiEndPoint.orderStatus,
         isAuthorize: true,
         data: {

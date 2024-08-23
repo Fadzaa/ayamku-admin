@@ -8,9 +8,16 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class ItemsUserReview extends StatelessWidget {
-  const ItemsUserReview({super.key, required this.name, required this.date, required this.comment, required this.rating, this.onTap});
+  const ItemsUserReview({
+    super.key,
+    required this.name,
+    required this.date,
+    this.comment,
+    required this.rating,
+    this.onTap});
 
-  final String name, date, comment;
+  final String name, date;
+  final String? comment;
   final int rating;
   final VoidCallback? onTap;
 
@@ -76,7 +83,7 @@ class ItemsUserReview extends StatelessWidget {
                       SizedBox(height: 10,),
 
                       Text(
-                        comment,
+                        comment ?? "",
                         style: txtCaption,
                         overflow: TextOverflow.ellipsis,
                       ),

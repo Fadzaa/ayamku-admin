@@ -1,5 +1,5 @@
 import 'package:ayamku_admin/app/router/app_pages.dart';
-import 'package:ayamku_admin/common/constant.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -52,8 +52,6 @@ class EditPosPageController extends GetxController{
     descriptionController.text = pos["description"];
     selectedImagePath.value = pos["image"];
 
-    print("CHECK DATA KIRIMAN");
-    print(pos);
 
 
   }
@@ -77,19 +75,28 @@ class EditPosPageController extends GetxController{
   Future<void> updatePos() async {
     try {
       isLoading(true);
-       await posService.updatePos(
-        pos["id"].toString(),
-        titleController.text,
-        descriptionController.text,
-        selectedImagePath.value,
-      );
+
+      Map<String, dynamic> data = {
+        "name": titleController.text,
+        "description": descriptionController.text,
+      };
+
+      if (!selectedImagePath.value.contains("https")) {
+        data["image"] = await dio.MultipartFile.fromFile(selectedImagePath.value);
+      }
+
+      dio.FormData formData = dio.FormData.fromMap(data);
+
+       await posService.updatePos(formData, pos['id'].toString());
   
       Get.snackbar(
         "Success",
         "POS updated successfully",
       );
 
+      Get.snackbar("Perbarui post sukses", "Berhasil memperbarui pos!");
 
+      Get.offNamedUntil(Routes.POS_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
 
     } catch (e) {
       Get.snackbar(

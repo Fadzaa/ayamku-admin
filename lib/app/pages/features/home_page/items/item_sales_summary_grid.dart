@@ -78,34 +78,6 @@ class ItemSalesSummary extends GetView<HomePageController> {
           ),
         );
 
-    // case SalesItem.totalSales:
-    //   return Container(
-    //     padding: const EdgeInsets.all(16.0),
-    //     decoration: BoxDecoration(
-    //         color: const Color(0xFFF8F9FB),
-    //         borderRadius: BorderRadius.circular(16)
-    //     ),
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             Text("Total Sales", style: txtCaption),
-    //
-    //             const SizedBox(width: 10,),
-    //
-    //             Text("-10%", style: txtCaption.copyWith(color: pinkLight))
-    //           ],
-    //         ),
-    //
-    //         Text("Rp. 1.120.000", style: txtHarga)
-    //
-    //       ],
-    //     ),
-    //   );
-
       case SalesItem.totalOrders:
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
@@ -137,7 +109,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("${controller.numberOfOrders.value}", style: txtHarga),
+                  Text("${numberOfOrders}", style: txtHarga),
                   Container(
                     width: 40,
                     height: 40,

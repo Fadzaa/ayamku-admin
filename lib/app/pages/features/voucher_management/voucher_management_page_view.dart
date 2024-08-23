@@ -75,7 +75,7 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
 
                   SizedBox(height: 15,),
 
-                  CommonSearch(text: "Search", ),
+                  CommonSearch(text: "Search", onChanged: (newText) => controller.getSearchVoucher(newText), ),
 
                   SizedBox(height: 15,),
 

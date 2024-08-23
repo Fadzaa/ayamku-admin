@@ -33,9 +33,13 @@ class AddProductPageController extends GetxController {
       if (pickedImage != null) {
         imagePath.value = pickedImage.path;
       }
+
+      print("CHECK CURRENT IMAGE FILE");
+      print(filePathImage);
+
   }
 
-  Future addProduct() async{
+  Future addProduct() async {
     try {
       isLoading.value = true;
       dio.FormData formData = dio.FormData.fromMap({
@@ -50,19 +54,7 @@ class AddProductPageController extends GetxController {
           formData
       );
 
-      Product product = Product(
-          name: nameController.text,
-          description: descriptionController.text,
-          price: (int.tryParse(priceController.text) ?? 0),
-          category: categories.join(", "),
-          image: filePathImage.value
-      );
-
-      controller.listProduct.add(product);
-
-      update();
-
-      Get.toNamed(Routes.HOME_PAGE);
+      Get.offNamedUntil(Routes.PRODUCT_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
       Get.snackbar("Tambah produk Sukses", "Berhasil menambahkan produk!");
     }
     catch(e){

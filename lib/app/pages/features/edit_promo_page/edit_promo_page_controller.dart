@@ -18,18 +18,12 @@ class EditPromoPageControlller extends GetxController{
   // final TextEditingController descriptionController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
 
-  final ImagePicker _picker = ImagePicker();
-
   RxBool isLoading = false.obs;
 
   final promo = Get.arguments;
-  // RxList<Promo> promoList = <Promo>[].obs;
 
-  RxString imagePath = RxString("");
+  final ImagePicker _picker = ImagePicker();
   RxString selectedImagePath = ''.obs;
-  RxString filePathImage = ''.obs;
-
-
   
   PromoService promoService = PromoService();
   PromoResponse promoResponse = PromoResponse();
@@ -84,6 +78,9 @@ class EditPromoPageControlller extends GetxController{
     endDateController.text = formattedEndDate;
     selectedImagePath.value = promo['image'];
 
+    print("Check type selectedImagePath.value");
+    print(selectedImagePath.value.contains("https"));
+
   }
 
   Future <void> updatePromo() async {
@@ -100,21 +97,26 @@ class EditPromoPageControlller extends GetxController{
       }
 
       if (endDate.isBefore(startDate)) {
-        throw Exception("End date must be after start date");
+        Get.snackbar("Error", "End date must be after start date");
       }
 
-      dio.FormData formData = dio.FormData.fromMap({
+      Map<String, dynamic> data = {
         "name" : nameController.text,
         "description" : eventController.text,
         "discount" : int.parse(discountController.text),
         "start_date" : startDate.toString(),
         "end_date" : endDate.toString(),
-        'image': await dio.MultipartFile.fromFile(selectedImagePath.value),
-      });
+      };
+
+      if (!selectedImagePath.value.contains("https")) {
+        data["image"] = await dio.MultipartFile.fromFile(selectedImagePath.value);
+      }
+
+      dio.FormData formData = dio.FormData.fromMap(data);
 
       await promoService.updatePromo(formData, promo['id']);
 
-      Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
+      Get.snackbar("Update promo berhasil", "Berhasil memperbarui promo!");
 
       Get.offNamedUntil(Routes.PROMO_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
 

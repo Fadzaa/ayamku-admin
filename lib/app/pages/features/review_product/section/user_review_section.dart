@@ -60,7 +60,7 @@ class UserReviewSection extends GetView<ReviewProductPageController> {
                         name: customer.userName!,
                         date: DateFormat('yyyy MMMM dd').format(
                             DateTime.parse(customer.createdAt!)),
-                        comment: customer.comment!,
+                        comment: customer.comment,
                         rating: customer.rating!,
                       );
                     },

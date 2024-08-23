@@ -61,19 +61,37 @@ class EditProductPageController extends GetxController {
     selectedCategory.value = category;
   }
 
-  void updateProduct() {
-    int price = int.parse(priceController.text);
-    int qty = int.parse(qtyController.text);
+  Future<void> updateProduct() async {
+    try {
+      isLoading.value = true;
+      Map<String, dynamic> data = {
+        "name" : nameController.text,
+        "description" : descriptionController.text,
+        "price" : int.parse(priceController.text),
+        "category" : selectedCategory.value.toLowerCase(),
+      };
 
-    // productPageController.updateProduct(productIndex, Product(
-    //   name: nameController.text,
-    //   price: price,
-    //   qty: qty,
-    //   description: descriptionController.text,
-    //   category: selectedCategory.value,
-    //   image: selectedImagePath.value,
-    // ));
-    Get.back();
+      if (!selectedImagePath.value.contains("https")) {
+        data["image"] = await dio.MultipartFile.fromFile(selectedImagePath.value);
+      }
+
+      dio.FormData formData = dio.FormData.fromMap(data);
+
+      await productService.updateProduct(formData, product.id.toString());
+
+      Get.snackbar("Update produk berhasil", "Berhasil memperbarui produk!");
+
+      Get.offNamedUntil(Routes.PRODUCT_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
+
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        e.toString(),
+      );
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   @override

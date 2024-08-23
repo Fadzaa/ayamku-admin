@@ -1,6 +1,7 @@
 import 'package:ayamku_admin/app/pages/features/add_product_page/add_product_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_dropdown_category.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_text_field.dart';
+import 'package:ayamku_admin/common/loading_overlay.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,18 +15,19 @@ class AddProductPage extends GetView<AddProductPageController> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20),
-      child: Column(
+      child: Obx(() => LoadingOverlay(isLoading: controller.isLoading.value, body: Column(
         children: [
           Obx(() => PickImg(
             onTap: () => controller.pickImage(controller.filePathImage),
             imagePath: controller.filePathImage.value,
           ),),
-          DropdownCategory(
+
+          Obx(()=>DropdownCategory(
             color: blackColor50,
             categories: controller.categories,
             selectedValue: controller.selectedCategory.value,
             onChanged: (value) => controller.onChangeCategory(value!),
-          ),
+          ),),
 
           ItemTextField(
             text: "Nama",
@@ -62,7 +64,7 @@ class AddProductPage extends GetView<AddProductPageController> {
           ),
 
         ],
-      )
+      )))
     );
   }
 }

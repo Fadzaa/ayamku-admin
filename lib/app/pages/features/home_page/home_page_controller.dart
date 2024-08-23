@@ -32,7 +32,7 @@ class HomePageController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isLoadingSales = false.obs;
 
-  RxList<Order> listOrder = <Order>[].obs;
+  RxList<Order> listLatestOrder = <Order>[].obs;
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
@@ -50,12 +50,12 @@ class HomePageController extends GetxController {
     super.onInit();
     pageController = PageController(initialPage: 0);
 
-
-
     storeService = StoreService();
     updateStore();
-    getAllOrder();
-    getSalesSummary(toString());
+    getLatestOrder(null);
+    print("Check Current latest order");
+
+    getSalesSummary('today');
   }
 
 
@@ -83,52 +83,12 @@ class HomePageController extends GetxController {
     }
   }
 
-  Future <void> getAllOrder() async {
-    try {
-      isLoading.value = true;
-
-      final fcmToken = await FirebaseMessaging.instance.getToken();
-      print('FCM TOKEN');
-      print(fcmToken);
-
-      final response = await orderService.getOrder();
-
-      print("Fetch Semua Order");
-      print(response.data);
-
-      List<Order> orders = (response.data['data'] as List)
-          .map((orderData) => Order.fromJson(orderData))
-          .toList();
-
-      print('Number of orders: ${numberOfOrders.value}');
-
-      processingOrdersCount.value = orders.where((order) => order.status == "processing").length;
-      print('Number of processing orders: ${processingOrdersCount.value}');
-
-      orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.obs;
-
-      print(listOrder);
-
-      print(orderResponse.data);
-    } catch (e) {
-      isLoading.value = true;
-      print(e);
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
   Future<void> getSalesSummary(String filter) async {
     try {
       isLoadingSales.value = true;
 
       final response = await salesService.getSaleSummary(filter);
       salesResponse = SalesResponse.fromJson(response.data);
-
-      print("SALES RESPONSE:");
-      print(salesResponse.totalProduct);
-
 
     } catch (e) {
       isLoadingSales.value = true;
@@ -162,24 +122,22 @@ class HomePageController extends GetxController {
     getSalesSummary(filter);
   }
 
-  Future getOrderMethod(String method, String status) async {
+  Future getLatestOrder(String? method) async {
     try {
-      print('value method = ' + method);
       isLoading.value = true;
 
-      final response = await orderService.getOrderMethodType(method: method);
-      listOrder.clear();
+      print("Check pre latest order");
 
-      print("CHECK RESPONSE METHOD");
-      print(response.data);
+      final response = await orderService.getOrderLatest(method);
+      listLatestOrder.clear();
+
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.where((order) => order.methodType == method && order.status == status).toList().obs;
+      listLatestOrder.value = orderResponse.data!;
 
-      if (method == 'on_delivery') {
-        numberOfDeliveryOrders.value = listOrder.length;
-      } else if (method == 'pickup') {
-        numberOfPickupOrders.value = listOrder.length;
-      }
+      print("Check latest order");
+      print(listLatestOrder.length);
+
+
     } catch (e) {
       print(e);
     } finally {
@@ -198,13 +156,13 @@ class HomePageController extends GetxController {
     currentIndex.value = index;
     switch (index) {
       case 0:
-        await getAllOrder();
+        await getLatestOrder(null);
         break;
       case 1:
-        await getOrderMethod('on_delivery', 'processing');
+        await getLatestOrder("on_delivery");
         break;
       case 2:
-        await getOrderMethod('pickup', 'processing');
+        await getLatestOrder('pickup');
         break;
     }
   }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/sections/order_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -117,7 +116,7 @@ class OrderPageController extends GetxController {
       print('value method = ' + method);
       isLoading.value = true;
 
-      final response = await orderService.getOrderMethodType(method: method);
+      final response = await orderService.getOrderLatest(null);
       listOrder.clear();
       print("CHECK RESPONSE METHOD");
       print(response.data);
@@ -148,7 +147,7 @@ class OrderPageController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await orderService.updateOrderStatus(id, status);
+      final response = await orderService.updateOrderStatus(int.parse(id), status.toString());
 
       print("Update order status response: ${response.data}");
 
@@ -218,7 +217,6 @@ class OrderPageController extends GetxController {
       isLoading.value = false;
     }
   }
-
 
   Future<void> selectTypeOrder(String type) async {
     selectedFilterTypeOrder.value = type;

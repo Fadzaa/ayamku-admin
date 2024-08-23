@@ -98,9 +98,6 @@ class AddPromoPageController extends GetxController{
 
       await promoService.addPromo(formData);
 
-      Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
-
-      Get.offNamedUntil(Routes.PROMO_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
 
     } catch (e) {
       Get.snackbar(
@@ -110,6 +107,8 @@ class AddPromoPageController extends GetxController{
       print(e);
     } finally {
       isLoading.value = false;
+      Get.offNamedUntil(Routes.PROMO_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
+      Get.snackbar("Tambah voucher Sukses", "Berhasil menambahkan voucher!");
     }
   }
   void clearForm() {

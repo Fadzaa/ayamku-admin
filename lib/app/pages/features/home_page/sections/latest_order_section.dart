@@ -14,11 +14,11 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LatestOrderSection extends GetView<HomePageController> {
   LatestOrderSection({super.key});
 
-  final orderController = Get.put(OrderPageController());
   @override
   Widget build(BuildContext context) {
     List<String> listMethod = [
@@ -49,7 +49,7 @@ class LatestOrderSection extends GetView<HomePageController> {
               itemBuilder: (context, index) =>
                   Obx(() => ChipOrder(
                     text: listMethod[index],
-                    totalOrder: index == 0 ? controller.numberOfAllOrders.value : index == 1 ? controller.numberOfDeliveryOrders.value : controller.numberOfPickupOrders.value,
+                    totalOrder: controller.listLatestOrder.length,
                     index: index,
                     isSelected: controller.currentIndex.value == index,
 
@@ -61,25 +61,34 @@ class LatestOrderSection extends GetView<HomePageController> {
 
         Obx(() {
           if (controller.isLoading.value){
-            return Center(
-              child: commonLoading(),
+            return Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: ListView.builder(
+                  itemCount: 3,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return ItemAllOrderVerticalShimmer();
+                  }
+              ),
             );
           }
-          else if (controller.listOrder.isEmpty){
+          else if (controller.listLatestOrder.isEmpty){
             return Center(
                 child: NotFoundPage(
                   image: notFound,
-                  title: 'Data tidak ditemukan',
-                  subtitle: 'Silahkan cari data lainnya',
+                  title: 'Belum ada order',
+                  subtitle: 'Tunggu order terbaru.',
                 ));
           }
           else if (controller.currentIndex.value == 0) {
             return ListView.builder(
-                itemCount: orderController.listOrder.length,
+                itemCount: controller.listLatestOrder.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final order = orderController.listOrder[index];
+                  final order = controller.listLatestOrder[index];
                   return ItemAllOrderVertical(
                     onTap: () {
                       Get.toNamed(
@@ -113,11 +122,11 @@ class LatestOrderSection extends GetView<HomePageController> {
           }
           else if (controller.currentIndex.value == 1){
             return ListView.builder(
-                itemCount: controller.listOrder.length,
+                itemCount: controller.listLatestOrder.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final order = controller.listOrder[index];
+                  final order = controller.listLatestOrder[index];
                   return ItemDeliveryVertical(
                     onTap: () {
                       Get.toNamed(
@@ -149,11 +158,11 @@ class LatestOrderSection extends GetView<HomePageController> {
             );
           } else if (controller.currentIndex.value == 2){
             return ListView.builder(
-                itemCount: controller.listOrder.length,
+                itemCount: controller.listLatestOrder.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final order = controller.listOrder[index];
+                  final order = controller.listLatestOrder[index];
                   return ItemPickupVertical(
                     onPressed: () {
                       Get.toNamed(

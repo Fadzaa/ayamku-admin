@@ -22,6 +22,8 @@ class OrderPageController extends GetxController {
   // fetch order
   RxList<Order> listOrder = <Order>[].obs;
   RxList<Order> listAllOrder = <Order>[].obs;
+  RxList<Order> listPickupOrder = <Order>[].obs;
+  RxList<Order> listDeliveryOrder = <Order>[].obs;
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
@@ -75,6 +77,8 @@ class OrderPageController extends GetxController {
     super.onInit();
     pageController = PageController(initialPage: 0);
     getAllOrder();
+    getOrderMethod('on_delivery');
+    getOrderMethod('pickup');
   }
 
   @override
@@ -116,26 +120,18 @@ class OrderPageController extends GetxController {
       print('value method = ' + method);
       isLoading.value = true;
 
-      final response = await orderService.getOrderLatest(null);
-      listOrder.clear();
-      print("CHECK RESPONSE METHOD");
-      print(response.data);
+      final response = await orderService.getOrderLatest(method);
 
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder.assignAll(orderResponse.data!
-          .where((order) => order.methodType == method)
-          .toList());
 
-      numberOfDeliveryOrders.value = orderResponse.data!
-          .where((order) => order.methodType == 'on_delivery')
-          .length;
-      numberOfPickupOrders.value = orderResponse.data!
-          .where((order) => order.methodType == 'pickup')
-          .length;
+      if (method == 'on_delivery') {
+        listDeliveryOrder.assignAll(orderResponse.data!);
+        numberOfDeliveryOrders.value = listOrder.length;
+      } else {
+        listPickupOrder.assignAll(orderResponse.data!);
+        numberOfPickupOrders.value = listPickupOrder.length;
+      }
 
-      print('Number of delivery orders: ${numberOfDeliveryOrders.value}');
-      print('Number of pickup orders: ${numberOfPickupOrders.value}');
-      print(listOrder);
     } catch (e) {
       print('Error occurred: $e');
     } finally {

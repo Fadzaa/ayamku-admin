@@ -15,11 +15,10 @@ class LoadingOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isLoading ? Stack(
-      alignment: Alignment.center,
         children: [
           body,
 
-          CircularProgressIndicator(color: primaryColor,),
+          Center(child: CircularProgressIndicator(color: primaryColor,)),
         ]
     ) : body;
   }

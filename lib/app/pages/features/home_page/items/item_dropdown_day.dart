@@ -9,8 +9,6 @@ class ItemDropdownDay extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     final List<String> day_select = ["Hari ini", "7 Hari yang lalu", "1 Bulan yang lalu"];
 
 

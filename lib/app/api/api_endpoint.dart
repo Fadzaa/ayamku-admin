@@ -39,7 +39,7 @@ class ApiEndPoint {
   static String getAllReview = '$baseUrl/reviews';
   static String getReviewProductId(int productId) => '$baseUrl/reviews/$productId';
 
-
-
+  //analytic
+   static String analytic = '$baseUrl/analytic-revenue';
 
 }

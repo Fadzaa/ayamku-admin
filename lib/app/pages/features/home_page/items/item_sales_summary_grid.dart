@@ -13,13 +13,15 @@ class ItemSalesSummary extends GetView<HomePageController> {
     required this.typeSalesItem,
     this.numberOfOrders,
     this.analyticSales,
-    this.productSales
+    this.productSales,
+    this.specialPage
   });
 
   final SalesItem typeSalesItem;
   final int? numberOfOrders;
   final int? analyticSales;
   final int? productSales;
+  final bool? specialPage;
 
 
   @override
@@ -29,7 +31,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
       case SalesItem.analytic:
         return InkWell(
           onTap: (){
-            Get.toNamed(Routes.ANALYTIC_PAGE);
+            specialPage ?? false ? Container() : Get.toNamed(Routes.ANALYTIC_PAGE);
           },
           child: Container(
             width: ScreenWidth,
@@ -47,7 +49,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                   children: [
                     Text("Analytic Sales", style: txtListItemTitle),
 
-                    const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16,)
+                    specialPage ?? false ? Container() : const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16,)
                   ],
                 ),
 

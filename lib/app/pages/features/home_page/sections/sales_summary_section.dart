@@ -10,23 +10,29 @@ import 'package:shimmer/shimmer.dart';
 class SalesSummarySection extends GetView<HomePageController> {
   const SalesSummarySection({
     super.key,
+    this.specialPage
   });
+
+  final bool? specialPage;
 
 
   @override
   Widget build(BuildContext context) {
 
-    return Obx(() => controller.isLoadingSales.value ? SalesSummaryShimmer() : SalesSummaryContent(isShimmer: false));
+    return Obx(() => controller.isLoadingSales.value ? SalesSummaryShimmer() : SalesSummaryContent(isShimmer: false, specialPage: specialPage,));
   }
 }
 
 class SalesSummaryContent extends GetView<HomePageController> {
   const SalesSummaryContent({
     super.key,
-    required this.isShimmer
+    required this.isShimmer,
+    this.specialPage
   });
 
   final bool isShimmer;
+  final bool? specialPage;
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,7 @@ class SalesSummaryContent extends GetView<HomePageController> {
 
         const SizedBox(height: 10,),
 
-        ItemSalesSummary(typeSalesItem: SalesItem.analytic, analyticSales: isShimmer ? 0 : controller.salesResponse.sales),
+        ItemSalesSummary(typeSalesItem: SalesItem.analytic, analyticSales: isShimmer ? 0 : controller.salesResponse.sales, specialPage: specialPage,),
 
         const SizedBox(height: 15,),
 

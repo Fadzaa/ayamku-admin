@@ -31,28 +31,37 @@ class HomePageView extends GetView<HomePageController> {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: baseColor,
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeadingSection(),
-                        
-                SizedBox(height: 20,),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.updateStore();
+            controller.getLatestOrder(null);
+            print("Check Current latest order");
 
-                SalesSummarySection(),
-                        
-                SizedBox(height: 20,),
-                        
-                LatestOrderSection()
-                        
-                        
-              ],
+            controller.getSalesSummary('today');
+          },
+            child: SingleChildScrollView(
+              child: Container(
+                color: baseColor,
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    HeadingSection(),
+
+                    SizedBox(height: 20,),
+
+                    SalesSummarySection(),
+
+                    SizedBox(height: 20,),
+
+                    LatestOrderSection()
+
+
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
+        )
       )
     );
   }

@@ -45,7 +45,6 @@ class OrderPageView extends GetView<OrderPageController> {
 
             Spacer(),
 
-            ItemDropdownDay()
           ],
         )
       ),

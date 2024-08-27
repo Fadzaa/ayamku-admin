@@ -60,9 +60,9 @@ class PosPageView extends GetView<PosPageController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
 
-                    ItemFilterSelectPos(),
-
-                    SizedBox(height: 20,),
+                    // ItemFilterSelectPos(),
+                    //
+                    // SizedBox(height: 20,),
 
                     CommonSearch(
                         text: "Search pos",

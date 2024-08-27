@@ -66,7 +66,10 @@ class AppPages {
     GetPage(
       name: _Paths.HOME_PAGE,
       page: () => const HomePageView(),
-      binding: HomePageBinding(),
+      bindings: [
+        HomePageBinding(),
+        OrderPageBinding()
+      ],
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 500),
     ),
@@ -155,12 +158,6 @@ class AppPages {
       transition: Transition.noTransition,
     ),
     GetPage(
-      name: _Paths.ANALYTIC_PAGE,
-      page: () => const AnalyticPageView(),
-      binding: AnalyticPageBinding(),
-      transition: Transition.noTransition,
-    ),
-    GetPage(
       name: _Paths.MANAGEMENT_VOUCHER,
       page: () => const VoucherManagementPage(),
       binding: VoucherPageBinding(),
@@ -207,6 +204,6 @@ class AppPages {
       page: () => const ReviewProductPageView(),
       binding: ReviewProductPageBinding(),
       transition: Transition.noTransition,
-    ),
+    )
   ];
 }

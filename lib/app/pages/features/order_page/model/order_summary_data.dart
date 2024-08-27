@@ -5,16 +5,10 @@ import 'order_summary.dart';
 
 final controller = Get.put(OrderPageController());
 final List <OrderSummary> order_summary_data = [
-
   OrderSummary(
       icon: icTotalOrder,
       title: "Total Order",
-      count: "${controller.numberOfOrders.value}"
-  ),
-  OrderSummary(
-      icon: icHistory,
-      title: "History Order",
-      count: "148"
+      count: "${controller.listAllOrder.length}"
   ),
   OrderSummary(
       icon: icTotalPickup,
@@ -26,11 +20,5 @@ final List <OrderSummary> order_summary_data = [
       title: "Total Delivery",
       count: "${controller.numberOfDeliveryOrders.value}"
   ),
-  // OrderSummary(
-  //     icon: icCancel,
-  //     title: "Canceled",
-  //     count: 3
-  // ),
-
 
 ];

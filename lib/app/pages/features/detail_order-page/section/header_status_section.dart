@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HeaderStatusSection extends StatelessWidget {
-  const HeaderStatusSection({super.key});
+  const HeaderStatusSection({super.key, required this.name});
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class HeaderStatusSection extends StatelessWidget {
 
               SizedBox(height: 10,),
 
-              Text("Pesanan telah dikonfirmasi oleh AlyaaRana",style: txtCaption,)
+              Text("Pesanan telah dikonfirmasi oleh $name",style: txtCaption,)
             ],
           ),
           SvgPicture.asset(

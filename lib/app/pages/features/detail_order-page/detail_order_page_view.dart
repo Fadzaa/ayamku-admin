@@ -45,26 +45,29 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
           )),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (controller.orderStatus.value == "confirmed_order") HeaderStatusSection(),
-              DeliverySection(
-                date: controller.date.value,
-                status: controller.orderStatus.value,
-                idOrder: controller.orderId.value,
-                userName: controller.userName.value,
-                posName: controller.methodType.value == 'pickup'
-                    ? "ambil di outlet"
-                    : controller.postName.value,
-                posDesc: controller.methodType.value == 'pickup'
-                    ? null
-                    : controller.postDesc.value,
-              ),
-          
-              DetailOrderSummary(),
-              // if (controller.orderStatus.value == "confirm_order") PenilaianSection(),
-            ],
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (controller.orderStatus.value == "confirmed_order") HeaderStatusSection(name: controller.userName.value,),
+                DeliverySection(
+                  date: controller.date.value,
+                  status: controller.orderStatus.value,
+                  idOrder: controller.orderId.value,
+                  userName: controller.userName.value,
+                  posName: controller.methodType.value == 'pickup'
+                      ? "ambil di outlet"
+                      : controller.postName.value,
+                  posDesc: controller.methodType.value == 'pickup'
+                      ? null
+                      : controller.postDesc.value,
+                ),
+
+                DetailOrderSummary(),
+                // if (controller.orderStatus.value == "confirm_order") PenilaianSection(),
+              ],
+            ),
           ),
         ),
       ),

@@ -7,6 +7,7 @@ import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ItemAllOrderVertical extends GetView<OrderPageController> {
   const ItemAllOrderVertical(
@@ -35,7 +36,7 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
         return TerimaPesanan(orderId: orderId, status: status);
       case 'completed':
         return PesananSelesai();
-      case 'confirm_order':
+      case 'confirmed_order':
         return PesananDikonfirmasi();
       case 'accept':
         return AcceptedOrder(
@@ -51,6 +52,9 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    List<String> timeParts = sessionOrder?.split(':') ?? [];
+    DateTime specificTime = DateTime(now.year, now.month, now.day, int.parse(timeParts[0]), int.parse(timeParts[1]), int.parse(timeParts[2]));
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -147,9 +151,9 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    sessionOrder ?? "09.40",
-                    style: txtCaption.copyWith(),
-                  ),
+                      DateFormat('HH:mm').format(specificTime),
+                      style: txtCaption
+                  )
                 )
               ],
             ),
@@ -169,10 +173,12 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
             SizedBox(
               height: 15,
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: getStatusWidget(status, id),
-            ),
+            Obx(() {
+              return Align(
+                alignment: Alignment.centerRight,
+                child: getStatusWidget(status, id),
+              );
+            }),
             SizedBox(
               height: 5,
             ),

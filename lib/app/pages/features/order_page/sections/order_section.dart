@@ -64,7 +64,7 @@ class OrderSection extends GetView<OrderPageController> {
                             final order = controller.listOrder[index];
                             if (methodType == 'Semua' || order.methodType == methodType) {
                               return ItemAllOrderVertical(
-                                id: order.id ?? 0,
+                                id: order.id!,
                                 status: order.status.toString(),
                                 cartItems: order.cart!.cartItems!,
                                 namePos: order.post!.name!.toString(),
@@ -77,7 +77,7 @@ class OrderSection extends GetView<OrderPageController> {
                                     Routes.DETAIL_ORDER_PAGE,
                                     arguments: {
                                       'cartItems': order.cart?.cartItems,
-                                      'orderId': order.id ??  0,
+                                      'orderId': order.id.toString(),
                                       'userName': order.user!.name,
                                       'postName': order.post!.name,
                                       'postDesc': order.post!.description,

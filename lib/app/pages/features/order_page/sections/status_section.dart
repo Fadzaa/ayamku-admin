@@ -1,4 +1,5 @@
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_alert_dialog.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
@@ -40,26 +41,15 @@ class TerimaPesanan extends GetView<OrderPageController> {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Confirm'),
-                                content: Text(
-                                    'Apa anda yakin ingin membetalkan pesanan ini?'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text('Cancel'),
-                                    onPressed: () {
-
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text('Yes'),
-                                    onPressed: () {
-                                      controller.cancelOrder(orderId.toString());
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
+                              return CommonAlertDialog(
+                                title: 'Apakah anda akan membatalkan pesanan ini?',
+                                onCancel: () {
+                                  Get.back();
+                                },
+                                onConfirm: () async {
+                                  controller.cancelOrder(orderId.toString());
+                                  Get.back();
+                                }
                               );
                             },
                           );
@@ -78,27 +68,15 @@ class TerimaPesanan extends GetView<OrderPageController> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Confirm'),
-                            content: Text(
-                                'Are you sure you want to accept the order?'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text('Cancel'),
-                                onPressed: () {
-                                  Get.back();
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: Text('Yes'),
-                                onPressed: () {
-                                  print("TEST EVENT");
-                                  controller.acceptOrder(orderId.toString());
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
+                          return CommonAlertDialog(
+                              title: 'Apakah anda akan menerima pesanan ini?',
+                              onCancel: () {
+                                Get.back();
+                              },
+                              onConfirm: () async {
+                                controller.acceptOrder(orderId.toString());
+                                Get.back();
+                              }
                           );
                         },
                       );
@@ -108,8 +86,6 @@ class TerimaPesanan extends GetView<OrderPageController> {
                   ),
                 ],
               ),
-
-
             ],
           );
         }
@@ -146,7 +122,21 @@ class AcceptedOrder extends GetView<OrderPageController> {
               text: "Selesaikan pesanan",
               style: txtCaption.copyWith(color: Colors.white),
               onPressed: () {
-                controller.completeOrder(orderId.toString());
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CommonAlertDialog(
+                        title: 'Apakah anda akan menyelesaikan pesanan ini?',
+                        onCancel: () {
+                          Get.back();
+                        },
+                        onConfirm: () async{
+                          controller.completeOrder(orderId.toString());
+                          Get.back();
+                        }
+                    );
+                  },
+                );
               },
               color: greenMedium,
             ),
@@ -211,3 +201,9 @@ class PesananDibatalkan extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+

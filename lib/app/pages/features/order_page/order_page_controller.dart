@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/sections/order_section.dart';
+import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -52,6 +53,11 @@ class OrderPageController extends GetxController {
     return completedOrders.contains(orderId);
   }
 
+  void completeOrder(String orderId) {
+    updateStatus(orderId, 'completed');
+    completedOrders.add(orderId);
+  }
+
   void updateSelectedValue(String valueOrder) {
     selectedValue.value = valueOrder;
   }
@@ -65,10 +71,6 @@ class OrderPageController extends GetxController {
     }
   }
 
-  void completeOrder(String orderId) {
-    updateStatus(orderId, 'completed');
-    completedOrders.add(orderId);
-  }
 
 
   @override
@@ -150,8 +152,17 @@ class OrderPageController extends GetxController {
 
       final response = await orderService.updateOrderStatus(id, status);
 
-      print("Update order status response: ${response.data}");
+      print("Response status code: ${response.statusCode}");
 
+      Get.snackbar(
+        "Sukses",
+        "Item ditambahkan ke favorit",
+        backgroundColor: greenAlert,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        borderRadius: 30,
+        margin: EdgeInsets.all(10),
+      );
 
     } catch (e) {
       print('Error occurred: $e');
@@ -166,13 +177,13 @@ class OrderPageController extends GetxController {
     "Selesai": "completed",
     "Telah Diterima": "accept",
     "Dibatalkan": "cancelled",
-    "Dikonfirmasi": "order_confirm",
+    "Telah dikonfirmasi": "confirmed_order",
   };
 
   void updateSelectedStatus(String statusText) {
     selectedStatusDisplay.value = statusText;
     if (statusText == "Semua") {
-      selectedStatus.value = ["processing", "completed", "accept", "cancelled"].join(',');
+      selectedStatus.value = ["processing", "completed", "accept", "cancelled", "confirmed_order"].join(',');
     } else {
       selectedStatus.value = statusMapping[statusText] ?? "";
     }

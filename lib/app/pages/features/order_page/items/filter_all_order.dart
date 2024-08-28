@@ -11,6 +11,7 @@ List<String> filterStatus = [
   "Selesai",
   "Telah Diterima",
   "Dibatalkan",
+  "Telah dikonfirmasi"
 ];
 
 List<String> post = [
@@ -40,7 +41,7 @@ voidFilterAllOrder(BuildContext context) {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Container(
-            height:380,
+            height:410,
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

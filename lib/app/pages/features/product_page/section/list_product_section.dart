@@ -21,9 +21,9 @@ class ListProductSection extends GetView<ProductPageController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("List product", style: txtHeadline3),
+        // Text("List product", style: txtHeadline3),
 
-        SizedBox(height: 10,),
+        // SizedBox(height: 15,),
 
         CommonSearch(text: "Search", controller: controller.searchController,),
 
@@ -31,7 +31,7 @@ class ListProductSection extends GetView<ProductPageController> {
 
         ItemFilterListProduct(),
 
-        SizedBox(height: 10,),
+        SizedBox(height: 15,),
 
         Obx(() => controller.isLoading.value
             ? Center(child: commonLoading(),)
@@ -81,6 +81,7 @@ class ItemListProductSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: edit,
       child: Container(
@@ -92,13 +93,17 @@ class ItemListProductSection extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Image.network(
-                      image,
-                      width: 57,
-                      height: 50,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        image,
+                        width: 75,
+                        height: 75,
+                      ),
                     ),
 
-                    SizedBox(width: 10,),
+
+                    SizedBox(width: 15,),
 
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,14 +120,17 @@ class ItemListProductSection extends StatelessWidget {
                           ),
                         ),
 
-                        SizedBox(height: 5,),
+                        SizedBox(height: 10,),
 
-                        Text(
-                          name,
-                          style: txtListItemTitle,
+                        Container(
+                          width: screenWidth * 0.4,
+                          child: Text(
+                            name,
+                            style: txtListItemTitle,
+                          ),
                         ),
 
-                        SizedBox(height: 5,),
+                        SizedBox(height: 2,),
 
                         Row(
                           children: [

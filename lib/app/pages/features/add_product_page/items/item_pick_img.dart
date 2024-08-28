@@ -32,10 +32,14 @@ class PickImg extends StatelessWidget {
       );
     } else {
       if (imagePath.startsWith('https')) {
-        return Image.network(
-          imagePath,
-          fit: BoxFit.cover,
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child:Image.network(
+            imagePath,
+            fit: BoxFit.cover,
+          ),
         );
+
       } else {
         return Image.file(
           File(imagePath),

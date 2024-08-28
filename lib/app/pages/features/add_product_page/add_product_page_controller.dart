@@ -19,7 +19,7 @@ class AddProductPageController extends GetxController {
   final TextEditingController imageController = TextEditingController();
 
   RxString selectedCategory = "Geprek".obs;
-  RxList<String> categories = ["Geprek", "Snack", "Minuman"].obs;
+  RxList<String> categories = ["Geprek", "Snack", "Ricebowl","Minuman"].obs;
 
   RxString filePathImage = ''.obs;
   RxBool isLoading = false.obs;

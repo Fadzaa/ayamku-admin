@@ -14,7 +14,7 @@ voidFilterPickupOrder(BuildContext context) {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Container(
-            height: 270,
+            height: 325,
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

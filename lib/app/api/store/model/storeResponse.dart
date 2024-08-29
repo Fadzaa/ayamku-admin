@@ -1,15 +1,20 @@
 class Store {
-  String? message;
+  int? storeStatus;
+  String? description;
 
-  Store({this.message});
+  Store({this.storeStatus, this.description});
 
-  Store.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
+  factory Store.fromJson(Map<String, dynamic> json) {
+    return Store(
+      storeStatus: json['store_status'],
+      description: json['message'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    return data;
+    return {
+      'store_status': storeStatus,
+      'message': description,
+    };
   }
 }

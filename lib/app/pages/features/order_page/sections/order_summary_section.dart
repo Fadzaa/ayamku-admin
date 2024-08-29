@@ -122,6 +122,19 @@ class OrderSummarySection extends GetView<OrderPageController> {
           ),
           itemBuilder: (context, index) {
             return GestureDetector(
+                onTap: () {
+                  switch (order_summary_data[index].title) {
+                    case "Total Order":
+                      this.controller.selectSectionType('Semua');
+                      break;
+                    case "Total Delivery":
+                      this.controller.selectSectionType('on_delivery');
+                      break;
+                    case "Total Pickup":
+                      this.controller.selectSectionType('pickup');
+                      break;
+                  }
+                },
               child: Obx(() => ItemOrderSummary(
                 title: order_summary_data[index].title,
                 icon: order_summary_data[index].icon,

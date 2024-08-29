@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
+import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -147,7 +148,15 @@ class OrderPageController extends GetxController {
 
       print("Update order status response: ${response.data}");
 
-
+      Get.snackbar(
+        "Sukses",
+        "Status berhasil di update",
+        backgroundColor: greenAlert,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        borderRadius: 30,
+        margin: EdgeInsets.all(10),
+      );
     } catch (e) {
       print('Error occurred: $e');
       Get.snackbar("Error", e.toString());

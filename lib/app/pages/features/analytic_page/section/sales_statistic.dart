@@ -23,7 +23,7 @@ class SalesStatisitc extends GetView<AnalyticPageController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Statistik penjualan", style: txtHeadline3),
+              Text("Statistic Sales", style: txtHeadline3),
 
               ItemDropdownStatistic()
             ],
@@ -68,6 +68,7 @@ class SalesStatisitc extends GetView<AnalyticPageController> {
 
 BarChartData mainBarData(ChartRevenueResponse crr, String dropdownValue) {
   return BarChartData(
+
     barTouchData: BarTouchData(
       touchTooltipData: BarTouchTooltipData(
         getTooltipColor: (_) => Colors.blueGrey,
@@ -139,8 +140,9 @@ BarChartData mainBarData(ChartRevenueResponse crr, String dropdownValue) {
       ),
       leftTitles: const AxisTitles(
         sideTitles: SideTitles(
-          showTitles: false,
+          showTitles: true,
         ),
+
       ),
     ),
     borderData: FlBorderData(

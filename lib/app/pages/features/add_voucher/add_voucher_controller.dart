@@ -61,7 +61,6 @@ class AddVoucherPageController extends GetxController {
       dio.FormData formData = dio.FormData.fromMap({
         "code" : codeController.text,
         "discount" : int.parse(discountController.text),
-        "qty" : int.parse(qtyController.text),
         "description" : descriptionController.text,
         "start_date" : startDate.toString(),
         "end_date" : endDate.toString()

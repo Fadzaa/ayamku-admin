@@ -53,17 +53,17 @@ class PosPageController extends GetxController{
       isLoading.value = false;
     }
   }
-  
+
   void updateSelectedValue(String value) {
     selectedValue.value = value;
     update();
   }
-  
+
 
   @override
   void onInit() {
     super.onInit();
-    
+
     getAllPos();
   }
 }

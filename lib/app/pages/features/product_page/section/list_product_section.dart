@@ -22,41 +22,45 @@ class ListProductSection extends GetView<ProductPageController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("List product", style: txtHeadline3),
-
-        SizedBox(height: 10,),
-
-        CommonSearch(text: "Search", controller: controller.searchController,),
-
-        SizedBox(height: 10,),
-
+        SizedBox(
+          height: 10,
+        ),
+        CommonSearch(
+          text: "Search",
+          controller: controller.searchController,
+        ),
+        SizedBox(
+          height: 10,
+        ),
         ItemFilterListProduct(),
-
-        SizedBox(height: 10,),
-
+        SizedBox(
+          height: 10,
+        ),
         Obx(() => controller.isLoading.value
-            ? Center(child: commonLoading(),)
+            ? Center(
+                child: commonLoading(),
+              )
             : ListView.builder(
-            itemCount: controller.listProduct.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final product = controller.listProduct[index];
-              return ItemListProductSection(
-                tapReview: () {
-                  Get.toNamed(Routes.REVIEW_PAGE, arguments: product.id);
-                },
-                image: product.image.toString(),
-                category: product.category.toString(),
-                name: product.name.toString(),
-                price: formatCurrency.format(product.price ?? 0),
-                edit: () {
-                  Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: product);
-                },
-                rating: product.rating_avg ?? 0,
-                totalRating: product.totalRating ?? 0,
-              );
-            }
-        )),
+                itemCount: controller.listProduct.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final product = controller.listProduct[index];
+                  return ItemListProductSection(
+                    tapReview: () {
+                      Get.toNamed(Routes.REVIEW_PAGE, arguments: product.id);
+                    },
+                    image: product.image.toString(),
+                    category: product.category.toString(),
+                    name: product.name.toString(),
+                    price: formatCurrency.format(product.price ?? 0),
+                    edit: () {
+                      Get.toNamed(Routes.EDIT_PRODUCT_PAGE, arguments: product);
+                    },
+                    rating: product.rating_avg ?? 0,
+                    totalRating: product.totalRating ?? 0,
+                  );
+                })),
       ],
     );
   }
@@ -70,7 +74,9 @@ class ItemListProductSection extends StatelessWidget {
     required this.name,
     required this.edit,
     required this.price,
-    required this.tapReview, required this.rating, required this.totalRating,
+    required this.tapReview,
+    required this.rating,
+    required this.totalRating,
   });
 
   final String image, category, name;
@@ -81,6 +87,7 @@ class ItemListProductSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: edit,
       child: Container(
@@ -92,19 +99,24 @@ class ItemListProductSection extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Image.network(
-                      image,
-                      width: 57,
-                      height: 50,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.network(
+                        fit: BoxFit.cover,
+                        image,
+                        width: 75,
+                        height: 75,
+                      ),
                     ),
-
-                    SizedBox(width: 10,),
-
+                    SizedBox(
+                      width: 15,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
                             color: primaryColor,
                             borderRadius: BorderRadius.circular(10),
@@ -114,71 +126,84 @@ class ItemListProductSection extends StatelessWidget {
                             style: txtCaption.copyWith(color: blackColor),
                           ),
                         ),
-
-                        SizedBox(height: 5,),
-
-                        Text(
-                          name,
-                          style: txtListItemTitle,
+                        SizedBox(
+                          height: 10,
                         ),
-
-                        SizedBox(height: 5,),
-
+                        Container(
+                          width: screenWidth * 0.4,
+                          child: Text(
+                            name,
+                            style: txtListItemTitle,
+                            maxLines: 2,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
                         Row(
                           children: [
                             Text(
                               price,
                               style: txtCaption,
                             ),
-
-                            SizedBox(width: 5,),
-
-                            Text(".",style: txtListItemTitle,),
-
-                            SizedBox(width: 5,),
-
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              ".",
+                              style: txtListItemTitle,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Icon(
                               Icons.star,
                               size: 20,
                               color: primaryColor,
                             ),
-
                             Text(rating.toString()),
-
                             SizedBox(width: 5),
-
                             Text("($totalRating)".toString()),
                           ],
                         ),
-
                       ],
                     ),
                   ],
                 ),
-
+                Spacer(),
                 InkWell(
                   onTap: tapReview,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: baseColor,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(width: 1, color: primaryColor),
-                    ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(icStar),
-                        SizedBox(width: 5,),
-                        Text("Review",style: txtSecondaryTitle.copyWith(color: primaryColor),)
-                      ],
-                    )
-                  ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: baseColor,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(width: 1, color: primaryColor),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(icStar),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Review",
+                            style:
+                                txtSecondaryTitle.copyWith(color: primaryColor),
+                          )
+                        ],
+                      )),
                 )
-
               ],
             ),
-            SizedBox(height: 5,),
-            Divider(color: blackColor90, thickness: 0.5,)
+            SizedBox(
+              height: 5,
+            ),
+            Divider(
+              color: blackColor90,
+              thickness: 0.5,
+            )
           ],
         ),
       ),

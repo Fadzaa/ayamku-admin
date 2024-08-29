@@ -72,16 +72,23 @@ class HomePageController extends GetxController {
 
       final response = await storeService.updateStore();
       Store store = Store.fromJson(response.data);
-      print("Message: ${store.message}");
 
+      // Automatically set the toggle to active if store_status is 0 (store is closed)
+      if (store.storeStatus == 0) {
+        isActive.value = true;
+      } else if (store.storeStatus == 1) {
+        isActive.value = false;
+      }
+
+      // print("Message: ${store.message}");
     } catch (e) {
       Get.snackbar("Update failed", "Failed to update store: $e");
       print("Error updating store: $e");
     } finally {
-      print("Succes update");
       isLoading(false);
     }
   }
+
 
   Future<void> getSalesSummary(String filter) async {
     try {
@@ -147,9 +154,20 @@ class HomePageController extends GetxController {
 
 
   void toggleSwitch(bool value) {
-    isActive.value = value;
-    updateStore();
+    if (isActive.value == false && value == false) {
+      Get.snackbar("Store Status", "The store is already closed and cannot be closed again.");
+      return;
+    }
+
+    if (isActive.value == false && value == true) {
+      isActive.value = true; // Automatically open the store if it was closed
+      updateStore();
+    } else {
+      isActive.value = value;
+      updateStore();
+    }
   }
+
 
 
   void changeIndex(int index) async {

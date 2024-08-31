@@ -43,9 +43,7 @@ class AddPosPageView extends GetView<AddPosPageController> {
             ],
           )
       ),
-      body: Stack(
-        children: [
-          Container(
+      body: Container(
             height: screenHeight,
             color: baseColor,
             padding: EdgeInsets.symmetric(horizontal: 16),
@@ -55,29 +53,21 @@ class AddPosPageView extends GetView<AddPosPageController> {
                 )
             ),
           ),
-
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: CommonBottom(
-              onPressed1: () {
-                Get.back();
-              },
-              onPressed2: () {
-                controller.addPos();
-              },
-              bgColor1: red,
-              bgColor2: primaryColor,
-              ic1: icCancel,
-              ic2: icUpload,
-              txtColor1: Colors.white,
-              txtColor2: blackColor,
-              txt1: 'Batalkan',
-              txt2: 'Tambah pos',
-            ),
-          )
-        ],
+      bottomNavigationBar: CommonBottom(
+        onPressed1: () {
+          Get.back();
+        },
+        onPressed2: () {
+          controller.addPos();
+        },
+        bgColor1: red,
+        bgColor2: primaryColor,
+        ic1: icCancel,
+        ic2: icUpload,
+        txtColor1: Colors.white,
+        txtColor2: blackColor,
+        txt1: 'Batalkan',
+        txt2: 'Tambah pos',
       ),
     );
   }

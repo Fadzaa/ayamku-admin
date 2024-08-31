@@ -57,10 +57,13 @@ class AddPosPageController extends GetxController{
         "description": descriptionController.text,
         "image": await dio.MultipartFile.fromFile(filePathImage.value),
       });
+
+      print(formData.fields);
       
       await posService.addPos(formData);
 
       Get.offNamedUntil(Routes.POS_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
+      Get.snackbar("Tambah pos Sukses", "Berhasil menambahkan pos!");
 
     } catch (e) {
       if (e is dio.DioError) {

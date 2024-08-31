@@ -104,7 +104,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                           'totalPrice': order.finalAmount,
                           'discountAmount': order.discountAmount,
                           'voucher': order.voucher,
-                          'date': order.createdAt,
+                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                         },
                       );
                     },
@@ -142,7 +142,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                           'totalPrice': order.finalAmount,
                           'discountAmount': order.discountAmount,
                           'voucher': order.voucher,
-                          'date': order.createdAt,
+                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                         },
                       );
                     },

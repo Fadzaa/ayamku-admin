@@ -7,6 +7,7 @@ const Color greenLight = Color(0xFF6CD8B0);
 const Color greenMedium = Color(0xFF5CB85C);
 const Color greenGrass = Color(0xFFE5F8F3);
 const Color redMedium = Color(0xFFD85458);
+const Color greenAlert = Color(0xFF58D259);
 const Color redLight = Color(0xFFF8E8E5);
 const Color pinkLight = Color(0xFFFF7CA3);
 const Color grey = Color(0xFFD9D9D9);

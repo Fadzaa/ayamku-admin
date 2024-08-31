@@ -1,7 +1,9 @@
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
+import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class TerimaPesanan extends GetView<OrderPageController> {
@@ -40,26 +42,18 @@ class TerimaPesanan extends GetView<OrderPageController> {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Confirm'),
-                                content: Text(
-                                    'Apa anda yakin ingin membetalkan pesanan ini?'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text('Cancel'),
-                                    onPressed: () {
-
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text('Yes'),
-                                    onPressed: () {
-                                      controller.cancelOrder(orderId.toString());
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
+                              return CommonAlert(
+                                title: 'Batalkan pesanan',
+                                content: "Batalkan orderan ini sekarang?",
+                                onCancel: () {
+                                  Get.back();
+                                },
+                                onConfirm: () async {
+                                  controller.cancelOrder(orderId.toString());
+                                  Navigator.of(context).pop();
+                                },
+                                confirmText: 'Ya',
+                                cancelText: 'Tidak',
                               );
                             },
                           );
@@ -78,27 +72,18 @@ class TerimaPesanan extends GetView<OrderPageController> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Confirm'),
-                            content: Text(
-                                'Are you sure you want to accept the order?'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text('Cancel'),
-                                onPressed: () {
-                                  Get.back();
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              TextButton(
-                                child: Text('Yes'),
-                                onPressed: () {
-                                  print("TEST EVENT");
-                                  controller.acceptOrder(orderId.toString());
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
+                          return CommonAlert(
+                            title: 'Terima pesanan',
+                            content: "Terima pesanan ini sekarang?",
+                            onCancel: () {
+                              Get.back();
+                            },
+                            onConfirm: () async {
+                              controller.acceptOrder(orderId.toString());
+                              Navigator.of(context).pop();
+                            },
+                            confirmText: 'Ya',
+                            cancelText: 'Tidak',
                           );
                         },
                       );
@@ -208,6 +193,103 @@ class PesananDibatalkan extends StatelessWidget {
       style: txtCaption.copyWith(color: Colors.white),
       onPressed: () {},
       color: Colors.red,
+    );
+  }
+}
+
+class CommonAlert extends StatelessWidget {
+  final String title;
+  final String content;
+  final String confirmText;
+  final String cancelText;
+  final VoidCallback onConfirm;
+  final VoidCallback onCancel;
+
+  const CommonAlert({
+    Key? key,
+    required this.title,
+    required this.confirmText,
+    required this.cancelText,
+    required this.onConfirm,
+    required this.onCancel,
+    required this.content,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+        decoration: BoxDecoration(
+          color: baseColor,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Align(
+                    alignment: Alignment.topRight,
+                    child :  SvgPicture.asset(icCancel,color: Colors.black,)
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                  title,
+                  style: txtListItemTitle
+              ),
+            ),
+            SizedBox(height: 5),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                  content,
+                  style: txtBody
+              ),
+            ),
+            SizedBox(height: 15),
+            Padding(
+              padding: EdgeInsets.only(left: 25,  right:25,top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  LittleBtn(
+                    text: confirmText,
+                    style: txtCaption.copyWith(color: Colors.white),
+                    onPressed: () {
+                      onConfirm();
+                    },
+                    txtColor: Colors.white,
+                    color: greenAlert,
+                  ),
+                  LittleBtn(
+                    text: cancelText,
+                    style: txtCaption.copyWith(color: Colors.white),
+                    onPressed: () {
+                      onCancel();
+                    },
+                    txtColor: Colors.white,
+                    color: red,
+                  ),
+
+                ],
+              ),
+            ),
+            SizedBox(height: 10)
+          ],
+        ),
+      ),
     );
   }
 }

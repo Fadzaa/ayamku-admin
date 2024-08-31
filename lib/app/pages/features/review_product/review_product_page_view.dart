@@ -36,7 +36,7 @@ class ReviewProductPageView extends GetView<ReviewProductPageController> {
               SizedBox(width: 10,),
 
               Text(
-                "Review of ",
+                "Review product",
                 style: txtTitlePage.copyWith(
                   color: blackColor,
                 ),

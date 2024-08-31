@@ -17,8 +17,8 @@ class PromoPageController extends GetxController {
   PromoService promoService = PromoService();
   PromoResponse promoResponse = PromoResponse();
 
-@override
-void onInit() {
+  @override
+  void onInit() {
     super.onInit();
 
     getAllPromo();
@@ -35,7 +35,7 @@ void onInit() {
     // });
   }
 
-Future <void> getAllPromo() async {
+  Future <void> getAllPromo() async {
     try {
       isLoading.value = true;
 

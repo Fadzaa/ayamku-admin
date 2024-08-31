@@ -1,4 +1,3 @@
-
 import 'package:ayamku_admin/app/api/voucher/model/voucher_response.dart';
 import 'package:ayamku_admin/app/api/voucher/voucher_service.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
@@ -54,12 +53,12 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
     tabController!.dispose();
   }
 
-  Future <void> getAllVoucher() async {
+  Future<void> getAllVoucher() async {
     try {
       isLoading.value = true;
-      voucherList.clear();
-      final response = await voucherService.getAllVoucher();
+      voucherList.clear(); // Membersihkan list sebelum memuat data baru
 
+      final response = await voucherService.getAllVoucher();
       voucherResponse = VoucherResponse.fromJson(response.data);
       var vouchers = voucherResponse.data!;
 
@@ -73,16 +72,16 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
         }).toList();
       }
 
-      print(response.data);
-      voucherList.assignAll(VoucherResponse.fromJson(response.data).data!);
-      // voucherList = vouchers.obs;
+      // Memperbarui voucherList dengan data terbaru
+      voucherList.assignAll(vouchers);
+
     } catch (e) {
-      isLoading.value = true;
       print(e);
     } finally {
       isLoading.value = false;
     }
   }
+
 
   Future<void> getSearchVoucher(String search) async {
     try {

@@ -32,7 +32,7 @@ class HomePageController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isLoadingSales = false.obs;
 
-  RxList<Order> listOrder = <Order>[].obs;
+  RxList<Order> listLatestOrder = <Order>[].obs;
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
@@ -50,12 +50,12 @@ class HomePageController extends GetxController {
     super.onInit();
     pageController = PageController(initialPage: 0);
 
-
-
     storeService = StoreService();
     updateStore();
-    getAllOrder();
-    getSalesSummary(toString());
+    getLatestOrder(null);
+    print("Check Current latest order");
+
+    getSalesSummary('today');
   }
 
 
@@ -72,52 +72,23 @@ class HomePageController extends GetxController {
 
       final response = await storeService.updateStore();
       Store store = Store.fromJson(response.data);
-      print("Message: ${store.message}");
 
+      // Automatically set the toggle to active if store_status is 0 (store is closed)
+      if (store.storeStatus == 0) {
+        isActive.value = true;
+      } else if (store.storeStatus == 1) {
+        isActive.value = false;
+      }
+
+      // print("Message: ${store.message}");
     } catch (e) {
       Get.snackbar("Update failed", "Failed to update store: $e");
       print("Error updating store: $e");
     } finally {
-      print("Succes update");
       isLoading(false);
     }
   }
 
-  Future <void> getAllOrder() async {
-    try {
-      isLoading.value = true;
-
-      final fcmToken = await FirebaseMessaging.instance.getToken();
-      print('FCM TOKEN');
-      print(fcmToken);
-
-      final response = await orderService.getOrder();
-
-      print("Fetch Semua Order");
-      print(response.data);
-
-      List<Order> orders = (response.data['data'] as List)
-          .map((orderData) => Order.fromJson(orderData))
-          .toList();
-
-      print('Number of orders: ${numberOfOrders.value}');
-
-      processingOrdersCount.value = orders.where((order) => order.status == "processing").length;
-      print('Number of processing orders: ${processingOrdersCount.value}');
-
-      orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.obs;
-
-      print(listOrder);
-
-      print(orderResponse.data);
-    } catch (e) {
-      isLoading.value = true;
-      print(e);
-    } finally {
-      isLoading.value = false;
-    }
-  }
 
   Future<void> getSalesSummary(String filter) async {
     try {
@@ -125,10 +96,6 @@ class HomePageController extends GetxController {
 
       final response = await salesService.getSaleSummary(filter);
       salesResponse = SalesResponse.fromJson(response.data);
-
-      print("SALES RESPONSE:");
-      print(salesResponse.totalProduct);
-
 
     } catch (e) {
       isLoadingSales.value = true;
@@ -162,24 +129,22 @@ class HomePageController extends GetxController {
     getSalesSummary(filter);
   }
 
-  Future getOrderMethod(String method, String status) async {
+  Future getLatestOrder(String? method) async {
     try {
-      print('value method = ' + method);
       isLoading.value = true;
 
-      final response = await orderService.getOrderMethodType(method: method);
-      listOrder.clear();
+      print("Check pre latest order");
 
-      print("CHECK RESPONSE METHOD");
-      print(response.data);
+      final response = await orderService.getOrderLatest(method);
+      listLatestOrder.clear();
+
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder = orderResponse.data!.where((order) => order.methodType == method && order.status == status).toList().obs;
+      listLatestOrder.value = orderResponse.data!;
 
-      if (method == 'on_delivery') {
-        numberOfDeliveryOrders.value = listOrder.length;
-      } else if (method == 'pickup') {
-        numberOfPickupOrders.value = listOrder.length;
-      }
+      print("Check latest order");
+      print(listLatestOrder.length);
+
+
     } catch (e) {
       print(e);
     } finally {
@@ -189,22 +154,33 @@ class HomePageController extends GetxController {
 
 
   void toggleSwitch(bool value) {
-    isActive.value = value;
-    updateStore();
+    if (isActive.value == false && value == false) {
+      Get.snackbar("Store Status", "The store is already closed and cannot be closed again.");
+      return;
+    }
+
+    if (isActive.value == false && value == true) {
+      isActive.value = true; // Automatically open the store if it was closed
+      updateStore();
+    } else {
+      isActive.value = value;
+      updateStore();
+    }
   }
+
 
 
   void changeIndex(int index) async {
     currentIndex.value = index;
     switch (index) {
       case 0:
-        await getAllOrder();
+        await getLatestOrder(null);
         break;
       case 1:
-        await getOrderMethod('on_delivery', 'processing');
+        await getLatestOrder("on_delivery");
         break;
       case 2:
-        await getOrderMethod('pickup', 'processing');
+        await getLatestOrder('pickup');
         break;
     }
   }

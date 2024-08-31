@@ -26,6 +26,7 @@ abstract class Routes {
   static const OPTION_USER = _Paths.OPTION_USER;
   static const EDIT_VOUCHER_PAGE = _Paths.EDIT_VOUCHER_PAGE;
   static const REVIEW_PAGE = _Paths.REVIEW_PAGE;
+  static const CHART_EXAMPLE = _Paths.CHART_EXAMPLE;
 }
 
 abstract class _Paths {
@@ -54,4 +55,5 @@ abstract class _Paths {
   static const OPTION_USER = '/option-user-page';
   static const EDIT_VOUCHER_PAGE = '/edit-voucher-page';
   static const REVIEW_PAGE = '/review-page';
+  static const CHART_EXAMPLE = '/chart-example';
 }

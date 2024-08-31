@@ -180,3 +180,122 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
     );
   }
 }
+
+class ItemAllOrderVerticalShimmer extends GetView<OrderPageController> {
+  const ItemAllOrderVerticalShimmer(
+      {super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          margin: EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 2,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child:
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage(icPerson),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "username",
+                      style: txtSecondaryTitle,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text("orderTime",
+                style: txtSecondaryTitle.copyWith(color: blackColor40)),
+            const SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Divider(
+              height: 0.5,
+              color: blackColor70,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  icOrder,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Akan dijemput ",
+                  style: txtCaption,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    "09.40",
+                    style: txtCaption.copyWith(),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              children: [
+                SvgPicture.asset(icLocation,),
+
+                SizedBox(width: 10,),
+
+                Text("namePos", style: txtCaption)
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: getStatusWidget(status, id),
+            // ),
+            SizedBox(
+              height: 5,
+            ),
+          ])),
+    );
+  }
+}

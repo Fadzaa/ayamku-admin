@@ -34,16 +34,12 @@ class PosService {
     }
   }
 
- Future<dio.Response> updatePos(String name,String description,String id,String image) async {
+ Future<dio.Response> updatePos(formData, String id) async {
         try {
           final response = await _dioInstance.postImageRequest(
               endpoint: ApiEndPoint.updatePos(id),
               isAuthorize: true,
-              data: {
-                "name" : name,
-                "description" : description,
-                "image" : image           
-              }
+              data: formData
           );
 
           return response;
@@ -64,4 +60,19 @@ class PosService {
           throw Exception(e);
         }
       }
+
+  Future<dio.Response> searchPost(String search) async {
+    try {
+      final response = await _dioInstance.getRequest(
+        endpoint: ApiEndPoint.pos,
+        queryParameters: {
+          'search': search,
+        }
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
   }

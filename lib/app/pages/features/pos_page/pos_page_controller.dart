@@ -36,17 +36,34 @@ class PosPageController extends GetxController{
       isLoading.value = false;
     }
   }
-  
+
+  Future <void> searchPos(String search) async {
+    try {
+      isLoading.value = true;
+
+      final response = await productService.searchPost(search);
+
+      productResponse = PosResponse.fromJson(response.data);
+      listPos = productResponse.data!.obs;
+
+    } catch (e) {
+      isLoading.value = true;
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   void updateSelectedValue(String value) {
     selectedValue.value = value;
     update();
   }
-  
+
 
   @override
   void onInit() {
     super.onInit();
-    
+
     getAllPos();
   }
 }

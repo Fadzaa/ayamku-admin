@@ -2,6 +2,7 @@ import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_drop
 import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_pick_img.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_text_field.dart';
 import 'package:ayamku_admin/app/pages/features/edit_product_page/edit_product_page_controller.dart';
+import 'package:ayamku_admin/common/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,13 +15,13 @@ class EditProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20),
-      child: Column(
+      child: Obx(()=> LoadingOverlay(isLoading: controller.isLoading.value, body: Column(
         children: [
 
-          PickImg(
+          Obx(() => PickImg(
             onTap: () => controller.pickImage(),
             imagePath: controller.selectedImagePath.value,
-          ),
+          ),),
 
           Obx(() => DropdownCategory(
             categories: controller.categories,
@@ -60,7 +61,7 @@ class EditProductPage extends StatelessWidget {
             controller: controller.descriptionController,
           ),
         ],
-      ),
+      )))
     );
   }
 }

@@ -58,7 +58,17 @@ class PromoPageView extends GetView<PromoPageController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
 
-                    CommonSearch(text: "Search"),
+                    CommonSearch(
+                      text: "Search",
+                      controller: controller.searchController,
+                      onChanged: (newText) {
+                        if(newText.isEmpty) {
+                          controller.getAllPromo();
+                        } else {
+                          controller.getPromoSearch(newText);
+                        }
+                      }
+                    ),
 
                     SizedBox(height: 15,),
 

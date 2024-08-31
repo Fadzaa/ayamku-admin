@@ -27,8 +27,10 @@ class ApiEndPoint {
 
    //Order
    static String order = '$baseUrl/orders';
+  static String orderLatest = '$baseUrl/orders/latest';
    static String orderHistories = '$baseUrl/order-histories';
    static String orderStatus = '$baseUrl/orders/update-status';
+
 
   //Sales summary
    static String salesSummary = '$baseUrl/sales-summary';
@@ -37,7 +39,7 @@ class ApiEndPoint {
   static String getAllReview = '$baseUrl/reviews';
   static String getReviewProductId(int productId) => '$baseUrl/reviews/$productId';
 
-
-
+  //analytic
+   static String analytic = '$baseUrl/analytic-revenue';
 
 }

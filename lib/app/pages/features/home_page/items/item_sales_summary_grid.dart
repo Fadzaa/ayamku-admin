@@ -13,13 +13,15 @@ class ItemSalesSummary extends GetView<HomePageController> {
     required this.typeSalesItem,
     this.numberOfOrders,
     this.analyticSales,
-    this.productSales
+    this.productSales,
+    this.specialPage
   });
 
   final SalesItem typeSalesItem;
   final int? numberOfOrders;
   final int? analyticSales;
   final int? productSales;
+  final bool? specialPage;
 
 
   @override
@@ -29,7 +31,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
       case SalesItem.analytic:
         return InkWell(
           onTap: (){
-            Get.toNamed(Routes.ANALYTIC_PAGE);
+            specialPage ?? false ? Container() : Get.toNamed(Routes.ANALYTIC_PAGE);
           },
           child: Container(
             width: ScreenWidth,
@@ -47,7 +49,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                   children: [
                     Text("Analytic Sales", style: txtListItemTitle),
 
-                    const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16,)
+                    specialPage ?? false ? Container() : const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16,)
                   ],
                 ),
 
@@ -77,34 +79,6 @@ class ItemSalesSummary extends GetView<HomePageController> {
             ),
           ),
         );
-
-    // case SalesItem.totalSales:
-    //   return Container(
-    //     padding: const EdgeInsets.all(16.0),
-    //     decoration: BoxDecoration(
-    //         color: const Color(0xFFF8F9FB),
-    //         borderRadius: BorderRadius.circular(16)
-    //     ),
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //           children: [
-    //             Text("Total Sales", style: txtCaption),
-    //
-    //             const SizedBox(width: 10,),
-    //
-    //             Text("-10%", style: txtCaption.copyWith(color: pinkLight))
-    //           ],
-    //         ),
-    //
-    //         Text("Rp. 1.120.000", style: txtHarga)
-    //
-    //       ],
-    //     ),
-    //   );
 
       case SalesItem.totalOrders:
         return Container(
@@ -137,7 +111,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("${controller.numberOfOrders.value}", style: txtHarga),
+                  Text("${numberOfOrders}", style: txtHarga),
                   Container(
                     width: 40,
                     height: 40,

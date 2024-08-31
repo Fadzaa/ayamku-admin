@@ -17,25 +17,25 @@ class PromoPageController extends GetxController {
   PromoService promoService = PromoService();
   PromoResponse promoResponse = PromoResponse();
 
-@override
-void onInit() {
+  @override
+  void onInit() {
     super.onInit();
 
     getAllPromo();
 
-    searchController.addListener(() {
-      if (_debounce?.isActive ?? false) _debounce?.cancel();
-      _debounce = Timer(const Duration(milliseconds: 500), () {
-        if (searchController.text.isEmpty) {
-          getAllPromo();
-        } else {
-          getPromoSearch(searchController.text);
-        }
-      });
-    });
+    // searchController.addListener(() {
+    //   if (_debounce?.isActive ?? false) _debounce?.cancel();
+    //   _debounce = Timer(const Duration(milliseconds: 500), () {
+    //     if (searchController.text.isEmpty) {
+    //       getAllPromo();
+    //     } else {
+    //       getPromoSearch(searchController.text);
+    //     }
+    //   });
+    // });
   }
 
-Future <void> getAllPromo() async {
+  Future <void> getAllPromo() async {
     try {
       isLoading.value = true;
 
@@ -67,7 +67,8 @@ Future <void> getAllPromo() async {
 
       final response = await promoService.getPromoSearch(search: search);
       promosList.clear();
-      promosList.addAll(PromoResponse.fromJson(response.data).data!);
+
+      promosList.value = PromoResponse.fromJson(response.data).data!;
 
     } catch (e) {
       print(e);

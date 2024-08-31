@@ -3,6 +3,7 @@ import 'package:ayamku_admin/app/pages/features/home_page/sections/latest_order_
 import 'package:ayamku_admin/app/pages/features/home_page/sections/heading_section.dart';
 import 'package:ayamku_admin/app/pages/features/home_page/sections/sales_summary_section.dart';
 import 'package:ayamku_admin/common/constant.dart';
+import 'package:ayamku_admin/common/loading_overlay.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,30 +31,37 @@ class HomePageView extends GetView<HomePageController> {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: baseColor,
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeadingSection(),
-                        
-                SizedBox(height: 20,),
-                        
-                Obx(
-                        () => controller.isLoadingSales.value ? CircularProgressIndicator() : SalesSummarySection(salesResponse: controller.salesResponse,),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.updateStore();
+            controller.getLatestOrder(null);
+            print("Check Current latest order");
+
+            controller.getSalesSummary('today');
+          },
+            child: SingleChildScrollView(
+              child: Container(
+                color: baseColor,
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    HeadingSection(),
+
+                    SizedBox(height: 20,),
+
+                    SalesSummarySection(),
+
+                    SizedBox(height: 20,),
+
+                    LatestOrderSection()
+
+
+                  ],
                 ),
-                        
-                SizedBox(height: 20,),
-                        
-                LatestOrderSection()
-                        
-                        
-              ],
+              ),
             ),
-          ),
-        ),
+        )
       )
     );
   }

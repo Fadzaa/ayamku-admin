@@ -27,33 +27,33 @@ class AddPosPageSection extends GetView<AddPosPageController> {
             controller: controller.titleController,
           ),
 
-          SizedBox(height: 20),
+          // SizedBox(height: 20),
 
-          Row(
-            children: [
-              Expanded(
-                child: ItemSelectDropdown(
-                  titleTxt: 'Pilih Kelas',
-                  hintTxt: 'Pilih kelas',
-                  dropdownList: ["10", "11", "12"],
-                  selectedValue: controller.selectedKelas.value,
-                  onChanged: (value) => controller.onChangedKelas(value!),
-                ),
-              ),
-
-              SizedBox(width: 20),
-
-              Expanded(
-                child: ItemSelectDropdown(
-                  titleTxt: 'Pilih Jurusan',
-                  hintTxt: 'Pilih jurusan',
-                  dropdownList: ["PPLG", "ANIM", "DKV"],
-                  selectedValue: controller.selectedJurusan.value,
-                  onChanged: (value) => controller.onChangedJurusan(value!),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: ItemSelectDropdown(
+          //         titleTxt: 'Pilih Kelas',
+          //         hintTxt: 'Pilih kelas',
+          //         dropdownList: ["10", "11", "12"],
+          //         selectedValue: controller.selectedKelas.value,
+          //         onChanged: (value) => controller.onChangedKelas(value!),
+          //       ),
+          //     ),
+          //
+          //     SizedBox(width: 20),
+          //
+          //     Expanded(
+          //       child: ItemSelectDropdown(
+          //         titleTxt: 'Pilih Jurusan',
+          //         hintTxt: 'Pilih jurusan',
+          //         dropdownList: ["PPLG", "ANIM", "DKV"],
+          //         selectedValue: controller.selectedJurusan.value,
+          //         onChanged: (value) => controller.onChangedJurusan(value!),
+          //       ),
+          //     ),
+          //   ],
+          // ),
 
           SizedBox(height: 20),
 

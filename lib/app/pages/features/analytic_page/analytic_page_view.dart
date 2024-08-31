@@ -1,6 +1,8 @@
 import 'package:ayamku_admin/app/pages/features/analytic_page/analytic_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/analytic_page/section/sales_statistic.dart';
 import 'package:ayamku_admin/app/pages/features/analytic_page/section/sales_summary_section.dart';
+import 'package:ayamku_admin/app/pages/features/home_page/sections/sales_summary_section.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_loading.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -13,7 +15,9 @@ class AnalyticPageView extends GetView<AnalyticPageController>{
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: baseColor,
           automaticallyImplyLeading: false,
@@ -51,11 +55,11 @@ class AnalyticPageView extends GetView<AnalyticPageController>{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                SalesSummarySection(),
+                SalesSummarySection(specialPage: true),
 
-                SizedBox(height: 30,),
+                const SizedBox(height: 20),
 
-                // SalesStatisitc()
+                Obx(() => controller.isLoading.value ? Center(child: commonLoading(),) : SalesStatisitc())
 
               ],
             ),

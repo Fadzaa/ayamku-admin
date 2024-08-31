@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
-import 'package:ayamku_admin/app/pages/features/order_page/sections/order_section.dart';
+import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +23,8 @@ class OrderPageController extends GetxController {
   // fetch order
   RxList<Order> listOrder = <Order>[].obs;
   RxList<Order> listAllOrder = <Order>[].obs;
+  RxList<Order> listPickupOrder = <Order>[].obs;
+  RxList<Order> listDeliveryOrder = <Order>[].obs;
   OrderService orderService = OrderService();
   OrderResponse orderResponse = OrderResponse();
 
@@ -76,6 +78,8 @@ class OrderPageController extends GetxController {
     super.onInit();
     pageController = PageController(initialPage: 0);
     getAllOrder();
+    getOrderMethod('on_delivery');
+    getOrderMethod('pickup');
   }
 
   @override
@@ -117,26 +121,18 @@ class OrderPageController extends GetxController {
       print('value method = ' + method);
       isLoading.value = true;
 
-      final response = await orderService.getOrderMethodType(method: method);
-      listOrder.clear();
-      print("CHECK RESPONSE METHOD");
-      print(response.data);
+      final response = await orderService.getOrderLatest(method);
 
       orderResponse = OrderResponse.fromJson(response.data);
-      listOrder.assignAll(orderResponse.data!
-          .where((order) => order.methodType == method)
-          .toList());
 
-      numberOfDeliveryOrders.value = orderResponse.data!
-          .where((order) => order.methodType == 'on_delivery')
-          .length;
-      numberOfPickupOrders.value = orderResponse.data!
-          .where((order) => order.methodType == 'pickup')
-          .length;
+      if (method == 'on_delivery') {
+        listDeliveryOrder.assignAll(orderResponse.data!);
+        numberOfDeliveryOrders.value = listOrder.length;
+      } else {
+        listPickupOrder.assignAll(orderResponse.data!);
+        numberOfPickupOrders.value = listPickupOrder.length;
+      }
 
-      print('Number of delivery orders: ${numberOfDeliveryOrders.value}');
-      print('Number of pickup orders: ${numberOfPickupOrders.value}');
-      print(listOrder);
     } catch (e) {
       print('Error occurred: $e');
     } finally {
@@ -148,11 +144,19 @@ class OrderPageController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await orderService.updateOrderStatus(id, status);
+      final response = await orderService.updateOrderStatus(int.parse(id), status.toString());
 
       print("Update order status response: ${response.data}");
 
-
+      Get.snackbar(
+        "Sukses",
+        "Status berhasil di update",
+        backgroundColor: greenAlert,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        borderRadius: 30,
+        margin: EdgeInsets.all(10),
+      );
     } catch (e) {
       print('Error occurred: $e');
       Get.snackbar("Error", e.toString());
@@ -218,7 +222,6 @@ class OrderPageController extends GetxController {
       isLoading.value = false;
     }
   }
-
 
   Future<void> selectTypeOrder(String type) async {
     selectedFilterTypeOrder.value = type;

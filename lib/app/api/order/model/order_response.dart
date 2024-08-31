@@ -25,12 +25,12 @@ class Order {
   int? id;
   String? methodType;
   String? pickupTime;
-  Null? shiftDelivery;
+  String? shiftDelivery;
   String? status;
   User? user;
   Cart? cart;
   Post? post;
-  Null? voucher;
+  String? voucher;
   List<dynamic>? reviews;
   int? originalAmount;
   int? discountAmount;

@@ -4,11 +4,6 @@ import 'manage.dart';
 
 final List <Manage> manage_data = [
   Manage(
-    name: "Promo",
-    image: icPromo,
-    routes: Routes.PROMO_PAGE,
-  ),
-  Manage(
       name: "Voucher",
       image: icVoucher,
       routes: Routes.MANAGEMENT_VOUCHER,

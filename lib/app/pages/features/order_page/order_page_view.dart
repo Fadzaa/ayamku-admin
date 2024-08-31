@@ -45,20 +45,24 @@ class OrderPageView extends GetView<OrderPageController> {
 
             Spacer(),
 
-            ItemDropdownDay()
           ],
         )
       ),
 
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                OrderSummarySection(context: context,),
-              ],
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.getAllOrder();
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  OrderSummarySection(context: context,),
+                ],
+              ),
             ),
           ),
         ),

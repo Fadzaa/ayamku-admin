@@ -70,17 +70,16 @@ Future<void> selectDate(BuildContext context, TextEditingController controller) 
       }
 
       dio.FormData formData = dio.FormData.fromMap({
-        "code" : codeController.text,
-        "discount" : int.parse(discountController.text),
-        "qty" : int.parse(qtyController.text),
-        "description" : descriptionController.text,
-        "start_date" : startDate.toString(),
-        "end_date" : endDate.toString()
+        "code" : codeController.text.toString(),
+        "discount" : 10,
+        "description" : descriptionController.text.toString(),
+        "start_date" : startDate,
+        "end_date" : endDate
       });
 
-      await voucherService.addVoucher(formData);
+      await voucherService.updateVoucher(formData, voucher.id.toString());
 
-      Get.snackbar("Tambah voucher Sukses", "Berhasil menambhkan voucher!");
+      Get.snackbar("Perbarui voucher Sukses", "Berhasil memperbarui voucher!");
 
       Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER, (routes) => routes.settings.name == Routes.HOME_PAGE);
 

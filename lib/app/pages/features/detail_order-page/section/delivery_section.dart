@@ -24,6 +24,7 @@ class DeliverySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Column(
@@ -57,9 +58,12 @@ class DeliverySection extends StatelessWidget {
                 backgroundImage: AssetImage(icPerson),
               ),
               SizedBox(width: 10),
-              Text(
-                userName,
-                style: txtListItemTitle,
+              Container(
+                width: screenWidth * 0.4,
+                child: Text(
+                  userName,
+                  style: txtListItemTitle,
+                ),
               ),
               Spacer(),
               Container(
@@ -76,7 +80,7 @@ class DeliverySection extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 10,
+            height: 15,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,

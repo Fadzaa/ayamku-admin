@@ -35,9 +35,10 @@ class ProductService {
 
   Future<Response> updateProduct(FormData formData, String id) async {
         try {
-          final response = await _dioInstance.putRequest(
+          final response = await _dioInstance.postImageRequest(
               endpoint: 'https://ayamku-api.rplrus.com/api/products/$id',
               data: formData,
+              isAuthorize: true
           );
 
           return response;

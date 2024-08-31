@@ -40,7 +40,7 @@ class HeadingSection extends GetView<HomePageController> {
                           borderRadius: BorderRadius.circular(5)
                       ),
                       child: Center(
-                        child:Obx(() => Text("${controller.processingOrdersCount.value}", style: txtListItemTitle.copyWith(color: Colors.white),))
+                        child:Obx(() => Text("${controller.listLatestOrder.length}", style: txtListItemTitle.copyWith(color: Colors.white),))
                       ),
                     ),
 

@@ -69,13 +69,13 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
                 mainAxisAlignment: MainAxisAlignment.start,
 
                 children: [
-                  SizedBox(height: 15,),
+                  // SizedBox(height: 15,),
+                  //
+                  // FilterVoucher(),
+                  //
+                  // SizedBox(height: 15,),
 
-                  FilterVoucher(),
-
-                  SizedBox(height: 15,),
-
-                  CommonSearch(text: "Search", ),
+                  CommonSearch(text: "Search", onChanged: (newText) => controller.getSearchVoucher(newText), ),
 
                   SizedBox(height: 15,),
 

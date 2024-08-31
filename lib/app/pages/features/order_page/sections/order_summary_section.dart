@@ -114,7 +114,7 @@ class OrderSummarySection extends GetView<OrderPageController> {
           shrinkWrap: true,
           itemCount: order_summary_data.length,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 5,
             mainAxisSpacing: 10,
@@ -122,24 +122,26 @@ class OrderSummarySection extends GetView<OrderPageController> {
           ),
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: () {
-                switch (order_summary_data[index].title) {
-                  case "Total Order":
-                    this.controller.selectSectionType('Semua');
-                    break;
-                  case "Total Delivery":
-                    this.controller.selectSectionType('on_delivery');
-                    break;
-                  case "Total Pickup":
-                    this.controller.selectSectionType('pickup');
-                    break;
-                }
-              },
-              child: ItemOrderSummary(
+                onTap: () {
+                  switch (order_summary_data[index].title) {
+                    case "Total Order":
+                      this.controller.selectSectionType('Semua');
+                      break;
+                    case "Total Delivery":
+                      this.controller.selectSectionType('on_delivery');
+                      break;
+                    case "Total Pickup":
+                      this.controller.selectSectionType('pickup');
+                      break;
+                  }
+                },
+              child: Obx(() => ItemOrderSummary(
                 title: order_summary_data[index].title,
                 icon: order_summary_data[index].icon,
-                count: int.parse(order_summary_data[index].count),
-              ),
+                count: index == 0 ? this.controller.listAllOrder.length
+                    : index == 1 ? this.controller.numberOfPickupOrders.value
+                    : this.controller.numberOfDeliveryOrders.value,
+              ),)
             );
           },
         ),

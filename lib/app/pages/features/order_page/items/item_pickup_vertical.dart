@@ -17,10 +17,10 @@ class ItemPickupVertical extends StatelessWidget {
     required this.orderStatus,
     required this.cartItems,
     required this.onPressed,
-    required this.orderId,
+    required this.orderId, required this.profileUser, required this.sessionOrder,
   });
 
-  final String username, orderName ;
+  final String username, orderName ,profileUser,sessionOrder;
   final int orderId;
   final String orderTime;
   final List<CartItems> cartItems;
@@ -52,14 +52,15 @@ class ItemPickupVertical extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage(icPerson),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
+                      child:Image.network(profileUser, width: 40, height: 40, fit: BoxFit.cover)
                     ),
+
 
                     SizedBox(width: 10,),
 
-                    Text(username, style: txtSecondaryTitle,),
+                    Text(username, style: txtListItemTitle,),
                   ],
                 ),
 
@@ -111,14 +112,17 @@ class ItemPickupVertical extends StatelessWidget {
                         color: grey,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Text("Hari ini, 10:00", style: txtCaption.copyWith(),),
+                      child: Text(
+                        sessionOrder ?? "09.40",
+                        style: txtCaption.copyWith(),
+                      ),
                     )
                   ],
                 ),
 
 
                 SizedBox(height: 20,),
-                TerimaPesanan(orderId: orderId)
+                TerimaPesanan(orderId: orderId, nama: username)
               ])),
     );
   }

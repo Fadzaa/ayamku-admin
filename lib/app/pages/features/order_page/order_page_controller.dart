@@ -77,6 +77,9 @@ class OrderPageController extends GetxController {
   void onInit() {
     super.onInit();
     pageController = PageController(initialPage: 0);
+    completedOrders();
+    cancelledOrders();
+    acceptedOrders();
     getAllOrder();
     getOrderMethod('on_delivery');
     getOrderMethod('pickup');
@@ -127,7 +130,7 @@ class OrderPageController extends GetxController {
 
       if (method == 'on_delivery') {
         listDeliveryOrder.assignAll(orderResponse.data!);
-        numberOfDeliveryOrders.value = listOrder.length;
+        numberOfDeliveryOrders.value = listDeliveryOrder.length;
       } else {
         listPickupOrder.assignAll(orderResponse.data!);
         numberOfPickupOrders.value = listPickupOrder.length;

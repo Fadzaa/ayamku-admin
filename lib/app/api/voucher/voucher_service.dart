@@ -33,6 +33,7 @@ class VoucherService {
     }
   }
 
+
   Future<dio.Response> addVoucher(formData) async {
     try {
       final response = await _dioInstance.postRequest(
@@ -67,6 +68,20 @@ class VoucherService {
         queryParameters: {
           'search': search,
         },
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<dio.Response> giveVoucher(formData) async {
+    try {
+      final response = await _dioInstance.postRequest(
+        endpoint: ApiEndPoint.giveVoucher,
+        data: formData,
+        isAuthorize: true,
       );
 
       return response;

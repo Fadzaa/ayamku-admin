@@ -2,6 +2,7 @@ import 'package:ayamku_admin/app/pages/features/add_pos_page/add_pos_page_contro
 import 'package:ayamku_admin/app/pages/features/add_pos_page/item/item_select_dropdown.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_pick_img.dart';
 import 'package:ayamku_admin/app/pages/features/add_product_page/items/item_text_field.dart';
+import 'package:ayamku_admin/common/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,7 @@ class AddPosPageSection extends GetView<AddPosPageController> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20),
-      child: Column(
+      child: Obx(() => LoadingOverlay(isLoading: controller.isLoading.value, body: Column(
         children: [
           Obx(() => PickImg(
             onTap: () => controller.pickImage(controller.filePathImage),
@@ -65,7 +66,7 @@ class AddPosPageSection extends GetView<AddPosPageController> {
             controller: controller.descriptionController,
           ),
         ],
-      ),
+      ),))
 
 
     );

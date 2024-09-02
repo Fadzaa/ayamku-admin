@@ -1,16 +1,21 @@
 import 'package:ayamku_admin/app/pages/features/detail_order-page/detail_order_page_controller.dart';
+import 'package:ayamku_admin/app/pages/features/detail_order-page/items/item_section_order_menu.dart';
+import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
+import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailOrderSummary extends GetView<DetailOrderPageController> {
-  const DetailOrderSummary({super.key,});
+  const DetailOrderSummary({super.key, required this.orderId});
+  final String orderId;
 
 
   @override
   Widget build(BuildContext context) {
     final argument = Get.arguments;
+    final orderController = Get.put(OrderPageController());
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -35,7 +40,7 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                 itemBuilder: (BuildContext context, int index) {
                   final cartItem = argument['cartItems'][index];
                   return ItemSectionOrderMenu(
-                      image: sampleImage,
+                      image: cartItem.productImage.toString(),
                       menuName: cartItem.productName,
                       price: controller.formatPrice(cartItem.totalPrice ?? 0),
                       quantity: cartItem.quantity.toString()
@@ -59,7 +64,7 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                 style: txtHeadline3,
               ),
               SizedBox(height: 10),
-              Payment(text: "Sub total", subTxt: "Rp. 13.000"),
+              Payment(text: "Sub total", subTxt: controller.formatPrice(argument['originalAmount'] ?? 0)),
               // Payment(text: "Biaya admin", subTxt: "Rp. 5.000"),
               Payment(text: "Potongan voucher", subTxt: controller.formatPrice(argument['discountAmount'] ?? 0)),
               Divider(
@@ -73,7 +78,7 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                     style: txtHeadline3,
                   ),
                   Text(
-                    controller.formatPrice(argument['totalPrice'] ?? 0),
+                    controller.formatPrice(argument['finalAmount'] ?? 0),
                     style: txtHeadline3,
                   )
                 ],
@@ -155,6 +160,63 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
             ],
           ),
 
+          SizedBox(height: 20),
+
+          if(argument['orderStatus'] == 'processing')
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: LittleBtn(
+                          text: "Terima",
+                          onPressed: () async {
+                            orderController.acceptOrder(orderId.toString());
+                            Navigator.of(context).pop();
+                          },
+                          color: greenMedium
+                      ),
+                    ),
+
+                    SizedBox(width: 15,),
+
+                    Expanded(
+                      child: LittleBtn(
+                          text: "Tolak",
+                          onPressed:() async {
+                            orderController.cancelOrder(orderId.toString());
+                            Navigator.of(context).pop();
+                          },
+                          color: red
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 5,),
+
+                Text("*silahkan terima pesanan dari ${argument['userName']} jika anda menyetujuinya", style: txtCaption.copyWith(color: blackColor50)),
+              ],
+            ),
+
+
+          // SizedBox(height: 20),
+          if(controller.orderStatus.value == "accept")
+            LittleBtn(
+                text: "Selesaikan pesanan",
+                onPressed: () async {
+                  orderController.acceptOrder(orderId.toString());
+                  Navigator.of(context).pop();
+                },
+                color: greenMedium
+            ),
+
+
+          SizedBox(height: 15),
+
 
         ],
       ),
@@ -188,91 +250,5 @@ class Payment extends StatelessWidget {
   }
 }
 
-class ItemSectionOrderMenu extends StatelessWidget {
-  const ItemSectionOrderMenu({super.key, required this.image, required this.menuName, required this.price, required this.quantity});
 
-  final String image, menuName, price, quantity;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child:  Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            image,
-            width: 43,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        quantity,
-                        style: txtSecondaryTitle,
-                      ), // count
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Text(
-                        "x",
-                        style: txtSecondaryTitle,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    menuName,
-                    style:
-                    txtSecondaryTitle.copyWith(color: blackColor30),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Pedas",
-                    style: txtSecondaryTitle,
-                  ),
-                  SizedBox(
-                    width: 3,
-                  ),
-                  Text(
-                    "+",
-                    style: txtSecondaryTitle,
-                  ),
-                  SizedBox(
-                    width: 3,
-                  ),
-                  Text(
-                    "Es teh",
-                    style: txtSecondaryTitle,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Spacer(),
-          Text(
-            price,
-            style: txtSecondaryTitle,
-          )
-        ],
-      ),
-    );
-  }
-}
 

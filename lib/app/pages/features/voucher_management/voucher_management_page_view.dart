@@ -62,56 +62,61 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
 
         child: SafeArea(
 
-          child: SingleChildScrollView(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              controller.getAllVoucher();
+            },
+            child: SingleChildScrollView(
 
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
 
-                children: [
-                  // SizedBox(height: 15,),
-                  //
-                  // FilterVoucher(),
-                  //
-                  // SizedBox(height: 15,),
+                  children: [
+                    // SizedBox(height: 15,),
+                    //
+                    // FilterVoucher(),
+                    //
+                    // SizedBox(height: 15,),
 
-                  CommonSearch(text: "Search", onChanged: (newText) => controller.getSearchVoucher(newText), ),
+                    CommonSearch(text: "Search", onChanged: (newText) => controller.getSearchVoucher(newText), ),
 
-                  SizedBox(height: 15,),
+                    SizedBox(height: 15,),
 
-                  Obx(() {
-                    if (controller.isLoading.value) {
-                      return Center(child: commonLoading());
-                    } else if (controller.voucherList.isEmpty) {
-                      return NotFoundPage(
-                          image: notFound,
-                          title: "Voucher not found",
-                          subtitle: "Voucher yang anda inginkan tidak ditemukan, silahkan coba lagi"
-                      );
-                    } else {
-                      return ListView.builder(
-                        itemCount: controller.voucherList.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final voucher = controller.voucherList[index];
-                          final startDate = DateFormat('dd MMMM yyyy')
-                              .format(DateTime.parse(voucher.startDate ?? ''));
-                          final endDate = DateFormat('dd MMMM yyyy')
-                              .format(DateTime.parse(voucher.endDate ?? ''));
-                          return ItemVoucherVertical(
-                            name: voucher.code.toString(),
-                            startDate: startDate,
-                            endDate: endDate,
-                            discount: voucher.discount.toString(),
-                            onPressed: () {
-                              Get.toNamed(Routes.EDIT_VOUCHER_PAGE, arguments: voucher);
-                            },
-                          );
-                        },
-                      );
-                    }
-                  })]
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return Center(child: commonLoading());
+                      } else if (controller.voucherList.isEmpty) {
+                        return NotFoundPage(
+                            image: notFound,
+                            title: "Voucher not found",
+                            subtitle: "Voucher yang anda inginkan tidak ditemukan, silahkan coba lagi"
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: controller.voucherList.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final voucher = controller.voucherList[index];
+                            final startDate = DateFormat('dd MMMM yyyy')
+                                .format(DateTime.parse(voucher.startDate ?? ''));
+                            final endDate = DateFormat('dd MMMM yyyy')
+                                .format(DateTime.parse(voucher.endDate ?? ''));
+                            return ItemVoucherVertical(
+                              name: voucher.code.toString(),
+                              startDate: startDate,
+                              endDate: endDate,
+                              discount: voucher.discount.toString(),
+                              onPressed: () {
+                                Get.toNamed(Routes.EDIT_VOUCHER_PAGE, arguments: voucher);
+                              },
+                            );
+                          },
+                        );
+                      }
+                    })]
+              ),
             ),
           ),
         ),

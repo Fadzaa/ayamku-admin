@@ -18,10 +18,10 @@ class ItemDeliveryVertical extends StatelessWidget{
     required this.namePos,
     required this.cartItems,
     required this.onTap,
-    required this.orderId,
+    required this.orderId, required this.profileUser, required this.sessionOrder,
   });
 
-  final String username, orderName, namePos;
+  final String username, orderName, namePos,profileUser,sessionOrder;
   final int orderId;
   final String orderTime;
   final List<CartItems> cartItems;
@@ -54,14 +54,14 @@ class ItemDeliveryVertical extends StatelessWidget{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage(icPerson),
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child:Image.network(profileUser, width: 40, height: 40, fit: BoxFit.cover)
                     ),
 
                     SizedBox(width: 10,),
 
-                    Text(username, style: txtSecondaryTitle,),
+                    Text(username, style: txtListItemTitle,),
                   ],
                 ),
 
@@ -122,7 +122,10 @@ class ItemDeliveryVertical extends StatelessWidget{
                         color: grey,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Text("09.40", style: txtCaption.copyWith(),),
+                      child: Text(
+                        sessionOrder ?? "09.40",
+                        style: txtCaption.copyWith(),
+                      ),
                     )
                   ],
                 ),
@@ -141,7 +144,7 @@ class ItemDeliveryVertical extends StatelessWidget{
 
                 SizedBox(height: 20,),
 
-                TerimaPesanan(orderId: orderId)
+                TerimaPesanan(orderId: orderId, nama: username,)
               ])),
     );
   }

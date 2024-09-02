@@ -42,7 +42,7 @@ class DropdownCategory extends StatelessWidget {
               value: category,
               child: Text(
                 category,
-                style: txtSecondaryTitle.copyWith(color: color ?? blackColor50),
+                style: txtSecondaryTitle.copyWith(color: color ?? blackColor),
               ),
             );
           }).toList(),

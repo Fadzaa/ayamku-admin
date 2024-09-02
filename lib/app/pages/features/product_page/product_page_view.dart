@@ -50,21 +50,26 @@ class ProductPageView extends GetView<ProductPageController> {
         color: baseColor,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // InventorySection(),
-                //
-                // SizedBox(height: 20,),
-                //
-                // ProdukTerlarisSection(),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              controller.getAllProduct();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // InventorySection(),
+                  //
+                  // SizedBox(height: 20,),
+                  //
+                  // ProdukTerlarisSection(),
 
-                SizedBox(height: 20,),
+                  SizedBox(height: 20,),
 
-                ListProductSection(),
-              ],
+                  ListProductSection(),
+                ],
+              ),
             ),
           ),
         ),

@@ -50,11 +50,10 @@ class EditProductPageController extends GetxController {
     selectedImagePath.value = product.image!;
 
 
-    if (categories.contains(product.category)) {
-      selectedCategory.value = product.category!;
-    } else {
-      selectedCategory.value = categories.first;
+    if (!categories.contains(product.category)) {
+      categories.add(product.category!);
     }
+    selectedCategory.value = product.category!;
   }
 
   void onChangeCategory(String category) {

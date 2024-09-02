@@ -6,6 +6,7 @@ import 'package:ayamku_admin/app/api/sales-summary/sales_model.dart';
 import 'package:ayamku_admin/app/api/sales-summary/sales_service.dart';
 import 'package:ayamku_admin/app/api/store/model/storeResponse.dart';
 import 'package:ayamku_admin/app/api/store/store_service.dart';
+import 'package:ayamku_admin/common/theme.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -73,14 +74,24 @@ class HomePageController extends GetxController {
       final response = await storeService.updateStore();
       Store store = Store.fromJson(response.data);
 
-      // Automatically set the toggle to active if store_status is 0 (store is closed)
+
       if (store.storeStatus == 0) {
         isActive.value = true;
       } else if (store.storeStatus == 1) {
         isActive.value = false;
       }
 
-      // print("Message: ${store.message}");
+      Get.snackbar(
+        "Sukses",
+        "Store status berhasil di update value",
+        backgroundColor: greenAlert,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        borderRadius: 30,
+        margin: EdgeInsets.all(10),
+      );
+
+      print("Status: ${store.storeStatus}");
     } catch (e) {
       Get.snackbar("Update failed", "Failed to update store: $e");
       print("Error updating store: $e");

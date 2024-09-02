@@ -92,14 +92,16 @@ class CommonButtonOutline extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    required this.color,
+     this.color,
+     this.colorBorder,
     this.style,
   });
 
   String text;
   VoidCallback onPressed;
   TextStyle? style;
-  Color color;
+  Color? color;
+  Color? colorBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +112,7 @@ class CommonButtonOutline extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: primaryColor,
+            color: colorBorder ?? primaryColor,
             width: 1,
           ),
         ),
@@ -157,10 +159,13 @@ class LittleBtn extends StatelessWidget {
           color: color ?? primaryColor,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Text(
-          text,
-          style: style ?? txtButtonTab.copyWith(
-            color: txtColor ?? Colors.white,
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            text,
+            style: style ?? txtButtonTab.copyWith(
+              color: txtColor ?? Colors.white,
+            ),
           ),
         ),
       ),

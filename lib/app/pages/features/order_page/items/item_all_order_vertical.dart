@@ -11,39 +11,37 @@ import 'package:get/get.dart';
 class ItemAllOrderVertical extends GetView<OrderPageController> {
   const ItemAllOrderVertical(
       {super.key,
-        required this.username,
-        required this.id,
-        this.sessionOrder,
-        required this.orderName,
-        required this.namePos,
-        required this.orderTime,
-        required this.cartItems,
-        required this.onTap,
-        required this.method,
-        required this.status});
+      required this.username,
+      required this.id,
+      this.sessionOrder,
+      required this.orderName,
+      required this.namePos,
+      required this.orderTime,
+      required this.cartItems,
+      required this.onTap,
+      required this.method,
+      required this.profileUser,
+      required this.status});
 
-  final String username, orderName, namePos, method, status;
+  final String username, orderName, namePos, method, status, profileUser;
   final int id;
   final String? sessionOrder;
   final String orderTime;
   final List<CartItems> cartItems;
   final VoidCallback onTap;
 
-  Widget getStatusWidget(String status, int orderId) {
+  Widget getStatusWidget(String status, int orderId, String nameUser) {
     switch (status) {
       case 'processing':
-        return TerimaPesanan(orderId: orderId, status: status);
+        return TerimaPesanan(orderId: orderId, status: status, nama: nameUser);
       case 'completed':
-        return PesananSelesai();
-      case 'confirm_order':
-        return PesananDikonfirmasi();
+        return PesananSelesai(nama: nameUser);
+      // case 'confirm_order':
+      //   return PesananDikonfirmasi();
       case 'accept':
-        return AcceptedOrder(
-          orderId: orderId,
-          status: status,
-        );
-      case 'cancelled':
-        return PesananDibatalkan();
+        return AcceptedOrder(orderId: orderId, status: status, nama: nameUser);
+      // case 'cancelled':
+      //   return PesananDibatalkan();
       default:
         return SizedBox.shrink();
     }
@@ -51,6 +49,8 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -69,42 +69,59 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
             ],
           ),
           child:
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage(icPerson),
-                    ),
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(25),
+                        child: Image.network(profileUser,
+                            width: 40, height: 40, fit: BoxFit.cover)),
                     SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      username,
-                      style: txtSecondaryTitle,
+                    Container(
+                      width: screenWidth * 0.3,
+                      child: Text(
+                        username,
+                        style: txtListItemTitle,
+                        maxLines: 2,
+                      ),
                     ),
                   ],
+                ),
+                CommonButtonOutline(
+                  text: status,
+                  style: txtCaption.copyWith(),
+                  onPressed: () {},
+                    color: status == 'completed'
+                        ? Colors.green
+                        : (status == 'processing'
+                        ? primaryColor
+                        : (status == 'cancelled'
+                        ? Colors.red
+                        : Colors.grey))
                 ),
               ],
             ),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             Text(orderTime.toString(),
                 style: txtSecondaryTitle.copyWith(color: blackColor40)),
             const SizedBox(
-              height: 15,
+              height: 10,
             ),
             Column(
               children: cartItems.map((cartItem) {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('${cartItem.quantity!.toString()} pcs', style: txtSecondaryTitle),
+                    Text('${cartItem.quantity!.toString()} pcs',
+                        style: txtSecondaryTitle),
                     SizedBox(width: 10),
                     Text(cartItem.productName.toString(),
                         style: txtSecondaryTitle),
@@ -157,21 +174,23 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
               height: 5,
             ),
             if (method != 'pickup')
-             Row(
-              children: [
-                SvgPicture.asset(icLocation,),
-
-                SizedBox(width: 10,),
-
-                Text(namePos, style: txtCaption)
-              ],
-            ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    icLocation,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(namePos, style: txtCaption)
+                ],
+              ),
             SizedBox(
               height: 15,
             ),
             Align(
-              alignment: Alignment.centerRight,
-              child: getStatusWidget(status, id),
+              alignment: Alignment.center,
+              child: getStatusWidget(status, id, username),
             ),
             SizedBox(
               height: 5,
@@ -182,9 +201,7 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
 }
 
 class ItemAllOrderVerticalShimmer extends GetView<OrderPageController> {
-  const ItemAllOrderVerticalShimmer(
-      {super.key});
-
+  const ItemAllOrderVerticalShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +222,7 @@ class ItemAllOrderVerticalShimmer extends GetView<OrderPageController> {
             ],
           ),
           child:
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -278,10 +295,12 @@ class ItemAllOrderVerticalShimmer extends GetView<OrderPageController> {
             ),
             Row(
               children: [
-                SvgPicture.asset(icLocation,),
-
-                SizedBox(width: 10,),
-
+                SvgPicture.asset(
+                  icLocation,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
                 Text("namePos", style: txtCaption)
               ],
             ),

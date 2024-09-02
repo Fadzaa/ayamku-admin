@@ -17,9 +17,10 @@ class DeliverySection extends StatelessWidget {
     required this.date,
     this.posName,
     this.posDesc,
+    required this.profileUser,
   });
 
-  final String idOrder, userName, status,date;
+  final String idOrder, userName, status,date, profileUser;
   final String? posName, posDesc;
 
   @override
@@ -53,10 +54,14 @@ class DeliverySection extends StatelessWidget {
           ),
           Row(
             children: [
-              CircleAvatar(
-                // radius: 25,
-                backgroundImage: AssetImage(icPerson),
-              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Image.network(
+                  profileUser,
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),),
               SizedBox(width: 10),
               Container(
                 width: screenWidth * 0.4,
@@ -108,9 +113,9 @@ class DeliverySection extends StatelessWidget {
               )
             ],
           ),
-          // SizedBox(
-          //   height: 10,
-          // ),
+          SizedBox(
+            height: 15,
+          ),
           Row(
             children: [
               SvgPicture.asset(icCalender),

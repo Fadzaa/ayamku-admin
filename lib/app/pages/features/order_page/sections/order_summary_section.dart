@@ -20,6 +20,7 @@ class OrderSummarySection extends GetView<OrderPageController> {
   String displayTime() {
     int currentHour = DateTime.now().hour;
     DateTime now = DateTime.now();
+
     if (currentHour >= 10 && currentHour < 12) {
       return DateFormat('HH:mm').format(DateTime(now.year, now.month, now.day, 12, 0));
     } else if (currentHour >= 7 && currentHour < 10) {
@@ -28,6 +29,7 @@ class OrderSummarySection extends GetView<OrderPageController> {
       return "Selesai";
     }
   }
+
 
   late final Map<String, Widget> orderSections;
 

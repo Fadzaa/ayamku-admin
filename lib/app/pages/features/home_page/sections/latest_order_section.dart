@@ -94,6 +94,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                       Get.toNamed(
                         Routes.DETAIL_ORDER_PAGE,
                         arguments: {
+                          'profileUser': order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                           'cartItems': order.cart?.cartItems,
                           'orderId': order.id.toString(),
                           'userName': order.user!.name,
@@ -108,6 +109,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                         },
                       );
                     },
+                      sessionOrder: order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
                     cartItems: order.cart!.cartItems!,
                     namePos: order.post!.name!.toString(),
                     orderName: order.id.toString(),
@@ -116,6 +118,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                     id: order.id!,
                     method: order.methodType.toString(),
                     status: order.status.toString(),
+                    profileUser: order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                   );
                 }
             );
@@ -132,8 +135,9 @@ class LatestOrderSection extends GetView<HomePageController> {
                       Get.toNamed(
                         Routes.DETAIL_ORDER_PAGE,
                         arguments: {
+                          'profileUser': order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                           'cartItems': order.cart?.cartItems,
-                          'orderId': order.id.toString(),
+                          'orderId': order.id ??  0,
                           'userName': order.user!.name,
                           'postName': order.post!.name,
                           'postDesc': order.post!.description,
@@ -141,8 +145,11 @@ class LatestOrderSection extends GetView<HomePageController> {
                           'methodType': order.methodType,
                           'totalPrice': order.finalAmount,
                           'discountAmount': order.discountAmount,
+                          'originalAmount': order.originalAmount,
+                          'finalAmount': order.finalAmount,
                           'voucher': order.voucher,
-                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                          'session_order': order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
+                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
                         },
                       );
                     },
@@ -153,6 +160,8 @@ class LatestOrderSection extends GetView<HomePageController> {
                     orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
                     orderId: order.id!,
+                    profileUser: order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
+                    sessionOrder: order.pickupTime.toString() ,
                   );
                 }
             );
@@ -168,6 +177,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                       Get.toNamed(
                         Routes.DETAIL_ORDER_PAGE,
                         arguments: {
+                          'profileUser': order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                           'cartItems': order.cart?.cartItems,
                           'orderId': order.id.toString(),
                           'userName': order.user!.name,
@@ -182,12 +192,15 @@ class LatestOrderSection extends GetView<HomePageController> {
                         },
                       );
                     },
+
+                    profileUser: order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                     cartItems: order.cart!.cartItems!,
                     orderName: order.id.toString(),
                     orderStatus: PickupStatus.done,
                     orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
                     orderId: order.id!,
+                    sessionOrder: '',
                   );
                 }
             );

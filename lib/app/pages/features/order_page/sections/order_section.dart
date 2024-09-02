@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/item_all_order_vertical.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/items/filter_all_order.dart';
 import 'package:ayamku_admin/app/pages/features/order_page/order_page_controller.dart';
@@ -10,6 +11,19 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class OrderSection extends GetView<OrderPageController> {
+  String displayTime() {
+    int currentHour = DateTime.now().hour;
+    DateTime now = DateTime.now();
+
+    if (currentHour >= 10 && currentHour < 12) {
+      return DateFormat('HH:mm').format(DateTime(now.year, now.month, now.day, 12, 0));
+    } else if (currentHour >= 7 && currentHour < 10) {
+      return DateFormat('HH:mm').format(DateTime(now.year, now.month, now.day, 9, 40));
+    } else {
+      return "Selesai";
+    }
+  }
+
   final String methodType;
   final Widget header;
 
@@ -23,6 +37,7 @@ class OrderSection extends GetView<OrderPageController> {
           child: commonLoading(),
         );
       } else {
+        String currentShift = displayTime();
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -43,6 +58,14 @@ class OrderSection extends GetView<OrderPageController> {
                   );
                 }
 
+                List<Order> filteredOrders = controller.listOrder.where((order) {
+                  if (methodType == 'on_delivery') {
+                    return order.shiftDelivery == currentShift;
+                  }
+                  // For other methods, like 'pickup', you can add specific conditions as well
+                  return true;
+                }).toList();
+
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -57,13 +80,15 @@ class OrderSection extends GetView<OrderPageController> {
                           }
                         },
                         child: ListView.builder(
-                          itemCount: controller.listOrder.length,
+                          // itemCount: controller.listOrder.length,
+                          itemCount:filteredOrders.length,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            final order = controller.listOrder[index];
+                            final order = filteredOrders[index];
                             if (methodType == 'Semua' || order.methodType == methodType) {
                               return ItemAllOrderVertical(
+                                profileUser: order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                                 id: order.id ?? 0,
                                 status: order.status.toString(),
                                 cartItems: order.cart!.cartItems!,
@@ -71,11 +96,12 @@ class OrderSection extends GetView<OrderPageController> {
                                 orderName: order.id.toString(),
                                 orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                                 username: order.user!.name!,
-                                sessionOrder: order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
+                                sessionOrder:order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
                                 onTap: () {
                                   Get.toNamed(
                                     Routes.DETAIL_ORDER_PAGE,
                                     arguments: {
+                                      'profileUser': order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                                       'cartItems': order.cart?.cartItems,
                                       'orderId': order.id ??  0,
                                       'userName': order.user!.name,
@@ -85,6 +111,8 @@ class OrderSection extends GetView<OrderPageController> {
                                       'methodType': order.methodType,
                                       'totalPrice': order.finalAmount,
                                       'discountAmount': order.discountAmount,
+                                      'originalAmount': order.originalAmount,
+                                      'finalAmount': order.finalAmount,
                                       'voucher': order.voucher,
                                       'session_order': order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
                                       'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))

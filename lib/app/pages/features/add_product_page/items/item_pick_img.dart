@@ -57,13 +57,16 @@ class PickImg extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: screenWidth,
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(5),
         height: 184,
         decoration: BoxDecoration(
           border: Border.all(color: blackColor50),
           borderRadius: BorderRadius.circular(15),
         ),
-        child: _buildChild(),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+            child: _buildChild()
+        ),
       ),
     );
   }

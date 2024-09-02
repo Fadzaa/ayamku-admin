@@ -106,4 +106,6 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
     } else if (optionType.value == "massal") {
     }
   }
+
+
 }

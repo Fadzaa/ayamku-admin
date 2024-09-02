@@ -10,6 +10,7 @@ class DetailOrderPageController extends GetxController {
   var orderStatus = ''.obs;
   var methodType = ''.obs;
   var date = ''.obs;
+  var profileUser = ''.obs;
 
   @override
   void onInit() {
@@ -24,6 +25,7 @@ class DetailOrderPageController extends GetxController {
       orderStatus.value = args['orderStatus'];
       methodType.value = args['methodType'];
       date.value = args['date'];
+      profileUser.value = args['profileUser'].toString();
     }
   }
 

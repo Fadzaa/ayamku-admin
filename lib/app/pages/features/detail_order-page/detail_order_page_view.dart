@@ -50,6 +50,7 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
             children: [
               if (controller.orderStatus.value == "confirmed_order") HeaderStatusSection(),
               DeliverySection(
+                profileUser: controller.profileUser.value ?? "https://i.imgflip.com/6yvpkj.jpg",
                 date: controller.date.value,
                 status: controller.orderStatus.value,
                 idOrder: controller.orderId.value,
@@ -62,8 +63,10 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
                     : controller.postDesc.value,
               ),
           
-              DetailOrderSummary(),
+              DetailOrderSummary(orderId: controller.orderId.value,),
               // if (controller.orderStatus.value == "confirm_order") PenilaianSection(),
+
+
             ],
           ),
         ),

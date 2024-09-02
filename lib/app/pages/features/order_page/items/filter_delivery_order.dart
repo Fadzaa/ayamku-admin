@@ -14,7 +14,7 @@ voidDeliveryOrder(BuildContext context) {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Container(
-            height: 410,
+            height: 420,
             padding: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

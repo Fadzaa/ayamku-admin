@@ -40,7 +40,7 @@ voidFilterAllOrder(BuildContext context) {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Container(
-            height:380,
+            height:360,
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

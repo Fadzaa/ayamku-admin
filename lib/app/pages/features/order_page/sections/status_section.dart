@@ -7,9 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class TerimaPesanan extends GetView<OrderPageController> {
-  const TerimaPesanan({super.key, required this.orderId, this.status});
+  const TerimaPesanan({super.key, required this.orderId, this.status, required this.nama});
   final int orderId;
   final String? status;
+  final String nama;
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +21,18 @@ class TerimaPesanan extends GetView<OrderPageController> {
         } else if (controller.isOrderAccepted(orderId.toString()) && status == "accept") {
           return Align(
               alignment: Alignment.centerRight,
-              child: AcceptedOrder(orderId: orderId, status : "accept")
+              child: AcceptedOrder(orderId: orderId, status : "accept", nama : nama)
           );
         } else {
           return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              CommonButtonOutline(
-                text: "Lihat detail",
-                style: txtCaption.copyWith(color: primaryColor),
-                onPressed: () {},
-                color: primaryColor,
-              ),
+              // CommonButtonOutline(
+              //   text: "Lihat detail",
+              //   style: txtCaption.copyWith(color: primaryColor),
+              //   onPressed: () {},
+              //   color: primaryColor,
+              // ),
 
               Row(
                 children: [
@@ -104,29 +105,30 @@ class TerimaPesanan extends GetView<OrderPageController> {
 }
 
 class AcceptedOrder extends GetView<OrderPageController> {
-  AcceptedOrder({super.key, required this.orderId, this.status});
+  AcceptedOrder({super.key, required this.orderId, this.status, required this.nama});
   final int orderId;
   final String? status;
+  final String nama;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isOrderCompleted(orderId.toString()) && status == "completed") {
-        return PesananSelesai();
+        return PesananSelesai(nama : nama);
       } else {
         return Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            LittleBtn(
-              text: "Pesanan diterima",
-              style: txtCaption.copyWith(color: Colors.white),
-              onPressed: () {},
-              color: primaryColor,
-            ),
-            SizedBox(
-              width: 10,
-            ),
+            // LittleBtn(
+            //   text: "Pesanan diterima",
+            //   style: txtCaption.copyWith(color: Colors.white),
+            //   onPressed: () {},
+            //   color: primaryColor,
+            // ),
+            // SizedBox(
+            //   width: 10,
+            // ),
             LittleBtn(
               text: "Selesaikan pesanan",
               style: txtCaption.copyWith(color: Colors.white),
@@ -143,25 +145,27 @@ class AcceptedOrder extends GetView<OrderPageController> {
 }
 
 class PesananSelesai extends StatelessWidget {
-  const PesananSelesai({super.key});
+  const PesananSelesai({super.key, required this.nama});
+
+  final String nama;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LittleBtn(
-          text: "Pesanan selesai",
-          style: txtCaption.copyWith(color: Colors.white),
-          onPressed: () {},
-          color: primaryColor,
-        ),
-        SizedBox(
-          height: 5,
-        ),
+        // LittleBtn(
+        //   text: "Pesanan selesai",
+        //   style: txtCaption.copyWith(color: Colors.white),
+        //   onPressed: () {},
+        //   color: primaryColor,
+        // ),
+        // SizedBox(
+        //   height: 5,
+        // ),
         Text(
-          "*silahkan tunggu konfirmasi pesanan",
+          "*silahkan tunggu konfirmasi pesanan dari $nama",
           style: txtCaption.copyWith(color: blackColor50),
         )
       ],

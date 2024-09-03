@@ -76,11 +76,14 @@ class VoucherService {
     }
   }
 
-  Future<dio.Response> giveVoucher(formData) async {
+  Future<dio.Response> giveVoucher({required int userId, required int voucherId}) async {
     try {
       final response = await _dioInstance.postRequest(
         endpoint: ApiEndPoint.giveVoucher,
-        data: formData,
+        data: {
+          "voucher_id": voucherId,
+          "user_id": userId
+        },
         isAuthorize: true,
       );
 
@@ -89,4 +92,22 @@ class VoucherService {
       throw Exception(e);
     }
   }
+
+  Future<dio.Response> giveVoucherMass({required int voucherId}) async {
+    try {
+      final response = await _dioInstance.postRequest(
+        endpoint: ApiEndPoint.giveVoucherMass,
+        data: {
+          "voucher_id": voucherId
+        },
+        isAuthorize: true,
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+
 }

@@ -2,7 +2,7 @@ import 'package:ayamku_admin/app/pages/features/voucher_management/bottomSheet/g
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 
-voidMenuVoucher(BuildContext context, String name, String startDate, String endDate, String discount, String stock){
+voidMenuVoucher(BuildContext context, String name, String startDate, String endDate, String discount, String stock, int index){
   showModalBottomSheet(
       context: context,
       builder: (BuildContext context) => Container(
@@ -68,7 +68,7 @@ voidMenuVoucher(BuildContext context, String name, String startDate, String endD
                 IcVoucherTap(
                   nama: "Bagikan",
                   icon: Icons.share,
-                  onPressed: () => voidGiftVoucher(context),
+                  onPressed: () => voidGiftVoucher(context, index),
                 ),
               ],
             ),

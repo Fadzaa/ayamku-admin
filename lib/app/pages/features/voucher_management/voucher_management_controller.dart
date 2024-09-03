@@ -10,6 +10,7 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
   TabController? tabController;
 
   RxString selectedValue = 'Semua'.obs;
+  RxString selectedGiftVoucherType = 'user'.obs;
   RxBool isLoading = false.obs;
 
   RxList<Voucher> voucherList = <Voucher>[].obs;
@@ -23,6 +24,11 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
 
   void setOption(String option) {
     value.value = option;
+  }
+
+  void selectedRadio(String value) {
+    selectedGiftVoucherType.value = value;
+
   }
 
   void updateSelectedValue(String value) {
@@ -100,10 +106,33 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
     }
   }
 
-  void optionGift() {
-    if (optionType.value == "user") {
-      Get.toNamed(Routes.OPTION_USER);
-    } else if (optionType.value == "massal") {
+  Future<void> giveVoucherMass(int voucherId) async {
+    try {
+      isLoading.value = true;
+
+      await voucherService.giveVoucherMass(voucherId: voucherId);
+
+      Get.snackbar(
+        "Berhasil",
+        "Voucher berhasil diberikan",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white
+      );
+
+
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void optionGift(int voucherId) {
+    if (selectedGiftVoucherType.value == "user") {
+      Get.toNamed(Routes.OPTION_USER, arguments: voucherId);
+    } else if (selectedGiftVoucherType.value == "massal") {
+      giveVoucherMass(voucherId);
     }
   }
 

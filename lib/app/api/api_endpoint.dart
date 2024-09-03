@@ -9,6 +9,7 @@ class ApiEndPoint {
   static String login = '$baseUrlAuth/login';
   static String register = '$baseUrlAuth';
   static String logout = '$baseUrlAuth/logout';
+  static String allUser = '$baseUrlAuth/all-user';
 
   //Product
   static String product = '$baseUrl/products';
@@ -20,6 +21,7 @@ class ApiEndPoint {
   //Voucher
    static String voucher = '$baseUrl/vouchers';
    static String giveVoucher = '$baseUrl/vouchers/give';
+   static String giveVoucherMass = '$baseUrl/vouchers/give-mass';
    static String updateVoucher (String id) => '$baseUrl/vouchers/$id';
 
    //pos

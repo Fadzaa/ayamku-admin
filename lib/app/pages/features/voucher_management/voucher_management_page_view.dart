@@ -108,6 +108,7 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
                               startDate: startDate,
                               endDate: endDate,
                               discount: voucher.discount.toString(),
+                              index: voucher.id,
                               onPressed: () {
                                 Get.toNamed(Routes.EDIT_VOUCHER_PAGE, arguments: voucher);
                               },

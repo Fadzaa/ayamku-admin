@@ -141,8 +141,8 @@ class OrderSummarySection extends GetView<OrderPageController> {
                 title: order_summary_data[index].title,
                 icon: order_summary_data[index].icon,
                 count: index == 0 ? this.controller.listAllOrder.length
-                    : index == 1 ? this.controller.numberOfPickupOrders.value
-                    : this.controller.numberOfDeliveryOrders.value,
+                    : index == 1 ? this.controller.listDeliveryOrder.length
+                    : this.controller.listPickupOrder.length,
               ),)
             );
           },

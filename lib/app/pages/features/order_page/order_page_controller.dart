@@ -83,6 +83,7 @@ class OrderPageController extends GetxController {
     getAllOrder();
     getOrderMethod('on_delivery');
     getOrderMethod('pickup');
+    listDeliveryOrder.assignAll(orderResponse.data!);
   }
 
   @override
@@ -135,6 +136,8 @@ class OrderPageController extends GetxController {
         listPickupOrder.assignAll(orderResponse.data!);
         numberOfPickupOrders.value = listPickupOrder.length;
       }
+
+      print('Number of delivery orders: ${numberOfDeliveryOrders.value}');
 
     } catch (e) {
       print('Error occurred: $e');

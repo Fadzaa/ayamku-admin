@@ -24,6 +24,13 @@ class OrderSection extends GetView<OrderPageController> {
     }
   }
 
+  String formatTime(int minutes) {
+    final hours = (minutes ~/ 60).toString().padLeft(2, '0');
+    final mins = (minutes % 60).toString().padLeft(2, '0');
+    return '$hours:$mins';
+  }
+
+
   final String methodType;
   final Widget header;
 

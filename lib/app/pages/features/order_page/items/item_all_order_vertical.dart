@@ -95,15 +95,31 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                 ),
                 CommonButtonOutline(
                   text: status,
-                  style: txtCaption.copyWith(),
-                  onPressed: () {},
+                  style: txtCaption.copyWith(
                     color: status == 'completed'
                         ? Colors.green
                         : (status == 'processing'
-                        ? primaryColor
-                        : (status == 'cancelled'
-                        ? Colors.red
-                        : Colors.grey))
+                            ? primaryColor
+                            : (status == 'cancelled'
+                                ? Colors.red
+                                : (status == 'confirmed_order'
+                                    ? Colors.green
+                                    : (status == "accept"
+                                        ? primaryColor
+                                        : Colors.grey)))),
+                  ),
+                  onPressed: () {},
+                  colorBorder: status == 'completed'
+                      ? Colors.green
+                      : (status == 'processing'
+                          ? primaryColor
+                          : (status == 'cancelled'
+                              ? Colors.red
+                              : (status == 'confirmed_order'
+                                  ? Colors.green
+                                  : (status == "accept"
+                                      ? primaryColor
+                                      : Colors.grey)))),
                 ),
               ],
             ),

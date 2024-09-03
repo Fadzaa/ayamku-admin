@@ -41,7 +41,7 @@ class SalesSummaryContent extends GetView<HomePageController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Sales Summary", style: txtHeadline3),
+            Text("Ringkasan Penjualan", style: txtHeadline3),
 
             ItemDropdownDay()
           ],

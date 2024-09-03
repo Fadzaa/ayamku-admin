@@ -47,7 +47,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Analytic Sales", style: txtListItemTitle),
+                    Text("Analisis Penjualan", style: txtListItemTitle),
 
                     specialPage ?? false ? Container() : const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 16,)
                   ],
@@ -96,7 +96,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
                   children: [
                     Row(
                       children: [
-                        Text("Total Sales", style: txtCaption),
+                        Text("Total Penjualan", style: txtCaption),
                         // const SizedBox(width: 3,),
                         // Text("(items)", style: txtNavbar.copyWith(color: blackColor50))
                       ],
@@ -140,7 +140,7 @@ class ItemSalesSummary extends GetView<HomePageController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Products", style: txtCaption),
+              Text("Total Produk (terjual)", style: txtCaption),
 
               SizedBox(height: 7,),
 

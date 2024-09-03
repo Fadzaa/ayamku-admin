@@ -79,7 +79,7 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
                     //
                     // SizedBox(height: 15,),
 
-                    CommonSearch(text: "Search", onChanged: (newText) => controller.getSearchVoucher(newText), ),
+                    CommonSearch(text: "Cari voucher", onChanged: (newText) => controller.getSearchVoucher(newText), ),
 
                     SizedBox(height: 15,),
 
@@ -89,7 +89,7 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
                       } else if (controller.voucherList.isEmpty) {
                         return NotFoundPage(
                             image: notFound,
-                            title: "Voucher not found",
+                            title: "Voucher tidak ada",
                             subtitle: "Voucher yang anda inginkan tidak ditemukan, silahkan coba lagi"
                         );
                       } else {
@@ -132,7 +132,7 @@ class VoucherManagementPage extends GetView<VoucherPageController> {
         ),
 
         child: CommonButton(
-          text: '+ Add New Voucher',
+          text: '+ Tambahkan Voucher Baru',
           onPressed: () {
             Get.toNamed(Routes.ADD_VOUCHER_PAGE);
           },

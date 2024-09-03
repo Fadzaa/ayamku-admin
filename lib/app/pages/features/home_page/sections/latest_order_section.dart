@@ -33,7 +33,7 @@ class LatestOrderSection extends GetView<HomePageController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Latest Order", style: txtHeadline3),
+            Text("Pesanan Terbaru", style: txtHeadline3),
           ],
         ),
 

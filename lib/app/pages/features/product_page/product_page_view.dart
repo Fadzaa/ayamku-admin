@@ -65,7 +65,7 @@ class ProductPageView extends GetView<ProductPageController> {
                   //
                   // ProdukTerlarisSection(),
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 15,),
 
                   ListProductSection(),
                 ],

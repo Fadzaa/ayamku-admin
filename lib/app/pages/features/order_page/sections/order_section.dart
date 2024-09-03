@@ -24,11 +24,22 @@ class OrderSection extends GetView<OrderPageController> {
     }
   }
 
-  String formatTime(int minutes) {
-    final hours = (minutes ~/ 60).toString().padLeft(2, '0');
-    final mins = (minutes % 60).toString().padLeft(2, '0');
-    return '$hours:$mins';
+
+
+  String formatPickupTime(String time) {
+    if (time.isEmpty) {
+      return "Waktu tidak tersedia";
+    }
+
+    try {
+      DateTime parsedTime = DateFormat("HH:mm:ss").parse(time);
+      return DateFormat("HH.mm").format(parsedTime);
+    } catch (e) {
+
+      return "Format waktu salah";
+    }
   }
+
 
 
   final String methodType;
@@ -103,7 +114,9 @@ class OrderSection extends GetView<OrderPageController> {
                                 orderName: order.id.toString(),
                                 orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                                 username: order.user!.name!,
-                                sessionOrder:order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
+                                  sessionOrder: order.methodType == 'on_delivery'
+                              ? order.shiftDelivery
+                                  : formatPickupTime(order.pickupTime ?? "") ,
                                 onTap: () {
                                   Get.toNamed(
                                     Routes.DETAIL_ORDER_PAGE,
@@ -121,7 +134,9 @@ class OrderSection extends GetView<OrderPageController> {
                                       'originalAmount': order.originalAmount,
                                       'finalAmount': order.finalAmount,
                                       'voucher': order.voucher,
-                                      'session_order': order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
+                                      'sessionOrder': order.methodType == 'on_delivery'
+                                          ? order.shiftDelivery
+                                          : formatPickupTime(order.pickupTime ?? "") ,
                                       'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
                                     },
                                   );

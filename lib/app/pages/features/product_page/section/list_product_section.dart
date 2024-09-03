@@ -21,10 +21,10 @@ class ListProductSection extends GetView<ProductPageController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("List product", style: txtHeadline3),
-        SizedBox(
-          height: 10,
-        ),
+        // Text("List product", style: txtHeadline3),
+        // SizedBox(
+        //   height: 10,
+        // ),
         CommonSearch(
           text: "Search",
           controller: controller.searchController,

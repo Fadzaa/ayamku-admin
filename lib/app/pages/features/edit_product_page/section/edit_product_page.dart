@@ -37,18 +37,10 @@ class EditProductPage extends StatelessWidget {
 
           SizedBox(height: 15,),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: ItemTextField(
-                  text: "Harga",
-                  hintText: "Rp.13.000",
-                  controller: controller.priceController,
-                ),
-              ),
-              SizedBox(width: 20,),
-            ],
+          ItemTextField(
+            text: "Harga",
+            hintText: "Rp.13.000",
+            controller: controller.priceController,
           ),
 
           SizedBox(height: 15,),

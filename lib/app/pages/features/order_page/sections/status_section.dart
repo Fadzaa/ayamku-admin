@@ -268,15 +268,7 @@ class CommonAlert extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  LittleBtn(
-                    text: confirmText,
-                    style: txtCaption.copyWith(color: Colors.white),
-                    onPressed: () {
-                      onConfirm();
-                    },
-                    txtColor: Colors.white,
-                    color: greenAlert,
-                  ),
+
                   LittleBtn(
                     text: cancelText,
                     style: txtCaption.copyWith(color: Colors.white),
@@ -285,6 +277,15 @@ class CommonAlert extends StatelessWidget {
                     },
                     txtColor: Colors.white,
                     color: red,
+                  ),
+                  LittleBtn(
+                    text: confirmText,
+                    style: txtCaption.copyWith(color: Colors.white),
+                    onPressed: () {
+                      onConfirm();
+                    },
+                    txtColor: Colors.white,
+                    color: greenAlert,
                   ),
 
                 ],

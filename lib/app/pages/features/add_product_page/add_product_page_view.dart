@@ -78,7 +78,7 @@ class AddProductPageView extends GetView<AddProductPageController> {
         txtColor1: Colors.white,
         txtColor2: blackColor,
         txt1: 'Batalkan',
-        txt2: 'Upload Menu',
+        txt2: 'Tambahkan',
       ),
     );
   }

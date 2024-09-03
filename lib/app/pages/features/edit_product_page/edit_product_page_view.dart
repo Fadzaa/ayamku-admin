@@ -72,8 +72,8 @@ class EditProductPageView extends StatelessWidget{
         ic2: icEdit,
         txtColor1: Colors.white,
         txtColor2: blackColor,
-        txt1: 'Hapus Menu',
-        txt2: 'Edit Menu',
+        txt1: 'Hapus ',
+        txt2: 'Edit ',
       ),
     );
   }

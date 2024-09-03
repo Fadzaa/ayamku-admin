@@ -36,4 +36,20 @@ class AuthenticationService {
       throw Exception(e);
     }
   }
+
+  Future<UserListResponse> searchUser(String search) async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.allUser,
+          queryParameters: {
+            "search": search
+          },
+          isAuthorize: true
+      );
+
+      return UserListResponse.fromJson(response.data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

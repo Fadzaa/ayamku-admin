@@ -52,11 +52,13 @@ class HomePageController extends GetxController {
     pageController = PageController(initialPage: 0);
 
     storeService = StoreService();
-    updateStore();
+
     getLatestOrder(null);
     print("Check Current latest order");
 
     getSalesSummary('today');
+
+    getStatusStore();
   }
 
 
@@ -74,12 +76,7 @@ class HomePageController extends GetxController {
       final response = await storeService.updateStore();
       Store store = Store.fromJson(response.data);
 
-
-      if (store.storeStatus == 0) {
-        isActive.value = true;
-      } else if (store.storeStatus == 1) {
-        isActive.value = false;
-      }
+      getStatusStore();
 
       Get.snackbar(
         "Sukses",
@@ -100,6 +97,23 @@ class HomePageController extends GetxController {
     }
   }
 
+  Future<void> getStatusStore() async {
+    try {
+      final response = await storeService.getStatusStore();
+      Store store = Store.fromJson(response.data);
+
+      if (store.storeStatus == 0) {
+        isActive.value = false;
+      } else if (store.storeStatus == 1) {
+        isActive.value = true;
+      }
+
+
+    } catch (e) {
+      Get.snackbar("Update failed", "Failed to update store: $e");
+      print("Error updating store: $e");
+    }
+  }
 
   Future<void> getSalesSummary(String filter) async {
     try {
@@ -178,8 +192,6 @@ class HomePageController extends GetxController {
       updateStore();
     }
   }
-
-
 
   void changeIndex(int index) async {
     currentIndex.value = index;

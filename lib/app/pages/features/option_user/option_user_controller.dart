@@ -3,6 +3,7 @@ import 'package:ayamku_admin/app/api/auth/model/user_list_response.dart';
 import 'package:ayamku_admin/app/api/voucher/model/voucher_response.dart';
 import 'package:ayamku_admin/app/api/voucher/voucher_service.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -13,6 +14,7 @@ class OptionUserController extends GetxController{
   AuthenticationService authService = AuthenticationService();
   Rx<UserListResponse> userListResponse = UserListResponse().obs;
   List<int> listUserId = [];
+  TextEditingController searchController = TextEditingController();
 
   VoucherService voucherService = VoucherService();
   int voucherId = Get.arguments;
@@ -32,7 +34,8 @@ class OptionUserController extends GetxController{
 
       userListResponse.value = response;
 
-      print("CHECK CURRENT RESPONE");
+      print("CHECK CURRENT RESPON");
+      print("CHECK CURRENT RESPON");
       print(userListResponse.value.data!.length);
 
       for (var i = 0; i < userListResponse.value.data!.length; i++) {
@@ -60,7 +63,7 @@ class OptionUserController extends GetxController{
          await voucherService.giveVoucher(voucherId: voucherId, userId: listUserId[i]);
         }
       }
-      
+
     }
     catch(e){
       isLoading.value = true;
@@ -68,6 +71,23 @@ class OptionUserController extends GetxController{
         "Error",
         e.toString(),
       );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> searchUser(String search) async {
+    try {
+
+      isLoading.value = true;
+
+      final response = await authService.searchUser(search);
+
+      userListResponse.value = response;
+
+    } catch (e) {
+      isLoading.value = true;
+      print(e);
     } finally {
       isLoading.value = false;
     }

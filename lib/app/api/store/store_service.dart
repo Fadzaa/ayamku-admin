@@ -18,4 +18,17 @@ class StoreService {
     }
   }
 
+  Future<Response> getStatusStore() async {
+    try {
+      final response = await _dioInstance.getRequest(
+        endpoint: ApiEndPoint.store,
+        isAuthorize: true
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
 }

@@ -32,10 +32,8 @@ class HomePageView extends GetView<HomePageController> {
         body: SafeArea(
             child: RefreshIndicator(
           onRefresh: () async {
-            controller.updateStore();
+            controller.getStatusStore();
             controller.getLatestOrder(null);
-            print("Check Current latest order");
-
             controller.getSalesSummary('today');
           },
           child: SingleChildScrollView(

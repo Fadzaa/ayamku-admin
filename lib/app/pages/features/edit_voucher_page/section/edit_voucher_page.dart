@@ -32,7 +32,6 @@ class EditVoucherPage extends GetView<EditVoucherPageController> {
                     ),
                   ),
 
-                  SizedBox(width: 20,),
 
                 ],
               ),

@@ -12,6 +12,8 @@ class CommonTextField extends StatelessWidget {
     this.isObscure,
     this.prefixIcon,
     this.onToggleObscure,
+    this.error = false,
+    this.validator,
   });
 
   final TextEditingController controller;
@@ -20,6 +22,8 @@ class CommonTextField extends StatelessWidget {
   final bool? isObscure;
   final IconData? prefixIcon;
   final VoidCallback? onToggleObscure;
+  final String? Function(String?)? validator;
+  final bool error;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +67,15 @@ class CommonTextField extends StatelessWidget {
                   color: primaryColor,
                 ),
               ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(color: Colors.red),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide(color: Colors.red),
+              ),
+              errorText: error ? 'Error occurred' : null,
             ),
           ),
         ),

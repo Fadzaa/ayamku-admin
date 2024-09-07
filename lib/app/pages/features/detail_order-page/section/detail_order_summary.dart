@@ -99,10 +99,31 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                 style: txtHeadline3,
               ),
               SizedBox(height: 10),
-              Text(
-                "Dana",
-                style: txtSecondaryTitle,
-              )
+              Row(
+                children: [
+                  ClipRRect(
+                    // borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(argument['payment'] == "DANA"
+                        ? dana
+                        : argument['payment'] == "LINKAJA"
+                        ? link
+                        : argument['payment'] == "OVO"
+                        ? ovo
+                        : argument['payment'] == "QRIS"
+                        ? qris
+                        : argument['payment'] == "ShopeePay"
+                        ? pay
+                        : emptyWhite,width: 30,height: 30,),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    argument['payment'] ?? "",
+                    style: txtSecondaryTitle.copyWith(color: blackColor40),
+                  ),
+                ],
+              ),
             ],
           ),
 
@@ -122,7 +143,7 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                 style: txtSecondaryTitle,
               ),
               Text(
-                argument['methodType'],
+                argument['method'],
                 style: txtSecondaryTitle,
               )
             ],
@@ -138,7 +159,11 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                 style: txtSecondaryTitle,
               ),
               Text(
-                argument['session_order'] ?? '',
+                argument['method'] == "on_delivery"
+                    ? argument['shift_delivery']?.toString() ?? ""
+                    : argument['method'] == "pickup"
+                    ? argument['pickup_time']?.toString() ?? ""
+                    : "",
                 style: txtSecondaryTitle,
               )
             ],
@@ -170,18 +195,6 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: LittleBtn(
-                          text: "Terima",
-                          onPressed: () async {
-                            orderController.acceptOrder(orderId.toString());
-                            Navigator.of(context).pop();
-                          },
-                          color: greenMedium
-                      ),
-                    ),
-
-                    SizedBox(width: 15,),
 
                     Expanded(
                       child: LittleBtn(
@@ -191,6 +204,19 @@ class DetailOrderSummary extends GetView<DetailOrderPageController> {
                             Navigator.of(context).pop();
                           },
                           color: red
+                      ),
+                    ),
+
+                    SizedBox(width: 15,),
+
+                    Expanded(
+                      child: LittleBtn(
+                          text: "Terima",
+                          onPressed: () async {
+                            orderController.acceptOrder(orderId.toString());
+                            Navigator.of(context).pop();
+                          },
+                          color: greenMedium
                       ),
                     ),
                   ],

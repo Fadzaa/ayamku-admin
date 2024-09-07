@@ -10,6 +10,7 @@ import '../../../api/product/product_service.dart';
 import '../product_page/product_page_controller.dart';
 
 class AddProductPageController extends GetxController {
+  final formKey = GlobalKey<FormState>();
 
   final ProductPageController controller = Get.put(ProductPageController());
   final TextEditingController nameController = TextEditingController();
@@ -23,6 +24,13 @@ class AddProductPageController extends GetxController {
 
   RxString filePathImage = ''.obs;
   RxBool isLoading = false.obs;
+  RxBool isImageSelected = false.obs;
+
+  //validator error
+  RxString nameError = ''.obs;
+  RxString qtyError = ''.obs;
+  RxString descriptionError = ''.obs;
+  RxString priceError = ''.obs;
 
   ProductService productService = ProductService();
 
@@ -39,29 +47,43 @@ class AddProductPageController extends GetxController {
 
   }
 
-  Future addProduct() async {
+  Future<void> addProduct() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    if (filePathImage.value.isEmpty) {
+      Get.snackbar("Error", "Please select an image");
+      return;
+    }
+
     try {
       isLoading.value = true;
+
       dio.FormData formData = dio.FormData.fromMap({
-        "name" : nameController.text,
-        "description" : descriptionController.text,
-        "price" : int.parse(priceController.text),
-        "category" : selectedCategory.value.toLowerCase(),
+        "name": nameController.text,
+        "description": descriptionController.text,
+        "price": int.parse(priceController.text),
+        "category": selectedCategory.value.toLowerCase(),
         "image": await dio.MultipartFile.fromFile(filePathImage.value),
       });
 
-      await productService.addProduct(
-          formData
-      );
+      print('FormData: ${formData.fields}');
 
+      await productService.addProduct(formData);
       Get.offNamedUntil(Routes.PRODUCT_PAGE, (routes) => routes.settings.name == Routes.HOME_PAGE);
       Get.snackbar("Tambah produk Sukses", "Berhasil menambahkan produk!");
-    }
-    catch(e){
-      isLoading.value = true;
-      print(e);
-    }
-    finally{
+
+    } catch (e) {
+      isLoading.value = false;
+      if (e is dio.DioError) {
+        print(e.response!.data);
+        Get.snackbar("Error", e.response!.data['message']);
+      } else {
+        Get.snackbar("Error", "Something went wrong");
+      }
+
+    } finally {
       isLoading.value = false;
     }
   }
@@ -93,5 +115,5 @@ class AddProductPageController extends GetxController {
     super.onClose();
   }
 
-  
+
 }

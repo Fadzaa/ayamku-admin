@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../router/app_pages.dart';
 
 class EditProductPageController extends GetxController {
+  final formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController qtyController = TextEditingController();
@@ -37,7 +38,15 @@ class EditProductPageController extends GetxController {
     print("Image Selected");
     print(pickedFile?.path);
     print(selectedImagePath.value);
+    isImageSelected.value = true;
   }
+
+  //validator error
+  RxBool isImageSelected = false.obs;
+  RxString nameError = ''.obs;
+  RxString qtyError = ''.obs;
+  RxString descriptionError = ''.obs;
+  RxString priceError = ''.obs;
 
   @override
   void onInit() {
@@ -113,6 +122,9 @@ class EditProductPageController extends GetxController {
   }
 
   Future editProduct() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
     try {
       isLoading.value = true;
       dio.FormData formData = dio.FormData.fromMap({

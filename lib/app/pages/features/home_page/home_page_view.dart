@@ -19,6 +19,7 @@ class HomePageView extends GetView<HomePageController> {
         // drawer: ItemDrawer(),
         appBar: AppBar(
           backgroundColor: baseColor,
+          automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

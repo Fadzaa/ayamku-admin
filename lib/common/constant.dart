@@ -18,7 +18,12 @@ String promoNatal = '${images}promo_natal.png';
 String imgPos = '${images}img_pos.png';
 String icVoucherOutline = '${images}ic_voucher_outline.png';
 String icPickup = '${images}pickupic.png';
-
+String dana = '${images}dana.png';
+String link = '${images}link.png';
+String ovo = '${images}ovo.png';
+String qris = '${images}qris.png';
+String pay = '${images}pay.png';
+String emptyWhite = '${images}empty_blank.png';
 
 
 

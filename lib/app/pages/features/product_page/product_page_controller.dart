@@ -21,6 +21,7 @@ class ProductPageController extends GetxController{
   RxString filePathImage = ''.obs;
 
   RxList<Product> listProduct = <Product>[].obs;
+  RxList<Product> listTopReview = <Product>[].obs;
   ProductService productService = ProductService();
   ProductResponse productResponse = ProductResponse();
 

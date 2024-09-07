@@ -64,7 +64,6 @@ class AddVoucherPageView extends GetView<AddVoucherPageController> {
         },
         onPressed2: () {
           controller.addVoucher();
-          Get.offAndToNamed(Routes.MANAGEMENT_VOUCHER);
         },
         bgColor1: red,
         bgColor2: primaryColor,
@@ -73,7 +72,7 @@ class AddVoucherPageView extends GetView<AddVoucherPageController> {
         txtColor1: Colors.white,
         txtColor2: blackColor,
         txt1: 'Batal',
-        txt2: 'Tambah Voucher',
+        txt2: 'Tambah ',
       ) ,
     );
   }

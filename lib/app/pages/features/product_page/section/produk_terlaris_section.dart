@@ -1,31 +1,40 @@
+import 'dart:math';
+
+import 'package:ayamku_admin/app/pages/features/product_page/product_page_controller.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class ProdukTerlarisSection extends StatelessWidget {
+class ProdukTerlarisSection extends GetView<ProductPageController> {
   const ProdukTerlarisSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        Text("Produk terlaris", style: txtHeadline3),
+        Text("Produk Review Teratas", style: txtHeadline3),
 
         SizedBox(height: 10,),
 
         ListView.builder(
-          itemCount: 3,
+            itemCount: min(3, controller.listTopReview.length),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => ItemProdukTerlaris(
-            image: sampleImage,
-            nameMenu: 'PAHE GEPREK',
-            description: 'Nasi + Ayam Geprek + Teh',
-            graph: 10,
-            price: 13000,
-          )
+          itemBuilder: (context, index) {
+            final product = controller.listTopReview[index];
+            return ItemProdukTerlaris(
+              image: product.image.toString(),
+              nameMenu: product.name.toString(),
+              description: product.description.toString(),
+              graph: 2,
+              price: formatCurrency.format(product.price ?? 0),
+            );
+          }
 
         )
 
@@ -45,8 +54,8 @@ class ItemProdukTerlaris extends StatelessWidget {
     required this.price
   });
 
-  final String image, nameMenu, description;
-  final int graph, price;
+  final String image, nameMenu, description,price;
+  final int graph;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +108,7 @@ class ItemProdukTerlaris extends StatelessWidget {
                 ),
 
                 Text(
-                  "Rp.13.000",
+                  price,
                   style: txtSecondaryTitle,
                 )
 

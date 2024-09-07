@@ -116,7 +116,7 @@ class OrderSection extends GetView<OrderPageController> {
                                 username: order.user!.name!,
                                   sessionOrder: order.methodType == 'on_delivery'
                               ? order.shiftDelivery
-                                  : formatPickupTime(order.pickupTime ?? "") ,
+                                  : formatPickupTime(order.pickupTime.toString(),) ,
                                 onTap: () {
                                   Get.toNamed(
                                     Routes.DETAIL_ORDER_PAGE,
@@ -128,15 +128,15 @@ class OrderSection extends GetView<OrderPageController> {
                                       'postName': order.post!.name,
                                       'postDesc': order.post!.description,
                                       'orderStatus': order.status,
-                                      'methodType': order.methodType,
+                                      'method': order.methodType,
+                                      'payment' : order.paymentMethod,
                                       'totalPrice': order.finalAmount,
                                       'discountAmount': order.discountAmount,
                                       'originalAmount': order.originalAmount,
                                       'finalAmount': order.finalAmount,
                                       'voucher': order.voucher,
-                                      'sessionOrder': order.methodType == 'on_delivery'
-                                          ? order.shiftDelivery
-                                          : formatPickupTime(order.pickupTime ?? "") ,
+                                      'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
+                                      'shift_delivery' : order.shiftDelivery.toString(),
                                       'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
                                     },
                                   );

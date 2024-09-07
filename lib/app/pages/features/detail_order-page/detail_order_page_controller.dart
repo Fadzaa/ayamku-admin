@@ -23,7 +23,7 @@ class DetailOrderPageController extends GetxController {
       postName.value = args['postName'].toString();
       postDesc.value = args['postDesc'].toString();
       orderStatus.value = args['orderStatus'];
-      methodType.value = args['methodType'];
+      methodType.value = args['method'];
       date.value = args['date'];
       profileUser.value = args['profileUser'].toString();
     }

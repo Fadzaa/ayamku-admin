@@ -27,7 +27,7 @@ class SalesStatisitc extends GetView<AnalyticPageController> {
             ],
           ),
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           Expanded(
             child: Padding(

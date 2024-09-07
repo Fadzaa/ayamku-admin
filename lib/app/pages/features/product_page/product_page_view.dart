@@ -1,5 +1,6 @@
 import 'package:ayamku_admin/app/pages/features/product_page/product_page_controller.dart';
 import 'package:ayamku_admin/app/pages/features/product_page/section/list_product_section.dart';
+import 'package:ayamku_admin/app/pages/features/product_page/section/produk_terlaris_section.dart';
 import 'package:ayamku_admin/app/pages/global_component/common_button.dart';
 import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/constant.dart';
@@ -63,7 +64,7 @@ class ProductPageView extends GetView<ProductPageController> {
                   //
                   // SizedBox(height: 20,),
                   //
-                  // ProdukTerlarisSection(),
+                  ProdukTerlarisSection(),
 
                   SizedBox(height: 15,),
 

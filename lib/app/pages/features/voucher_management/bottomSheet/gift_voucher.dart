@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-voidGiftVoucher(BuildContext context) {
+voidGiftVoucher(BuildContext context, int voucherId) {
   final controller = Get.put(VoucherPageController());
   showModalBottomSheet(
       context: context,
@@ -57,7 +57,7 @@ voidGiftVoucher(BuildContext context) {
                     height: 45,
                     text: "Lanjutkan",
                     onPressed: (){
-                      controller.optionGift();
+                      controller.optionGift(voucherId);
                     }
                 )
               ],
@@ -72,6 +72,7 @@ class OptionGiftVoucher extends GetView<VoucherPageController> {
     super.key,
     required this.name,
     required this.value,
+
   });
 
   final String name, value;
@@ -82,29 +83,33 @@ class OptionGiftVoucher extends GetView<VoucherPageController> {
       margin: EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
-          Obx(() => Container(
-            width: 25,
-            height: 25,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: controller.optionType.value == value
-                    ? primaryColor
-                    : Colors.grey,
+          Obx(() => InkWell(
+            onTap: () => controller.selectedRadio(value),
+            child: Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: controller.selectedGiftVoucherType.value == value
+                      ? primaryColor
+                      : Colors.grey,
+                ),
+                color: Colors.transparent,
               ),
-              color: Colors.transparent,
+              child: controller.selectedGiftVoucherType.value == value
+                  ? Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: SvgPicture.asset(
+                  icActiveRadioButton,
+                  width: 10,
+                  height: 10,
+                ),
+              )
+                  : null,
             ),
-            child: controller.optionType.value == value
-                ? Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: SvgPicture.asset(
-                icActiveRadioButton,
-                width: 10,
-                height: 10,
-              ),
-            )
-                : null,
-          )),
+          )
+          ),
 
           SizedBox(width: 10,),
 

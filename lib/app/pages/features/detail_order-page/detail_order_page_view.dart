@@ -63,6 +63,7 @@ class DetailOrderPageView extends GetView<DetailOrderPageController> {
                     : controller.postDesc.value,
               ),
           
+
               DetailOrderSummary(orderId: controller.orderId.value,),
               // if (controller.orderStatus.value == "confirm_order") PenilaianSection(),
 

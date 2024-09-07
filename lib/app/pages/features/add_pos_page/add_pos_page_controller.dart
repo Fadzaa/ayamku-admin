@@ -8,6 +8,7 @@ import '../../../api/pos/pos_service.dart';
 import '../../../router/app_pages.dart';
 
 class AddPosPageController extends GetxController{
+  final formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   RxString selectedImagePath = ''.obs;
@@ -18,8 +19,11 @@ class AddPosPageController extends GetxController{
 
   RxString filePathImage = ''.obs;
   RxBool isLoading = false.obs;
+  RxBool isImageSelected = false.obs;
 
-  // kelas
+  //validator error
+  RxString titleError = ''.obs;
+  RxString descError = ''.obs;
 
   Future<void> pickImage(RxString imagePath) async {
     final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -27,6 +31,8 @@ class AddPosPageController extends GetxController{
       if (pickedImage != null) {
         imagePath.value = pickedImage.path;
       }
+
+      isImageSelected = true.obs;
   }
   
   RxString selectedKelas= "11".obs;
@@ -49,6 +55,9 @@ class AddPosPageController extends GetxController{
   }
 
   Future<void> addPos() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
     try {
       isLoading.value = true;
       

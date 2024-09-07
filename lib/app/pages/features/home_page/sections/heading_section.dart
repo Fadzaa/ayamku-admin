@@ -48,7 +48,7 @@ class HeadingSection extends GetView<HomePageController> {
 
                     Row(
                       children: [
-                        Text("New Orders", style: txtListItemTitle),
+                        Text("Pesanan baru", style: txtListItemTitle),
 
                         const SizedBox(width: 5),
 
@@ -70,7 +70,7 @@ class HeadingSection extends GetView<HomePageController> {
 
                 Row(
                   children: [
-                    Text("Manage Order", style: txtCaption.copyWith(
+                    Text("atur pesanan", style: txtCaption.copyWith(
                         color: blackColor50
                     ),),
 

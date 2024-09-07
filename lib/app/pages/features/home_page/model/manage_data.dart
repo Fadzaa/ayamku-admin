@@ -14,7 +14,7 @@ final List <Manage> manage_data = [
       routes: Routes.POS_PAGE,
   ),
   Manage(
-      name: "Product",
+      name: "Produk",
       image: icProduct,
       routes: Routes.PRODUCT_PAGE,
   ),

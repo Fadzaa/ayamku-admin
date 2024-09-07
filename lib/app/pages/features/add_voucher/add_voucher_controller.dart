@@ -9,6 +9,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:intl/intl.dart';
 
 class AddVoucherPageController extends GetxController {
+  final formKey = GlobalKey<FormState>();
 
   final TextEditingController codeController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
@@ -20,6 +21,13 @@ class AddVoucherPageController extends GetxController {
   RxList<Voucher> voucherList = <Voucher>[].obs;
   VoucherService voucherService = VoucherService();
   VoucherResponse voucherResponse = VoucherResponse();
+
+  //validator error
+  final codeError = ''.obs;
+  final discountError = ''.obs;
+  final descError = ''.obs;
+  final startDateError = ''.obs;
+  final endDateError = ''.obs;
 
 
   RxBool isLoading = false.obs;
@@ -42,6 +50,10 @@ class AddVoucherPageController extends GetxController {
 
 
   Future <void> addVoucher() async{
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
     try {
       isLoading.value = true;
 

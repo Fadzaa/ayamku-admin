@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class EditVoucherPageController extends GetxController {
+  final formKey = GlobalKey<FormState>();
   final VoucherPageController controller = Get.find();
   final TextEditingController codeController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
@@ -22,9 +23,15 @@ class EditVoucherPageController extends GetxController {
   VoucherService voucherService = VoucherService();
   VoucherResponse voucherResponse = VoucherResponse();
 
+  //validator error
+  final codeError = ''.obs;
+  final discountError = ''.obs;
+  final descError = ''.obs;
+  final startDateError = ''.obs;
+  final endDateError = ''.obs;
 
-Future<void> selectDate(BuildContext context, TextEditingController controller) async {
-
+  Future<void> selectDate(
+      BuildContext context, TextEditingController controller) async {
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -51,8 +58,10 @@ Future<void> selectDate(BuildContext context, TextEditingController controller) 
     endDateController.text = voucher.endDate!;
   }
 
-
-  Future <void> updateVoucher() async {
+  Future<void> updateVoucher() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
     try {
       isLoading.value = true;
 
@@ -62,7 +71,8 @@ Future<void> selectDate(BuildContext context, TextEditingController controller) 
         startDate = DateTime.parse(startDateController.text);
         endDate = DateTime.parse(endDateController.text);
       } catch (e) {
-        throw FormatException("Invalid date format. Please use YYYY-MM-DD format.");
+        throw FormatException(
+            "Invalid date format. Please use YYYY-MM-DD format.");
       }
 
       if (endDate.isBefore(startDate)) {
@@ -70,27 +80,25 @@ Future<void> selectDate(BuildContext context, TextEditingController controller) 
       }
 
       dio.FormData formData = dio.FormData.fromMap({
-        "code" : codeController.text.toString(),
-        "discount" : 10,
-        "description" : descriptionController.text.toString(),
-        "start_date" : startDate,
-        "end_date" : endDate
+        "code": codeController.text.toString(),
+        "discount": 10,
+        "description": descriptionController.text.toString(),
+        "start_date": startDate,
+        "end_date": endDate
       });
 
       await voucherService.updateVoucher(formData, voucher.id.toString());
 
       Get.snackbar("Perbarui voucher Sukses", "Berhasil memperbarui voucher!");
 
-      Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER, (routes) => routes.settings.name == Routes.HOME_PAGE);
-
-
-    }
-    catch(e){
+      Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER,
+          (routes) => routes.settings.name == Routes.HOME_PAGE);
+    } catch (e) {
       Get.snackbar(
         "Error",
         e.toString(),
       );
-        print(e);
+      print(e);
     }
   }
 
@@ -105,8 +113,9 @@ Future<void> selectDate(BuildContext context, TextEditingController controller) 
         "Voucher deleted successfully",
       );
 
-      Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER, (routes) => routes.settings.name == Routes.HOME_PAGE);
-    }catch (e) {
+      Get.offNamedUntil(Routes.MANAGEMENT_VOUCHER,
+          (routes) => routes.settings.name == Routes.HOME_PAGE);
+    } catch (e) {
       Get.snackbar(
         "Error",
         e.toString(),
@@ -114,5 +123,5 @@ Future<void> selectDate(BuildContext context, TextEditingController controller) 
     } finally {
       isLoading.value = false;
     }
-}
+  }
 }

@@ -15,9 +15,10 @@ class AddPromoPage extends GetView<AddPromoPageController> {
         child: Column(
           children: [
             Obx(() => PickImg(
-              onTap: () => controller.pickImage(),
+              onTap:() => controller.pickImage(),
               imagePath: controller.selectedImagePath.value,
-            )),
+              isImageSelected: controller.isImageSelected,
+            ),),
 
             SizedBox(height: 15,),
 

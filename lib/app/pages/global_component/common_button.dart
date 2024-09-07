@@ -110,7 +110,7 @@ class CommonButtonOutline extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: colorBorder ?? primaryColor,
             width: 1,
@@ -118,9 +118,7 @@ class CommonButtonOutline extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: style ?? txtButtonTab.copyWith(
-            color: color,
-          ),
+          style: style ?? txtButtonTab
         ),
       ),
     );

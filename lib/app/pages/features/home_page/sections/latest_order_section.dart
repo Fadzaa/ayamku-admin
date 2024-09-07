@@ -27,13 +27,27 @@ class LatestOrderSection extends GetView<HomePageController> {
       "Pickup",
     ];
 
+    String formatPickupTime(String time) {
+      if (time.isEmpty) {
+        return "Waktu tidak tersedia";
+      }
+
+      try {
+        DateTime parsedTime = DateFormat("HH:mm:ss").parse(time);
+        return DateFormat("HH.mm").format(parsedTime);
+      } catch (e) {
+
+        return "Format waktu salah";
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Latest Order", style: txtHeadline3),
+            Text("Pesanan Terbaru", style: txtHeadline3),
           ],
         ),
 
@@ -96,16 +110,21 @@ class LatestOrderSection extends GetView<HomePageController> {
                         arguments: {
                           'profileUser': order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                           'cartItems': order.cart?.cartItems,
-                          'orderId': order.id.toString(),
+                          'orderId': order.id ??  0,
                           'userName': order.user!.name,
                           'postName': order.post!.name,
                           'postDesc': order.post!.description,
                           'orderStatus': order.status,
-                          'methodType': order.methodType,
+                          'method': order.methodType,
+                          'payment' : order.paymentMethod,
                           'totalPrice': order.finalAmount,
                           'discountAmount': order.discountAmount,
+                          'originalAmount': order.originalAmount,
+                          'finalAmount': order.finalAmount,
                           'voucher': order.voucher,
-                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                          'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
+                          'shift_delivery' : order.shiftDelivery.toString(),
+                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
                         },
                       );
                     },
@@ -142,13 +161,15 @@ class LatestOrderSection extends GetView<HomePageController> {
                           'postName': order.post!.name,
                           'postDesc': order.post!.description,
                           'orderStatus': order.status,
-                          'methodType': order.methodType,
+                          'method': order.methodType,
+                          'payment' : order.paymentMethod,
                           'totalPrice': order.finalAmount,
                           'discountAmount': order.discountAmount,
                           'originalAmount': order.originalAmount,
                           'finalAmount': order.finalAmount,
                           'voucher': order.voucher,
-                          'session_order': order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
+                          'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
+                          'shift_delivery' : order.shiftDelivery.toString(),
                           'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
                         },
                       );
@@ -179,16 +200,21 @@ class LatestOrderSection extends GetView<HomePageController> {
                         arguments: {
                           'profileUser': order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                           'cartItems': order.cart?.cartItems,
-                          'orderId': order.id.toString(),
+                          'orderId': order.id ??  0,
                           'userName': order.user!.name,
                           'postName': order.post!.name,
                           'postDesc': order.post!.description,
                           'orderStatus': order.status,
-                          'methodType': order.methodType,
+                          'method': order.methodType,
+                          'payment' : order.paymentMethod,
                           'totalPrice': order.finalAmount,
                           'discountAmount': order.discountAmount,
+                          'originalAmount': order.originalAmount,
+                          'finalAmount': order.finalAmount,
                           'voucher': order.voucher,
-                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                          'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
+                          'shift_delivery' : order.shiftDelivery.toString(),
+                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
                         },
                       );
                     },

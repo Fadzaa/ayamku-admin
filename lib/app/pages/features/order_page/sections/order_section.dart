@@ -24,6 +24,24 @@ class OrderSection extends GetView<OrderPageController> {
     }
   }
 
+
+
+  String formatPickupTime(String time) {
+    if (time.isEmpty) {
+      return "Waktu tidak tersedia";
+    }
+
+    try {
+      DateTime parsedTime = DateFormat("HH:mm:ss").parse(time);
+      return DateFormat("HH.mm").format(parsedTime);
+    } catch (e) {
+
+      return "Format waktu salah";
+    }
+  }
+
+
+
   final String methodType;
   final Widget header;
 
@@ -96,7 +114,9 @@ class OrderSection extends GetView<OrderPageController> {
                                 orderName: order.id.toString(),
                                 orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                                 username: order.user!.name!,
-                                sessionOrder:order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
+                                  sessionOrder: order.methodType == 'on_delivery'
+                              ? order.shiftDelivery
+                                  : formatPickupTime(order.pickupTime.toString(),) ,
                                 onTap: () {
                                   Get.toNamed(
                                     Routes.DETAIL_ORDER_PAGE,
@@ -108,13 +128,15 @@ class OrderSection extends GetView<OrderPageController> {
                                       'postName': order.post!.name,
                                       'postDesc': order.post!.description,
                                       'orderStatus': order.status,
-                                      'methodType': order.methodType,
+                                      'method': order.methodType,
+                                      'payment' : order.paymentMethod,
                                       'totalPrice': order.finalAmount,
                                       'discountAmount': order.discountAmount,
                                       'originalAmount': order.originalAmount,
                                       'finalAmount': order.finalAmount,
                                       'voucher': order.voucher,
-                                      'session_order': order.methodType == 'on_delivery' ? order.shiftDelivery : order.pickupTime,
+                                      'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
+                                      'shift_delivery' : order.shiftDelivery.toString(),
                                       'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
                                     },
                                   );

@@ -59,7 +59,7 @@ class AnalyticPageView extends GetView<AnalyticPageController>{
 
                 const SizedBox(height: 20),
 
-                Obx(() => controller.isLoading.value ? Center(child: commonLoading(),) : SalesStatisitc())
+                Obx(() => controller.isLoading.value ? Center(child: commonLoading()) : SalesStatisitc())
 
               ],
             ),

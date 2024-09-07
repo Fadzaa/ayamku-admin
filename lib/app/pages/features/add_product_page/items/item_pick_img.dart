@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
+import 'package:get/get.dart';
 
 class PickImg extends StatelessWidget {
   const PickImg({
     Key? key,
     required this.onTap,
     required this.imagePath,
+     this.isImageSelected,
   }) : super(key: key);
 
   final VoidCallback onTap;
   final String imagePath;
+  final RxBool? isImageSelected;
 
   Widget _buildChild() {
     if (imagePath == null || imagePath.isEmpty) {

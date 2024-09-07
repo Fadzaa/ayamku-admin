@@ -12,7 +12,6 @@ import 'package:intl/intl.dart';
 class SalesStatisitc extends GetView<AnalyticPageController> {
   const SalesStatisitc({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -24,42 +23,23 @@ class SalesStatisitc extends GetView<AnalyticPageController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Statistic Sales", style: txtHeadline3),
-
               ItemDropdownStatistic()
             ],
           ),
-
-          SizedBox(height: 15,),
-
+          SizedBox(
+            height: 15,
+          ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Obx(() => BarChart(
-                mainBarData(controller.chartRevenueResponse.value, controller.dropdownValue.value),
-              ),)
-            ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                child: Obx(
+                  () => BarChart(
+                    mainBarData(controller.chartRevenueResponse.value,
+                        controller.dropdownValue.value),
+                  ),
+                )),
           ),
-
-          // Container(
-          //   padding: EdgeInsets.all(15),
-          //   decoration: BoxDecoration(
-          //     border: Border.all(color: blackColor80),
-          //     borderRadius: BorderRadius.circular(15)
-          //   ),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Text(
-          //         "Inventory Overview  -Today",
-          //         style: txtHeadline3,
-          //       ),
-          //
-          //       SizedBox(height: 5,),
-          //
-          //     ],
-          //   ),
-          // )
-
         ],
       ),
     );
@@ -68,19 +48,41 @@ class SalesStatisitc extends GetView<AnalyticPageController> {
 
 BarChartData mainBarData(ChartRevenueResponse crr, String dropdownValue) {
   return BarChartData(
-
     barTouchData: BarTouchData(
       touchTooltipData: BarTouchTooltipData(
-        getTooltipColor: (_) => Colors.blueGrey,
-        tooltipHorizontalAlignment: FLHorizontalAlignment.right,
-        tooltipMargin: -10,
-        getTooltipItem: (group, groupIndex, rod, rodIndex) {
-          if (dropdownValue == "Mingguan") {
-            List<String> weeksList = ["Week 1", "Week 2", "Week 3", "Week 4"];
-            String week = weeksList[group.x.toInt()];
-            String formattedValue = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0).format(rod.toY - 1);
+          getTooltipColor: (_) => Colors.grey.withOpacity(0.8),
+          tooltipMargin: 8,
+          tooltipPadding: const EdgeInsets.all(8),
+          getTooltipItem: (group, groupIndex, rod, rodIndex) {
+            if (dropdownValue == "Mingguan") {
+              List<String> weeksList = ["Week 1", "Week 2", "Week 3", "Week 4"];
+              String week = weeksList[group.x.toInt()];
+              String formattedValue = NumberFormat.currency(
+                      locale: 'id_ID', symbol: 'Rp', decimalDigits: 0)
+                  .format(rod.toY - 1);
+              return BarTooltipItem(
+                '$week\n',
+                txtCaption.copyWith(color: Colors.white),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: formattedValue,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              );
+            }
+
+            List<String> daysList = getPastSevenDays();
+            String weekDay = daysList[group.x.toInt()];
+            String formattedValue = NumberFormat.currency(
+                    locale: 'id_ID', symbol: 'Rp', decimalDigits: 0)
+                .format(rod.toY - 1);
             return BarTooltipItem(
-              '$week\n',
+              '$weekDay\n',
               const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -97,30 +99,7 @@ BarChartData mainBarData(ChartRevenueResponse crr, String dropdownValue) {
                 ),
               ],
             );
-          }
-
-          List<String> daysList = getPastSevenDays();
-          String weekDay = daysList[group.x.toInt()];
-          String formattedValue = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0).format(rod.toY - 1);
-          return BarTooltipItem(
-            '$weekDay\n',
-            const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                text: formattedValue,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          );
-        }),
+          }),
       touchCallback: (FlTouchEvent event, barTouchResponse) {},
     ),
     titlesData: FlTitlesData(
@@ -134,23 +113,41 @@ BarChartData mainBarData(ChartRevenueResponse crr, String dropdownValue) {
       bottomTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          getTitlesWidget: dropdownValue == "Harian" ? getTitles : dropdownValue == "Mingguan" ? getTitlesWeekly : getTitles,
+          getTitlesWidget: dropdownValue == "Harian"
+              ? getTitles
+              : dropdownValue == "Mingguan"
+                  ? getTitlesWeekly
+                  : getTitles,
           reservedSize: 38,
         ),
       ),
-      leftTitles: const AxisTitles(
+      leftTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-        ),
+          getTitlesWidget: (double value, TitleMeta meta) {
+            String formattedValue = NumberFormat.currency(
+                locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(value);
 
+            return Text(formattedValue,
+                style: TextStyle(
+                    color: blackColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12));
+          },
+          reservedSize: 70, // Sesuaikan ukuran jika diperlukan
+        ),
       ),
     ),
     borderData: FlBorderData(
       show: false,
     ),
-    barGroups: dropdownValue == "Harian" ? showingGroups(crr) : dropdownValue == "Mingguan" ? showingGroupsWeekly(crr) : showingGroupsMonthly(crr),
+    barGroups: dropdownValue == "Harian"
+        ? showingGroups(crr)
+        : dropdownValue == "Mingguan"
+            ? showingGroupsWeekly(crr)
+            : showingGroupsMonthly(crr),
 
-    gridData: const FlGridData(show: false),
+    // gridData: const FlGridData(show: true,),
   );
 }
 
@@ -268,7 +265,8 @@ List<BarChartGroupData> showingGroupsWeekly(ChartRevenueResponse chartRevenue) {
   });
 }
 
-List<BarChartGroupData> showingGroupsMonthly(ChartRevenueResponse chartRevenue) {
+List<BarChartGroupData> showingGroupsMonthly(
+    ChartRevenueResponse chartRevenue) {
   final months = chartRevenue.monthlyRevenue;
   final monthsMap = {
     'january': months!.january!,
@@ -285,7 +283,20 @@ List<BarChartGroupData> showingGroupsMonthly(ChartRevenueResponse chartRevenue) 
     'december': months.december!,
   };
 
-  List<String> monthsList = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+  List<String> monthsList = [
+    'january',
+    'february',
+    'march',
+    'april',
+    'may',
+    'june',
+    'july',
+    'august',
+    'september',
+    'october',
+    'november',
+    'december'
+  ];
 
   return List.generate(12, (i) {
     String month = monthsList[i];
@@ -322,7 +333,6 @@ BarChartGroupData makeGroupData(
 }
 
 
-
 class ItemDropdownStatistic extends GetView<AnalyticPageController> {
   const ItemDropdownStatistic({super.key});
 
@@ -330,27 +340,32 @@ class ItemDropdownStatistic extends GetView<AnalyticPageController> {
   Widget build(BuildContext context) {
     final List<String> day_select = ["Harian", "Mingguan"];
 
-
     return Container(
         height: 30,
         padding: EdgeInsets.symmetric(horizontal: 10),
         width: 145,
         decoration: BoxDecoration(
             border: Border.all(color: blackColor50, width: 0.5),
-            borderRadius: BorderRadius.circular(8)
-        ),
-        child: Obx(() => DropdownButton(
-          dropdownColor: Colors.white,
-          style: txtCaption.copyWith(color: blackColor),
-          elevation: 1,
-          isExpanded: true,
-          icon: const Icon(Icons.keyboard_arrow_down),
-          borderRadius: BorderRadius.circular(8),
-          underline: Container(),
-          items: day_select.map((String day) => DropdownMenuItem(child: Text(day), value: day,)).toList(),
-          onChanged: (value) =>  controller.onChangeValue(value ?? "Harian", day_select),
-          value: controller.dropdownValue.value,
-        ),)
-    );
+            borderRadius: BorderRadius.circular(8)),
+        child: Obx(
+          () => DropdownButton(
+            dropdownColor: Colors.white,
+            style: txtCaption.copyWith(color: blackColor),
+            elevation: 1,
+            isExpanded: true,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            borderRadius: BorderRadius.circular(8),
+            underline: Container(),
+            items: day_select
+                .map((String day) => DropdownMenuItem(
+                      child: Text(day),
+                      value: day,
+                    ))
+                .toList(),
+            onChanged: (value) =>
+                controller.onChangeValue(value ?? "Harian", day_select),
+            value: controller.dropdownValue.value,
+          ),
+        ));
   }
 }

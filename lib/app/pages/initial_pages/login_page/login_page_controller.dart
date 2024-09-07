@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../router/app_pages.dart';
 
 class LoginPageController extends GetxController {
+  final formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -15,6 +16,11 @@ class LoginPageController extends GetxController {
   RxBool isPasswordVisible = false.obs;
   RxBool isLoading = false.obs;
   late AuthenticationService authenticationService;
+
+  //validator error
+  RxString emailError = ''.obs;
+  RxString passError = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -31,6 +37,10 @@ class LoginPageController extends GetxController {
   }
 
   Future<void> login() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
     try {
       isLoading(true);
 
@@ -51,7 +61,20 @@ class LoginPageController extends GetxController {
 
     } catch (e) {
       isLoading(true);
-      Get.snackbar("Login Error", "Invalid email or password");
+      if (e.toString().contains('email')) {
+        emailError.value = 'Email salah';
+      } else if (e.toString().contains('password')) {
+        passError.value = 'Password salah';
+      }
+      Get.snackbar(
+        "Gagal",
+        "Silahkan cek email dan password anda! ",
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        borderRadius: 30,
+        margin: EdgeInsets.all(10),
+      );
       print(e);
 
     } finally {

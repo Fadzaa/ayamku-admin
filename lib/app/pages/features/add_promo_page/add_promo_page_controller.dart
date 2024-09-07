@@ -12,6 +12,7 @@ import '../../../router/app_pages.dart';
 
 
 class AddPromoPageController extends GetxController{
+  final formKey = GlobalKey<FormState>();
 
   final PromoPageController promoPageController = Get.find();
 
@@ -29,6 +30,7 @@ class AddPromoPageController extends GetxController{
 
 
   final ImagePicker _picker = ImagePicker();
+  RxBool isImageSelected = false.obs;
 
   RxString selectedImagePath = ''.obs;
   RxString filePathImage = ''.obs;
@@ -36,6 +38,7 @@ class AddPromoPageController extends GetxController{
   PromoService promoService = PromoService();
   PromoResponse promoResponse = PromoResponse();
   RxList<Promo> promosList = <Promo>[].obs;
+
 
 
   Future<void> pickImage() async {
@@ -48,6 +51,7 @@ class AddPromoPageController extends GetxController{
     print("Image Selected");
     print(pickedFile?.path);
     print(selectedImagePath.value);
+    isImageSelected.value = true;
   }
 
   Future<void> selectDate(BuildContext context, TextEditingController controller) async {

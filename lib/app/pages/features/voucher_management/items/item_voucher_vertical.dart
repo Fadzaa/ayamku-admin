@@ -21,14 +21,15 @@ class ItemVoucherVertical extends GetView<VoucherPageController> {
     required this.endDate,
     required this.discount,
     required this.onPressed,
+    this.index
   });
 
   final String name, startDate, endDate, discount;
+  final int? index;
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(VoucherPageController());
     
     return InkWell(
       onTap: onPressed,
@@ -111,7 +112,7 @@ class ItemVoucherVertical extends GetView<VoucherPageController> {
                 CommonButtonOutline(
                   text: 'Gift voucher',
                   style: txtCaption.copyWith(color: primaryColor),
-                  onPressed: () => voidGiftVoucher(context),
+                  onPressed: () => voidGiftVoucher(context, index!),
                   color: primaryColor,
                 )
               ],

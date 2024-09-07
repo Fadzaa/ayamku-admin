@@ -1,3 +1,4 @@
+import 'package:ayamku_admin/app/api/auth/model/user_list_response.dart';
 import 'package:dio/dio.dart';
 
 import '../api_endpoint.dart';
@@ -18,6 +19,35 @@ class AuthenticationService {
       );
 
       return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<UserListResponse> getAllUserAsc() async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.allUser,
+          isAuthorize: true
+      );
+
+      return UserListResponse.fromJson(response.data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<UserListResponse> searchUser(String search) async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.allUser,
+          queryParameters: {
+            "search": search
+          },
+          isAuthorize: true
+      );
+
+      return UserListResponse.fromJson(response.data);
     } catch (e) {
       throw Exception(e);
     }

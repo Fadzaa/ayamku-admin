@@ -121,7 +121,6 @@ class OrderPageController extends GetxController {
 
   Future<void> getOrderMethod(String method) async {
     try {
-      print('value method = ' + method);
       isLoading.value = true;
 
       final response = await orderService.getOrderLatest(method);
@@ -129,12 +128,14 @@ class OrderPageController extends GetxController {
       orderResponse = OrderResponse.fromJson(response.data);
 
       if (method == 'on_delivery') {
-        listDeliveryOrder.assignAll(orderResponse.data!);
+        listDeliveryOrder.assignAll(listAllOrder.where((order) => order.methodType == 'on_delivery').toList());
         numberOfDeliveryOrders.value = listDeliveryOrder.length;
-      } else {
-        listPickupOrder.assignAll(orderResponse.data!);
+      } else if (method == 'pickup') {
+        listPickupOrder.assignAll(listAllOrder.where((order) => order.methodType == 'pickup').toList());
         numberOfPickupOrders.value = listPickupOrder.length;
       }
+
+      print('Orders count for method $method: ${method == 'on_delivery' ? numberOfDeliveryOrders.value : numberOfPickupOrders.value}');
 
     } catch (e) {
       print('Error occurred: $e');
@@ -229,7 +230,7 @@ class OrderPageController extends GetxController {
   Future<void> selectTypeOrder(String type) async {
     selectedFilterTypeOrder.value = type;
     switch (type) {
-      case 'Semua':
+      case 'Semua ':
         await getAllOrder();
         break;
       case 'OnDelivery':

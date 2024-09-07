@@ -24,6 +24,7 @@ class OrderResponse {
 class Order {
   int? id;
   String? methodType;
+  String? paymentMethod;
   String? pickupTime;
   String? shiftDelivery;
   String? status;
@@ -41,6 +42,7 @@ class Order {
   Order(
       {this.id,
         this.methodType,
+        this.paymentMethod,
         this.pickupTime,
         this.shiftDelivery,
         this.status,
@@ -58,6 +60,7 @@ class Order {
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     methodType = json['method_type'];
+    paymentMethod = json['payment_method'];
     pickupTime = json['pickup_time'];
     shiftDelivery = json['shift_delivery'];
     status = json['status'];
@@ -82,6 +85,7 @@ class Order {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['method_type'] = this.methodType;
+    data['payment_method'] = this.paymentMethod;
     data['pickup_time'] = this.pickupTime;
     data['shift_delivery'] = this.shiftDelivery;
     data['status'] = this.status;

@@ -124,7 +124,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                           'voucher': order.voucher,
                           'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
                           'shift_delivery' : order.shiftDelivery.toString(),
-                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
+                          'date': DateFormat('dd MMMM yyyy').format(DateTime.parse(order.createdAt.toString()))
                         },
                       );
                     },
@@ -132,7 +132,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                     cartItems: order.cart!.cartItems!,
                     namePos: order.post!.name!.toString(),
                     orderName: order.id.toString(),
-                    orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                    orderTime: DateFormat('dd MMMM yyyy').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
                     id: order.id!,
                     method: order.methodType.toString(),
@@ -170,7 +170,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                           'voucher': order.voucher,
                           'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
                           'shift_delivery' : order.shiftDelivery.toString(),
-                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
+                          'date': DateFormat('dd MMMM yyyy').format(DateTime.parse(order.createdAt.toString()))
                         },
                       );
                     },
@@ -178,7 +178,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                     namePos: order.post!.name!.toString(),
                     orderName: order.id.toString(),
                     orderStatus: OrderStatus.done,
-                    orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                    orderTime: DateFormat('dd MMMM yyyy').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
                     orderId: order.id!,
                     profileUser: order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
@@ -214,7 +214,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                           'voucher': order.voucher,
                           'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
                           'shift_delivery' : order.shiftDelivery.toString(),
-                          'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
+                          'date': DateFormat('dd MMMM yyyy').format(DateTime.parse(order.createdAt.toString()))
                         },
                       );
                     },
@@ -223,7 +223,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                     cartItems: order.cart!.cartItems!,
                     orderName: order.id.toString(),
                     orderStatus: PickupStatus.done,
-                    orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                    orderTime: DateFormat('dd MMMM yyyy').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
                     orderId: order.id!,
                     sessionOrder: '',

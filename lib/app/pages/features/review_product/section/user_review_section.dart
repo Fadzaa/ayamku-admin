@@ -58,7 +58,7 @@ class UserReviewSection extends GetView<ReviewProductPageController> {
                       final customer = controller.listCustomer[index];
                       return ItemsUserReview(
                         name: customer.userName!,
-                        date: DateFormat('yyyy MMMM dd').format(
+                        date: DateFormat('dd MMMM yyyy').format(
                             DateTime.parse(customer.createdAt!)),
                         comment: customer.comment,
                         rating: customer.rating!,

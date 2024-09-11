@@ -69,34 +69,62 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
             ],
           ),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    ClipRRect(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      ClipRRect(
                         borderRadius: BorderRadius.circular(25),
-                        child: Image.network(profileUser,
-                            width: 40, height: 40, fit: BoxFit.cover)),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      width: screenWidth * 0.3,
-                      child: Text(
-                        username,
-                        style: txtListItemTitle,
-                        maxLines: 2,
+                        child: Image.network(
+                          profileUser,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
                       ),
+                      SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start, // Untuk menyelaraskan teks di kiri
+                        children: [
+                          Container(
+                            width: screenWidth * 0.3,
+                            child: Text(
+                              username,
+                              style: txtListItemTitle,
+                              maxLines: 1, // Atur agar hanya satu baris untuk username
+                              overflow: TextOverflow.ellipsis, // Jika teks terlalu panjang
+                            ),
+                          ),
+                          SizedBox(height: 5), // Spasi antara username dan tanggal
+                          Text(
+                            orderTime.toString(),
+                            style: txtSecondaryTitle.copyWith(color: blackColor40),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  CommonButtonOutline(
+                    text: status,
+                    style: txtCaption.copyWith(
+                      color: status == 'completed'
+                          ? Colors.green
+                          : (status == 'processing'
+                              ? primaryColor
+                              : (status == 'cancelled'
+                                  ? Colors.red
+                                  : (status == 'confirmed_order'
+                                      ? Colors.green
+                                      : (status == "accept"
+                                          ? primaryColor
+                                          : Colors.grey)))),
                     ),
-                  ],
-                ),
-                CommonButtonOutline(
-                  text: status,
-                  style: txtCaption.copyWith(
-                    color: status == 'completed'
+                    onPressed: () {},
+                    colorBorder: status == 'completed'
                         ? Colors.green
                         : (status == 'processing'
                             ? primaryColor
@@ -108,110 +136,101 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
                                         ? primaryColor
                                         : Colors.grey)))),
                   ),
-                  onPressed: () {},
-                  colorBorder: status == 'completed'
-                      ? Colors.green
-                      : (status == 'processing'
-                          ? primaryColor
-                          : (status == 'cancelled'
-                              ? Colors.red
-                              : (status == 'confirmed_order'
-                                  ? Colors.green
-                                  : (status == "accept"
-                                      ? primaryColor
-                                      : Colors.grey)))),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(orderTime.toString(),
-                style: txtSecondaryTitle.copyWith(color: blackColor40)),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              children: cartItems.map((cartItem) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('${cartItem.quantity!.toString()} pcs',
-                        style: txtSecondaryTitle),
-                    SizedBox(width: 10),
-                    Text(cartItem.productName.toString(),
-                        style: txtSecondaryTitle),
-                    Spacer(),
-                    Text(controller.formatPrice(cartItem.totalPrice ?? 0),
-                        style: txtSecondaryTitle),
-                  ],
-                );
-              }).toList(),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Divider(
-              height: 0.5,
-              color: blackColor70,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  icOrder,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  method == 'pickup' ? "Akan dijemput " : "Akan diantarkan ",
-                  style: txtCaption,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: grey,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    sessionOrder ?? "09.40",
-                    style: txtCaption.copyWith(),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            if (method != 'pickup')
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              
+              Column(
+                children: cartItems.map((cartItem) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('${cartItem.quantity!.toString()} x', style: txtSecondaryTitle),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          cartItem.productName.toString(),
+                          style: txtSecondaryTitle,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        controller.formatPrice(cartItem.totalPrice ?? 0),
+                        style: txtSecondaryTitle.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+
+              SizedBox(
+                height: 15,
+              ),
+              // Divider(
+              //   height: 0.5,
+              //   color: blackColor70,
+              // ),
+              // SizedBox(
+              //   height: 15,
+              // ),
               Row(
                 children: [
                   SvgPicture.asset(
-                    icLocation,
+                    icOrder,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    method == 'pickup' ? "Akan dijemput " : "Akan diantarkan ",
+                    style: txtCaption,
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Text(namePos, style: txtCaption)
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      sessionOrder ?? "09.40",
+                      style: txtCaption.copyWith(),
+                    ),
+                  )
                 ],
               ),
-            SizedBox(
-              height: 15,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: getStatusWidget(status, id, username),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-          ])),
+              SizedBox(
+                height: 5,
+              ),
+              if (method != 'pickup')
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      icLocation,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(namePos, style: txtCaption)
+                  ],
+                ),
+              SizedBox(
+                height: 15,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: getStatusWidget(status, id, username),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ])),
     );
   }
 }
@@ -271,13 +290,13 @@ class ItemAllOrderVerticalShimmer extends GetView<OrderPageController> {
             SizedBox(
               height: 15,
             ),
-            Divider(
-              height: 0.5,
-              color: blackColor70,
-            ),
-            SizedBox(
-              height: 15,
-            ),
+            // Divider(
+            //   height: 0.5,
+            //   color: blackColor70,
+            // ),
+            // SizedBox(
+            //   height: 15,
+            // ),
             Row(
               children: [
                 SvgPicture.asset(

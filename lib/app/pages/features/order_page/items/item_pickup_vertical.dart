@@ -30,6 +30,12 @@ class ItemPickupVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(OrderPageController());
+    String formattedItems = cartItems.map((cartItem) {
+      return '${cartItem.quantity} x ${cartItem.productName}';
+    }).join(' + ');
+
+    double totalPrice = cartItems.fold(0, (sum, cartItem) => sum + (cartItem.totalPrice ?? 0));
+
     return InkWell(
       onTap: onPressed,
       child: Container(
@@ -54,45 +60,63 @@ class ItemPickupVertical extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(25),
-                      child:Image.network(profileUser, width: 40, height: 40, fit: BoxFit.cover)
+                      child: Image.network(
+                        profileUser,
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-
-
-                    SizedBox(width: 10,),
-
-                    Text(username, style: txtListItemTitle,),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start, // Agar teks rata kiri
+                      children: [
+                        Text(
+                          username,
+                          style: txtListItemTitle,
+                        ),
+                        SizedBox(height: 5), // Jarak antara username dan tanggal
+                        Text(
+                          orderTime.toString(),
+                          style: txtSecondaryTitle.copyWith(color: blackColor40),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-
-                SizedBox(height: 5,),
-
-                Text(orderTime.toString(), style: txtSecondaryTitle.copyWith(
-                    color: blackColor40
-                )),
 
                 const SizedBox(height: 15,),
 
                 Column(
-                  children: cartItems.map((cartItem) {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Text('${cartItem.quantity!.toString()} pcs', style: txtSecondaryTitle),
-                        SizedBox(width: 10),
-                        Text(cartItem.productName.toString(), style: txtSecondaryTitle),
+                        // Menampilkan semua item dalam satu baris
+                        Expanded(
+                          child: Text(
+                            formattedItems,
+                            style: txtSecondaryTitle,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
                         Spacer(),
-                        Text(controller.formatPrice(cartItem.totalPrice ?? 0), style: txtSecondaryTitle),
+                        // Menampilkan total harga
+                        Text(
+                          controller.formatPrice(totalPrice.toInt()),
+                          style: txtSecondaryTitle.copyWith(fontWeight: FontWeight.bold),
+                        ),
                       ],
-                    );
-                  }).toList(),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 10,),
 
+                // SizedBox(height: 15,),
 
-                SizedBox(height: 15,),
-
-                Divider(height: 0.5, color: blackColor70,),
+                // Divider(height: 0.5, color: blackColor70,),
 
                 SizedBox(height: 15,),
 

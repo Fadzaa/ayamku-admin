@@ -112,7 +112,7 @@ class OrderSection extends GetView<OrderPageController> {
                                 cartItems: order.cart!.cartItems!,
                                 namePos: order.post!.name!.toString(),
                                 orderName: order.id.toString(),
-                                orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
+                                orderTime: DateFormat('dd MMMM yyyy').format(DateTime.parse(order.createdAt.toString())),
                                 username: order.user!.name!,
                                   sessionOrder: order.methodType == 'on_delivery'
                               ? order.shiftDelivery
@@ -137,7 +137,7 @@ class OrderSection extends GetView<OrderPageController> {
                                       'voucher': order.voucher,
                                       'pickup_time' : formatPickupTime(order.pickupTime.toString(),),
                                       'shift_delivery' : order.shiftDelivery.toString(),
-                                      'date': DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString()))
+                                      'date': DateFormat('dd MMMM yyyy').format(DateTime.parse(order.createdAt.toString()))
                                     },
                                   );
                                 },

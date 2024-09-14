@@ -35,7 +35,7 @@ class OrderService {
     }
   }
 
-  Future<Response> updateOrderStatus(int id, String status) async {
+  Future<Response> updateOrderStatus(String id, String status) async {
 
     try {
       final response = await _dioInstance.postRequest(

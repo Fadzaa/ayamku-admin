@@ -107,7 +107,7 @@ class OrderSection extends GetView<OrderPageController> {
                             if (methodType == 'Semua' || order.methodType == methodType) {
                               return ItemAllOrderVertical(
                                 profileUser: order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
-                                id: order.id ?? 0,
+                                id: order.id.toString(),
                                 status: order.status.toString(),
                                 cartItems: order.cart!.cartItems!,
                                 namePos: order.post!.name!.toString(),

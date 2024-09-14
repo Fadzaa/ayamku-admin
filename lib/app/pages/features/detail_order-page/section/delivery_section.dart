@@ -3,6 +3,7 @@ import 'package:ayamku_admin/common/constant.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -31,24 +32,30 @@ class DeliverySection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              "Order Id",
-              style: txtSecondaryTitle,
-            ),
-            Row(children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
               Text(
-                idOrder,
-                style: txtSecondaryTitle,
+                "Order id",
+                style: txtHeadline3,
               ),
-              SizedBox(width: 10),
-              SvgPicture.asset(
-                icCopy,
-                width: 20,
-                height: 20,
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(idOrder),
+                  InkWell(
+                      onTap: (){
+                        Clipboard.setData(ClipboardData(text:idOrder)).then((value) {
+                          Get.snackbar('Berhasil', 'Order ID berhasil disalin');
+                        });
+                      },
+                      child: SvgPicture.asset(icCopy)),
+                ],
               ),
-            ])
-          ]),
+            ],
+          ),
           SizedBox(
             height: 10,
           ),

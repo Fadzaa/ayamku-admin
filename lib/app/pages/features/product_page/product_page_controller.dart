@@ -31,7 +31,7 @@ class ProductPageController extends GetxController{
     super.onInit();
 
     getAllProduct();
-
+    getTopReview();
     searchController.addListener(() {
       if (_debounce?.isActive ?? false) _debounce?.cancel();
       _debounce = Timer(const Duration(milliseconds: 500), () {
@@ -49,7 +49,7 @@ class ProductPageController extends GetxController{
     update();
   }
 
-  void getAllProduct() async {
+  Future <void> getAllProduct() async {
     try {
       isLoading.value = true;
 
@@ -66,6 +66,22 @@ class ProductPageController extends GetxController{
 
 
       print(productResponse.data);
+    } catch (e) {
+      isLoading.value = true;
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getTopReview() async {
+    try {
+      isLoading.value = true;
+
+      final response = await productService.reviewTertinggi();
+      productResponse = ProductResponse.fromJson(response.data);
+      listTopReview = productResponse.data!.obs;
+      print("Ini list review tertinggi");
     } catch (e) {
       isLoading.value = true;
       print(e);

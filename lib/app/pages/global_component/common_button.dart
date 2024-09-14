@@ -152,10 +152,10 @@ class LittleBtn extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 8),
         decoration: BoxDecoration(
           color: color ?? primaryColor,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Align(
           alignment: Alignment.center,

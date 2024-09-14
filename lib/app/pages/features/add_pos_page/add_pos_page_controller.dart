@@ -76,7 +76,6 @@ class AddPosPageController extends GetxController{
 
     } catch (e) {
       if (e is dio.DioError) {
-        // Log the response data to check for any server error messages
         print("Response data: ${e.response?.data}");
         
         Get.snackbar(

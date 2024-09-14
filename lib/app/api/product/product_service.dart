@@ -18,6 +18,21 @@ class ProductService {
     }
   }
 
+  Future<Response> reviewTertinggi() async {
+    try {
+      final response = await _dioInstance.getRequest(
+          endpoint: ApiEndPoint.product,
+          queryParameters: {
+            'rating_tertinggi': 'true'
+          }
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   Future<Response> addProduct(FormData formData) async {
     try {
       final response = await _dioInstance.postImageRequest(

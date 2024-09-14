@@ -14,7 +14,6 @@ class FilterVoucher extends GetView<VoucherPageController> {
     final List<String> filter_voucher = [
       "Semua",
       "Expired",
-      "Masukkan tanggal"
     ];
 
     return SingleChildScrollView(
@@ -25,48 +24,49 @@ class FilterVoucher extends GetView<VoucherPageController> {
             padding: const EdgeInsets.only(right: 15),
             child: InkWell(
               onTap: () async {
-                if (filter_voucher[index] == "Masukkan tanggal") {
-                  showDialog(
-                    context: context,
-                    builder: (context) => Dialog(
-                      child: Container(
-                        height: 400,
-                        child: TableCalendar(
-                          calendarStyle: CalendarStyle(
-                            selectedDecoration: BoxDecoration(
-                              color: baseColor,
-                              shape: BoxShape.circle,
-                            ),
-                            todayDecoration: BoxDecoration(
-                              color: primaryColor,
-                              shape: BoxShape.circle,
-                            ),
-                            selectedTextStyle: TextStyle(color: Colors.white),
-                            todayTextStyle: TextStyle(color: Colors.black),
-                          ),
-                          headerStyle: HeaderStyle(
-                            formatButtonVisible: false,
-                            titleCentered: true,
-                          ),
-                          firstDay: DateTime.utc(1995, 1, 1),
-                          lastDay: DateTime.utc(2030, 12, 31),
-                          focusedDay: DateTime.now(),
-                          calendarFormat: CalendarFormat.month,
-                          rangeSelectionMode: RangeSelectionMode.toggledOn,
-                          onDaySelected: (selectedDay, focusedDay) {
-                            controller.updateDateRange(DateTimeRange(
-                              start: selectedDay,
-                              end: focusedDay,
-                            ));
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ),
-                    ),
-                  );
-                } else {
-                  controller.updateSelectedValue(filter_voucher[index]);
-                }
+                controller.updateSelectedValue(filter_voucher[index]);
+                // if (filter_voucher[index] == "Masukkan tanggal") {
+                //   showDialog(
+                //     context: context,
+                //     builder: (context) => Dialog(
+                //       child: Container(
+                //         height: 400,
+                //         child: TableCalendar(
+                //           calendarStyle: CalendarStyle(
+                //             selectedDecoration: BoxDecoration(
+                //               color: baseColor,
+                //               shape: BoxShape.circle,
+                //             ),
+                //             todayDecoration: BoxDecoration(
+                //               color: primaryColor,
+                //               shape: BoxShape.circle,
+                //             ),
+                //             selectedTextStyle: TextStyle(color: Colors.white),
+                //             todayTextStyle: TextStyle(color: Colors.black),
+                //           ),
+                //           headerStyle: HeaderStyle(
+                //             formatButtonVisible: false,
+                //             titleCentered: true,
+                //           ),
+                //           firstDay: DateTime.utc(1995, 1, 1),
+                //           lastDay: DateTime.utc(2030, 12, 31),
+                //           focusedDay: DateTime.now(),
+                //           calendarFormat: CalendarFormat.month,
+                //           rangeSelectionMode: RangeSelectionMode.toggledOn,
+                //           onDaySelected: (selectedDay, focusedDay) {
+                //             controller.updateDateRange(DateTimeRange(
+                //               start: selectedDay,
+                //               end: focusedDay,
+                //             ));
+                //             Navigator.of(context).pop();
+                //           },
+                //         ),
+                //       ),
+                //     ),
+                //   );
+                // } else {
+                //   controller.updateSelectedValue(filter_voucher[index]);
+                // }
               },
               child: ChipTheme(
                 data: ChipTheme.of(context).copyWith(

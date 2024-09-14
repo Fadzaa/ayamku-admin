@@ -134,7 +134,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                     orderName: order.id.toString(),
                     orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
-                    id: order.id!,
+                    id: order.id.toString(),
                     method: order.methodType.toString(),
                     status: order.status.toString(),
                     profileUser: order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
@@ -180,7 +180,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                     orderStatus: OrderStatus.done,
                     orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
-                    orderId: order.id!,
+                    orderId: order.id.toString(),
                     profileUser: order.user!.profilePicture ?? "https://i.imgflip.com/6yvpkj.jpg",
                     sessionOrder: order.pickupTime.toString() ,
                   );
@@ -225,7 +225,7 @@ class LatestOrderSection extends GetView<HomePageController> {
                     orderStatus: PickupStatus.done,
                     orderTime: DateFormat('yyyy MMMM dd').format(DateTime.parse(order.createdAt.toString())),
                     username: order.user!.name!,
-                    orderId: order.id!,
+                    orderId: order.id.toString(),
                     sessionOrder: '',
                   );
                 }

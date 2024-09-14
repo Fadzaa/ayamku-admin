@@ -22,7 +22,7 @@ class OrderResponse {
 }
 
 class Order {
-  int? id;
+  String? id;
   String? methodType;
   String? paymentMethod;
   String? pickupTime;

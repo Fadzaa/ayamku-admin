@@ -16,7 +16,11 @@ class ListProductSection extends GetView<ProductPageController> {
   @override
   Widget build(BuildContext context) {
     final ProductPageController controller = Get.put(ProductPageController());
-    final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
+    final formatCurrency = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

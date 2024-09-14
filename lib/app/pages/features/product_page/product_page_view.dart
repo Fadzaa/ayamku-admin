@@ -54,6 +54,7 @@ class ProductPageView extends GetView<ProductPageController> {
           child: RefreshIndicator(
             onRefresh: () async {
               controller.getAllProduct();
+              controller.getTopReview();
             },
             child: SingleChildScrollView(
               child: Column(

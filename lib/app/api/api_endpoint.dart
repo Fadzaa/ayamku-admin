@@ -21,6 +21,7 @@ class ApiEndPoint {
   //Voucher
    static String voucher = '$baseUrl/vouchers';
    static String giveVoucher = '$baseUrl/vouchers/give';
+   static String voucherExpired = '$baseUrl/vouchers/expired';
    static String giveVoucherMass = '$baseUrl/vouchers/give-mass';
    static String updateVoucher (String id) => '$baseUrl/vouchers/$id';
 

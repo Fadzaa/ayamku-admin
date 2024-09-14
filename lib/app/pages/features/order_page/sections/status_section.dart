@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class TerimaPesanan extends GetView<OrderPageController> {
   const TerimaPesanan({super.key, required this.orderId, this.status, required this.nama});
-  final int orderId;
+  final String orderId;
   final String? status;
   final String nama;
 
@@ -104,9 +104,66 @@ class TerimaPesanan extends GetView<OrderPageController> {
   }
 }
 
+class ProcessingOrder extends GetView<OrderPageController> {
+  ProcessingOrder({super.key, required this.orderId, this.status, required this.nama});
+  final String orderId;
+  final String? status;
+  final String nama;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (controller.isOrderCompleted(orderId.toString()) && status == "processing") {
+        return AcceptedOrder(orderId: orderId, status : "accept", nama : nama);
+      } else {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // LittleBtn(
+            //   text: "Pesanan diterima",
+            //   style: txtCaption.copyWith(color: Colors.white),
+            //   onPressed: () {},
+            //   color: primaryColor,
+            // ),
+            // SizedBox(
+            //   width: 10,
+            // ),
+            LittleBtn(
+              text: "Proses pesanan",
+              style: txtCaption.copyWith(color: Colors.white),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CommonAlert(
+                      title: 'Proses pesanan',
+                      content: "Proses pesanan ini sekarang?",
+                      onCancel: () {
+                        Get.back();
+                      },
+                      onConfirm: () async {
+                        controller.processOrder(orderId.toString());
+                        Navigator.of(context).pop();
+                      },
+                      confirmText: 'Ya',
+                      cancelText: 'Tidak',
+                    );
+                  },
+                );
+              },
+              color: greenMedium,
+            ),
+          ],
+        );
+      }
+    });
+  }
+}
+
 class AcceptedOrder extends GetView<OrderPageController> {
   AcceptedOrder({super.key, required this.orderId, this.status, required this.nama});
-  final int orderId;
+  final String orderId;
   final String? status;
   final String nama;
 

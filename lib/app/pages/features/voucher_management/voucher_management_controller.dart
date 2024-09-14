@@ -32,11 +32,16 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
   }
 
   void updateSelectedValue(String value) {
-    selectedValue.value = value;
-    if (value != "Masukkan tanggal") {
-      selectedDateRange = null;
+    switch (value) {
+      case 'Semua':
+        getAllVoucher();
+        break;
+      case 'Expired':
+        expiredVoucher();
+        break;
     }
-    getAllVoucher();
+    print(value);
+    selectedValue.value = value;
   }
 
   void updateDateRange(DateTimeRange? dateRange) {
@@ -79,6 +84,24 @@ class VoucherPageController extends GetxController with SingleGetTickerProviderM
       }
 
       // Memperbarui voucherList dengan data terbaru
+      voucherList.assignAll(vouchers);
+
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> expiredVoucher() async {
+    try {
+      isLoading.value = true;
+      voucherList.clear();
+
+      final response = await voucherService.voucherExpired();
+      voucherResponse = VoucherResponse.fromJson(response.data);
+      var vouchers = voucherResponse.data!;
+
       voucherList.assignAll(vouchers);
 
     } catch (e) {

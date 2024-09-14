@@ -23,6 +23,7 @@ String link = '${images}link.png';
 String ovo = '${images}ovo.png';
 String qris = '${images}qris.png';
 String pay = '${images}pay.png';
+String money = '${images}money.png';
 String emptyWhite = '${images}empty_blank.png';
 
 

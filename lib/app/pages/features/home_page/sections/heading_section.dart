@@ -17,7 +17,7 @@ class HeadingSection extends GetView<HomePageController> {
       children: [
 
         InkWell(
-          onTap: () => Get.toNamed(Routes.ORDER_PAGE),
+          onTap: () =>  Get.offNamedUntil(Routes.ORDER_PAGE, (route) => route.settings.name == Routes.HOME_PAGE),
           child: Container(
             height: 65,
             padding: const EdgeInsets.all(16.0),

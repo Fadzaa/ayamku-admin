@@ -185,7 +185,7 @@ class HomePageController extends GetxController {
     }
 
     if (isActive.value == false && value == true) {
-      isActive.value = true; // Automatically open the store if it was closed
+      isActive.value = true;
       updateStore();
     } else {
       isActive.value = value;

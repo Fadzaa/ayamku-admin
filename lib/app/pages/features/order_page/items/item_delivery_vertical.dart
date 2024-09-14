@@ -22,7 +22,7 @@ class ItemDeliveryVertical extends StatelessWidget{
   });
 
   final String username, orderName, namePos,profileUser,sessionOrder;
-  final int orderId;
+  final String orderId;
   final String orderTime;
   final List<CartItems> cartItems;
   final OrderStatus orderStatus;

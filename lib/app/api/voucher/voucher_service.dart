@@ -19,6 +19,18 @@ class VoucherService {
     }
   }
 
+  Future<dio.Response> voucherExpired() async {
+    try {
+      final response = await _dioInstance.getRequest(
+        endpoint: ApiEndPoint.voucherExpired,
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   Future<dio.Response> updateVoucher(formData, String id) async {
     try {
       final response = await _dioInstance.postImageRequest(

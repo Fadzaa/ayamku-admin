@@ -21,7 +21,7 @@ class ItemPickupVertical extends StatelessWidget {
   });
 
   final String username, orderName ,profileUser,sessionOrder;
-  final int orderId;
+  final String orderId;
   final String orderTime;
   final List<CartItems> cartItems;
   final PickupStatus orderStatus;

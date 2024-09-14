@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ayamku_admin/app/api/order/model/order_response.dart';
 import 'package:ayamku_admin/app/api/order/order_service.dart';
+import 'package:ayamku_admin/app/router/app_pages.dart';
 import 'package:ayamku_admin/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,15 @@ class OrderPageController extends GetxController {
   void acceptOrder(String orderId) {
     updateStatus(orderId, 'accept');
     acceptedOrders.add(orderId);
+  }
+
+  RxList<String> procesingsOrder = <String>[].obs;
+  bool isprocessOrder(String orderId) {
+    return procesingsOrder.contains(orderId);
+  }
+  void processOrder(String orderId) {
+    updateStatus(orderId, 'processing');
+    procesingsOrder.add(orderId);
   }
 
   RxList<String> completedOrders = <String>[].obs;
@@ -95,6 +105,9 @@ class OrderPageController extends GetxController {
   Future<void> getAllOrder() async {
     try {
       isLoading.value = true;
+      listAllOrder.clear();
+      completedOrders.clear();
+      cancelledOrders.clear();
 
       final response = await orderService.getOrder();
 
@@ -148,7 +161,11 @@ class OrderPageController extends GetxController {
     try {
       isLoading.value = true;
 
-      final response = await orderService.updateOrderStatus(int.parse(id), status.toString());
+      final response = await orderService.updateOrderStatus(id, status.toString());
+      listAllOrder.clear();
+      getAllOrder();
+      listDeliveryOrder.clear();
+      listPickupOrder.clear();
 
       print("Update order status response: ${response.data}");
 
@@ -161,6 +178,8 @@ class OrderPageController extends GetxController {
         borderRadius: 30,
         margin: EdgeInsets.all(10),
       );
+      Get.toNamed(Routes.ORDER_PAGE);
+      await getAllOrder();
     } catch (e) {
       print('Error occurred: $e');
       Get.snackbar("Error", e.toString());

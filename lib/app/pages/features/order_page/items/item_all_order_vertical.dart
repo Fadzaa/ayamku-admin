@@ -24,14 +24,17 @@ class ItemAllOrderVertical extends GetView<OrderPageController> {
       required this.status});
 
   final String username, orderName, namePos, method, status, profileUser;
-  final int id;
+  final String id;
   final String? sessionOrder;
   final String orderTime;
   final List<CartItems> cartItems;
   final VoidCallback onTap;
 
-  Widget getStatusWidget(String status, int orderId, String nameUser) {
+  Widget getStatusWidget(String status, String orderId, String nameUser) {
     switch (status) {
+      case 'waiting_payment':
+        return ProcessingOrder(
+            orderId: orderId, status: status, nama: nameUser);
       case 'processing':
         return TerimaPesanan(orderId: orderId, status: status, nama: nameUser);
       case 'completed':

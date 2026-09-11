@@ -33,15 +33,15 @@ dependencies:
   get: ^4.6.6
   dio: ^5.4.0
   shimmer:
-  google_fonts: ^6.2.1
+  google_fonts: ^8.2.1
   image_picker: ^1.1.1
-  intl: ^0.17.0
+  intl: ^0.20.3
   flutter_switch:
   auto_size_text: ^3.0.0
   dotted_line: ^3.2.2
   table_calendar: ^3.0.0
-  firebase_core: ^3.3.0
-  firebase_messaging: ^15.0.4
+  firebase_core: ^4.14.0
+  firebase_messaging: ^16.6.0
   flutter_rating_bar:
   fl_chart: ^0.68.0
   flutter:
